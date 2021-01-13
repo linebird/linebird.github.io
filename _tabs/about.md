@@ -10,7 +10,7 @@ order: 4
 # MIT License
 ---
 
-<img src="../assets/img/linebird2.png" width="30%">
+<img src="/assets/img/linebird2.png" width="30%">
 
 ## 연락처
 
