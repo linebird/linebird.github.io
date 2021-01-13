@@ -10,8 +10,11 @@ order: 4
 # MIT License
 ---
 
+<img src="../assets/img/linebird2.png" width="30%">
+
 ## 연락처
 
+* 이름 : 유진수
 * E-mail : linebird71@gmail.com
 
 ## 학력
