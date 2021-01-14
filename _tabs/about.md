@@ -10,7 +10,8 @@ order: 4
 # MIT License
 ---
 
-<img src="/assets/img/linebird2.png" width="30%">
+<!-- github에서는 경로를 아래와 같이 주어야 이미지 표시됨. src="../assets/img/linebird2.png" 경로는 표시되지 않음 -->
+<img src="/assets/img/linebird2.png" width="30%"> 
 
 ## 연락처
 
@@ -27,7 +28,9 @@ order: 4
 * (주)아롬정보기술(2009.02 ~ 2021.현재) : 클라우드사업본부/이사
   * 2020.03 ~ 2020.12 : KT cloud 2.0 Open API 개발 - KT
     * Application architecture
-    * openstack base cloud api template 제공 및 Guide
+    * openstack cloud 서비스 제공을 위한 정책 수립 지원
+    * KT cloud 2.0 Open API 개발 framework 선정 및 Prototype 제공
+    * 공통 모듈 개발 제공
     * JDK8, Spring boot, Tomcat9.0
   * 2014.12 ~ 2015.03 : SDI Orchestrator 고도화 및 가상화PBX 솔루션 개발 - KT
     * Project Manager
