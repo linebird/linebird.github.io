@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "bbbb"
+title: "Jenkins에 Sonarqube 연동하기"
 date: 2021-01-14 15:00:00 +0900
 categories: [Blogging]
 tags: [jenkins, sonarqube]
