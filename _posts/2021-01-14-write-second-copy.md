@@ -93,7 +93,8 @@ INFO: ------------------------------------------------------------------------
 WARN: Unable to locate 'report-task.txt' in the workspace. Did the SonarScanner succedeed?
 Finished: SUCCESS
 ```
-위와 같이 나오는데 SUCCESS 위에 나오는 http://sonarqubeURL:9000/dashboard?id=test 이 링크를 눌러서 들어가면 Sonarqube에서 프로젝트를 분석한 결과를 바로 볼수 있다. 
+
+위와 같이 나오는데 SUCCESS 위에 나오는 http://sonarqubeURL:9000/dashboard?id=test 이 링크를 눌러서 들어가면 Sonarqube에서 프로젝트를 분석한 결과를 바로 볼수 있다.
 ![Sonarqube 분석](https://blog.kakaocdn.net/dn/wIpSH/btqEcnK0q2h/CKEHTcMDcBc2LBYQ3y3x4k/img.png)  
 Sonarqube에 들어가지 않고 Jenkins Dashboard에서 직접 Issues에 대해서 확인을 할수도 있다.  
 **Jenkins > Dashboard tab > 보기수정 > Portlets at the bottom of the page (원하는 위치) > SonarQube Issues**
