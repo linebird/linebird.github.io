@@ -3,7 +3,7 @@ layout: post
 title: "2020 Javascript 정리"
 date: 2021-01-18 10:01:00 +0900
 categories: [Blogging]
-tags: [news]
+tags: [news, javascript]
 ---
 
 ## [State of JS 2020](https://2020.stateofjs.com/ko-KR/)
