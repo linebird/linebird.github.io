@@ -3,7 +3,7 @@ layout: post
 title: "SW관련 빠르게 학습하여 배울 수 있는 자료 모음"
 date: 2021-01-15 17:55:00 +0900
 categories: [Blogging]
-tags: [news, javascript]
+tags: [news]
 ---
 
 ## [Learn X in Y Minutes](https://learnxinyminutes.com/)
