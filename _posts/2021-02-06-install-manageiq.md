@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "2021-02-06 ManageIQ 설치"
+title: "ManageIQ 설치"
 date: 2021-02-06 12:57:00 +0900
 categories: [Blogging]
 tags: [manageiq]
