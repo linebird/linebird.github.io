@@ -311,6 +311,45 @@ class DashboardController < ApplicationController
   ...
 ```
 
+## Cloud 제공자 삭제 방법
+> manageiq-ui-classic/app/controllers/mixin/ems_common.rb 수정. form_instance_vars 메소드 수정
+```ruby
+
+    def form_instance_vars
+      @server_zones = []
+      zones = Zone.visible.order('lower(description)')
+      zones.each do |zone|
+        @server_zones.push([zone.description, zone.name])
+      end
+      @ems_types = Array(model.supported_types_and_descriptions_hash.invert).sort_by(&:first)
+
+      # 사용하지 않는 cloud provider 제거(수정 부분) 
+      @ems_types.delete_at(2)
+      @ems_types.delete_at(3)
+      @ems_types.delete_at(3)
+
+      @provider_regions = retrieve_provider_regions
+      @openstack_infra_providers = retrieve_openstack_infra_providers
+      @openstack_security_protocols = retrieve_openstack_security_protocols
+      @amqp_security_protocols = retrieve_amqp_security_protocols
+      @nuage_security_protocols = retrieve_nuage_security_protocols
+      @container_security_protocols = retrieve_container_security_protocols
+      @scvmm_security_protocols = [[_('Basic (SSL)'), 'ssl'], ['Kerberos', 'kerberos']]
+      @openstack_api_versions = retrieve_openstack_api_versions
+      @vmware_cloud_api_versions = retrieve_vmware_cloud_api_versions
+      @azure_stack_api_versions = retrieve_azure_stack_api_versions
+      @emstype_display = model.supported_types_and_descriptions_hash[@ems.emstype]
+      if @ems.respond_to?(:description)
+        @ems_region_display = @ems.description
+      end
+      @nuage_api_versions = retrieve_nuage_api_versions
+      @hawkular_security_protocols = retrieve_hawkular_security_protocols
+      @redfish_security_protocols = retrieve_security_protocols
+    end
+
+```
+
+
 ## ManageIQ 브라우저 탭 타이틀 수정
 
 > "ManageIQ" --> "Hybrid Cloud 관리 플랫폼" 으로 수정 요청(KT)
@@ -333,3 +372,5 @@ ko:
           pb: "PB"
           eb: "EB"
 ```
+
+
