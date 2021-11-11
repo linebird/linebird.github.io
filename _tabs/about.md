@@ -21,6 +21,12 @@ order: 4
 ## 경력
 
 * (주)아롬정보기술(2009.02 ~ 2021.현재) : 클라우드사업본부/이사
+  * 2021.04 ~ 2021.10 : 현대자동차 IaaS 포탈 개발 - KT
+    * SW Application architecture
+    * 현대 private cloud infra에 맞는 서비스
+    * Global Multi region 지원
+    * Keycloak & openstack federation
+    * JDK11, Spring boot, Nuxt.js
   * 2020.03 ~ 2020.12 : KT cloud 2.0 Open API 개발 - KT
     * Application architecture
     * openstack cloud 서비스 제공을 위한 정책 수립 지원
