@@ -15,12 +15,18 @@ tags: [bugs]
 > 예4) 기타
  
 ### 1. Request
+
 #### 1.1 Request URL
+
 > /api/v1/riskcause?param1=파라미터1&param2=파라미터2
+
 #### 1.2 HTTP Methods
+
 > POST/GET/PUT/DELETE
+
 #### 1.2 Request body
 > **요청시, 보내는 json 문자열. 아래의 예**
+
 ``` json
 {
   "deleteYn": null,
@@ -73,10 +79,14 @@ tags: [bugs]
 
 ### 2. Response
 #### 2.1 Response HTTP Status Code
+
 > HTTP 상태 코드
 > 200(OK), 201(Accept) ...
+
 #### 2.1 Response Body(제일 중요)
+
 > 요청 후, 응답한 json 문자열
+
 ``` json
 {
   "deleteYn": null,
