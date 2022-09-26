@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "SW관련 빠르게 학습하여 배울 수 있는 자료 모음"
+title: "안전관리 - Rest API Error 보고 양식"
 date: 2022-09-25 13:15:00 +0900
 categories: [Blogging]
 tags: [bugs]
@@ -16,7 +16,7 @@ tags: [bugs]
  
 ### 1. Request
 #### 1.1 Request URL
-> /api/v1/riskcause
+> /api/v1/riskcause?param1=파라미터1&param2=파라미터2
 #### 1.2 HTTP Methods
 > POST/GET/PUT/DELETE
 #### 1.2 Request body
@@ -73,7 +73,7 @@ tags: [bugs]
 #### 2.1 Response HTTP Status Code
 > HTTP 상태 코드
 > 200(OK), 201(Accept) ...
-#### 2.1 Response Body
+#### 2.1 Response Body(제일 중요)
 > 요청 후, 응답한 json 문자열
 {
   "deleteYn": null,
