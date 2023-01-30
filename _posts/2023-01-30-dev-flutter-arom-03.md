@@ -15,7 +15,7 @@ tags: [flutter]
 config 폴더에는 다음 폴더가 포함됨:
 
 - **routes :** 애플리케이션 화면 내비게이션 코드를 기반으로 하는 모든 파일이 포함
-- **themes :** 응용 프로그램이 light and dark theme and these themes 지원하고 이러한 테마가 사용자 정의 테마인 경우 light_theme.dart, dark_theme.dart 파일 두 개를 생성해야 함. 여기에서 각 위젯 유형에 필요한 모든 색상 추가.
+- **themes :** 응용 프로그램이 라이트 테마와 다크 테마를 지원하고 이러한 테마가 사용자 정의 테마인 경우 light_theme.dart, dark_theme.dart 파일 두 개를 생성해야 함. 여기에서 각 위젯 유형에 필요한 모든 색상 추가.
 - **translation :** 다국어 모듈 정의.
 
 ### Constants
