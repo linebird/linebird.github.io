@@ -18,7 +18,6 @@ Spring Boot 3.02 사용
 ![Untitled](/assets/img/202302/spring_boot_support.png)
 [Spring Boot Support](https://spring.io/projects/spring-boot#support)
 
-
 ## RESTful API 디자인 가이드
 
 1. REST API는 리소스를 중심으로 디자인되며, 클라이언트에서 액세스할 수 있는 모든 종류의 개체, 데이터 또는 서비스가 리소스에 포함됨.
