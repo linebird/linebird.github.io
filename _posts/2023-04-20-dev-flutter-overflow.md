@@ -19,7 +19,7 @@ https://docs.flutter.dev/development/ui/layout/constraints
 
 ### Container overflow
 
-> 컨테이너 안에 자식을 추가하면 컨테이너가 자식을 감싸고 자식 위젯에 따라 컨테이너 크기를 조정하는 경향이 있습니다.
+> 컨테이너 안에 자식을 추가하면 컨테이너가 자식을 감싸고 자식 위젯에 따라 컨테이너 크기를 조정하게 됨.
 
 #### container 표시 기분
 컨테이너 위젯에 *width, height 속성을 100*으로 함.
