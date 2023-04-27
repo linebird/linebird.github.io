@@ -11,7 +11,7 @@ order: 4
 ---
 
 <!-- github에서는 경로를 아래와 같이 주어야 이미지 표시됨. src="../assets/img/linebird2.png" 경로는 표시되지 않음 -->
-<img src="/assets/img/linebird2.png" width="30%"> 
+<img src="/assets/img/linebird3.png" width="30%">
 
 ## 연락처
 
@@ -20,8 +20,10 @@ order: 4
 
 ## 경력
 
-* (주)아롬정보기술(2009.02 ~ 2021.현재) : 클라우드사업본부/이사
-  * 2021.04 ~ 2021.10 : 현대자동차 IaaS 포탈 개발 - KT
+* (주)아롬정보기술(2009.02 ~ 2023.현재) : Technical Architecture
+  * 2022.12 ~ 현재 : 연구소 및 개발부서 지원.
+  * 2021.11 ~ 2022.11 : 현대자동차 IaaS 포탈 SM 지원 - 현대자동차
+  * 2021.04 ~ 2021.10 : 현대자동차 IaaS 포탈 개발 - 현대자동차, 오토에버
     * SW Application architecture
     * 현대 private cloud infra에 맞는 서비스
     * Global Multi region 지원
