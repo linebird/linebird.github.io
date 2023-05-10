@@ -65,12 +65,12 @@ window.addEventListener("flutterInAppWebViewPlatformReady", function(event) {
 
 ![InAppWebViewGroupOptions](/assets/img/2023/05/webview_code_01.png)  
 6 : WebView로 호출할 URL. 해당 url은 onload로 NICE 인증 표준창을 호출하게 됨.  
-12 ~ 60: navigationDelegate에서 android/ios 기기에서 PASS 앱으로 인증처리
+12 ~ 60: navigationDelegate에서 android/ios 기기에서 PASS 앱으로 인증처리  
 61 ~ : javascriptChannel에서 NICE 인증 표준창과 통신 후, 결과 처리
 
 ### 1.1. webView를 사용하여 NICE 본인인증 처리 결과(**화면 크기가 맞지않음**)
 
-![InAppWebViewGroupOptions](/assets/img/2023/05/webview_result_01.jpg)
+![InAppWebViewGroupOptions](/assets/img/2023/05/webview_result_01.jpg)  
 inappwebview를 사용하여 해결하고자 검토하게 됨.
 
 ## 2. Flutter inappWebview를 이용한 본인인증
