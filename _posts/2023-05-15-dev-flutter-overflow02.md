@@ -13,16 +13,14 @@ tags: [flutter, overflow]
 참고로 테스터는 눈이 노안인 관계로 폰의 설정을 아래와 같이 하여 사용하고 있었다.
 | Device                         | 글자 크기와 스타일  | 화면 크게/작게    |
 |--------------------------------|-------------|-------------|
-| **갤럭시 노트3**                     |   <img src="/assets/img/2023/05/android-config-01.jpg" width="200" height="400"/>          |    <img src="../assets/img/2023/05/android-config-02.jpg" width="200" height="400"/>         |
-
-
+| **갤럭시 노트3**                     |   ![android-config-01](/assets/img/2023/05/android-config-01.jpg)       |    ![android-config-02](/assets/img/2023/05/android-config-02.jpg)         |
 
 ## 1. 공통 컴포넌트에서 Expand를 사용하지 않아서, overflow가 발생한 경우
 
 [overflow 화면]
-<!-- ![page_06_01-overflow](/assets/img/2023/05/card_home_infoflow.jpg) -->
+![page_06_01-overflow](/assets/img/2023/05/card_home_infoflow.jpg)
 
-<img src="../assets/img/2023/05/card_home_info-overflow.jpg" width="300" height="600"/>
+<!-- <img src="../assets/img/2023/05/card_home_info-overflow.jpg" width="300" height="600"/> -->
 
 [수정 전, code]
 
@@ -42,8 +40,8 @@ SizedBox(
 ## 2. 기기의 화면 배율의 변경에 따라, overflow가 발생한 경우
 
 [overflow 화면]
-<!-- ![page_06_01-overflow](/assets/img/2023/05/page_06_01-overflow.jpg) -->
-<img src="../assets/img/2023/05/page_06_01-overflow.jpg" width="300" height="600"/>
+![page_06_01-overflow](/assets/img/2023/05/page_06_01-overflow.jpg)
+<!-- <img src="../assets/img/2023/05/page_06_01-overflow.jpg" width="300" height="600"/> -->
 
 [수정 전, code]
 
