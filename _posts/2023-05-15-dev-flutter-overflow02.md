@@ -15,10 +15,18 @@ tags: [flutter, overflow]
 |--------------------------------|-------------|-------------|
 | **갤럭시 노트3**                     |   ![android-config-01](/assets/img/2023/05/android-config-01.jpg)       |    ![android-config-02](/assets/img/2023/05/android-config-02.jpg)         |
 
+표 샘플
+|제목|내용|설명|
+|:---|---:|:---:|
+|왼쪽정렬|오른쪽정렬|중앙정렬|
+|왼쪽정렬|오른쪽정렬|중앙정렬|
+|왼쪽정렬|오른쪽정렬|중앙정렬|
+
+
 ## 1. 공통 컴포넌트에서 Expand를 사용하지 않아서, overflow가 발생한 경우
 
-[overflow 화면]
-![page_06_01-overflow](/assets/img/2023/05/card_home_infoflow.jpg)
+[overflow 화면]  
+![card_home_infoflow-overflow](/assets/img/2023/05/card_home_info-overflow.jpg)
 
 <!-- <img src="../assets/img/2023/05/card_home_info-overflow.jpg" width="300" height="600"/> -->
 
@@ -34,7 +42,7 @@ SizedBox(
 ...
 ```
 
-[수정 후, code]
+[수정 후, code]  
 ![code card_home_info](/assets/img/2023/05/code_card_home_info.png)
 
 ## 2. 기기의 화면 배율의 변경에 따라, overflow가 발생한 경우
@@ -64,7 +72,7 @@ SizedBox(
 **Apple Devices**
 | Device                         | Pixel Size  | Viewport    |
 |--------------------------------|-------------|-------------|
-| **iPhone**                     |             |             |
+| **iPhone**                     |      -       |      -       |
 | iPhone 12 Pro Max              | 2778 x 1284 |  428 x 926  |
 | iPhone 12 Pro                  | 2532 x 1170 |  390 x 844  |
 | iPhone 12                      | 2532 x 1170 | 414 x 895   |
