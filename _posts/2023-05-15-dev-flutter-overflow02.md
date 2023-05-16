@@ -13,7 +13,7 @@ tags: [flutter, overflow]
 참고로 테스터는 눈이 노안인 관계로 폰의 설정을 아래와 같이 하여 사용하고 있었다.
 | Device                         | 글자 크기와 스타일  | 화면 크게/작게    |
 |--------------------------------|-------------|-------------|
-| **갤럭시 노트3**                     |   <img src="../assets/img/2023/05/android-config-01.jpg" width="200" height="400"/>          |    <img src="../assets/img/2023/05/android-config-02.jpg" width="200" height="400"/>         |
+| **갤럭시 노트3**                     |   <img src="/assets/img/2023/05/android-config-01.jpg" width="200" height="400"/>          |    <img src="../assets/img/2023/05/android-config-02.jpg" width="200" height="400"/>         |
 
 
 
