@@ -53,7 +53,6 @@ git 커밋 메시지의 구조는 아래와 같이 사용:
 | Refs            | Referencing commits | 다른 커밋과 연관된 코드 변경 (예: Refs: 676104e, a215868) |
 | BREAKING CHANGE | Breaking changes    | 코드 변경으로 인해 다른 기능이 작동하지 않는 경우(예: 라이브러리 버전 변경으로 제공되는 함수가 변경됨) |
 
-
 ### 2) Git 커밋 메시지 작성 예시
 
 웹 개발 프로젝트에서 사용자 프로필 페이지를 추가한 작업을 한 경우 아래와 같은 방식으로 Git 커밋 메시지를 작성할 수 있다. 일반적으로 제목줄(<type>: <description>)과 <body>, <footer> 사이에는 한 줄씩 공백을 둔다.
@@ -73,9 +72,11 @@ Closes #101
 건기식 프로젝트에서는 최소 아래와 같이 메시지를 작성할 수 있도록 한다.
 
 ### 1) 작성 방법
+
 커밋 유형과 description은 반드시 작성한다.
 scope는 페이지 경로 또는 컴포넌트명, 패키지명 등을 선택해서 넣도록 한다.
 footer에는 레드마인의 일감 번호가 있는 경우, 완료인 경우에 "Closes **#레드마인일감번호**"를 작성한다.
+
 ```git
 <mandatory type>[optional scope]: <mandatory description>
 
