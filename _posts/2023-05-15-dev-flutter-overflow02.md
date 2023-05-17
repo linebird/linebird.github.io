@@ -16,13 +16,6 @@ tags: [flutter, overflow]
 |--------------------------------|-------------|-------------|
 | **갤럭시 노트3**                     |   ![android-config-01](/assets/img/2023/05/android-config-01.jpg)       |    ![android-config-02](/assets/img/2023/05/android-config-02.jpg)         |
 
-표 샘플
-|제목|내용|설명|
-|:---|---:|:---:|
-|왼쪽정렬|오른쪽정렬|중앙정렬|
-|왼쪽정렬|오른쪽정렬|중앙정렬|
-|왼쪽정렬|오른쪽정렬|중앙정렬|
-
 ## 1. 공통 컴포넌트에서 Expand를 사용하지 않아서, overflow가 발생한 경우
 
 [overflow 화면]  
