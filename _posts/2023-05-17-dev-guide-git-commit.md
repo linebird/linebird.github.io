@@ -105,3 +105,9 @@ Closes #1234
 ```git
 feat(api)!: 영양제를 구매하면 구매자에게 이메일을 보내도록 구현
 ```
+
+### 참고
+
+- [Conventional Commits 1.0.0](https://www.conventionalcommits.org/en/v1.0.0/)
+- [Git 커밋 메시지는 왜 중요할까?](https://insight.infograb.net/blog/2023/04/21/why-commit-convention-is-important/)
+- [Git 커밋 메시지 컨벤션은 왜 중요할까?](https://yozm.wishket.com/magazine/detail/1974/)
