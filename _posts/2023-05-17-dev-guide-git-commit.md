@@ -75,7 +75,7 @@ Closes #101
 ### 1) 작성 방법
 커밋 유형과 description은 반드시 작성한다.
 scope는 페이지 경로 또는 컴포넌트명, 패키지명 등을 선택해서 넣도록 한다.
-footer에는 레드마인의 일감 번호가 있는 경우, 완료인 경우에 "Closes #레드마인일감번호"를 작성한다.
+footer에는 레드마인의 일감 번호가 있는 경우, 완료인 경우에 "Closes **#레드마인일감번호**"를 작성한다.
 ```git
 <mandatory type>[optional scope]: <mandatory description>
 
