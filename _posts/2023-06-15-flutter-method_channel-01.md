@@ -123,3 +123,9 @@ import UIKit
       }
     })  
 ```
+
+### 참조
+
+1. [Writing custom platform-specific code - Flutter documentation](https://docs.flutter.dev/platform-integration/platform-channels)
+2. [Using Flutter’s MethodChannel to invoke Kotlin code for Android](https://blog.logrocket.com/using-flutters-methodchannel-invoke-kotlin-code-android/)
+3. [[Flutter/Swift] 플랫폼 통신(IOS) - Method Channel](https://velog.io/@tygerhwang/FLUTTER-Platform-Channel-with-IOS)
