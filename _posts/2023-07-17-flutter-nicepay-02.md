@@ -12,11 +12,11 @@ tags: [flutter, nicepay, payment]
 카카오 뱅크에서는 되는데, 국민은행 앱을 실행하면 에러 화면이 보인다는 제보.
 테스트 결과, 아래와 같이 화면이 보인다.
 
-![error01](/assets/img/2023/07/pg_error01.jpg)
-![error02](/assets/img/2023/07/pg_error02.jpg)
-![error03](/assets/img/2023/07/pg_error03.jpg)
+![error02](/assets/img/2023/07/pg_error_02.jpg)
+![error03](/assets/img/2023/07/pg_error_03.jpg)
 
 ### Error 발생 경위
+
 InAppWebView shouldOverrideUrlLoading에서 URL이 http/https가 아닌 경우에 Url을 실행시키지 않기 위해서 return NavigationActionPolicy.CANCEL; 을 하지만, url이 무조건 실행되어 문제를 발생시킨다.  
 페이지 로딩이 일어나고 Scheme오류 페이지(ERR_UNKNOWN_URL_SCHEME)가 나타나며 더이상 진행을 할수 없게 된다.  
 다행히도 구글링해서 쉽게 해결할 수 있었고, 참조한 site는 하단 참조를 보기 바란다.
@@ -58,6 +58,7 @@ shouldOverrideUrlLoading에서 android, url.scheme = intent 이고, mainFrame이
 추가하지 않으려 했으나, InAppWebView 문서 찾아보고, 예방 차원에서 코딩 추가해도 될 것 같아 반영하였다. 특정 scheme 작업처리를 위해.
 
 onLoadResourceCustomScheme 를 추가해서 해당 이벤트 메서드에서 await controller.stopLoading();처리 한다. InAppWebViewGroupOptions에 resourceCustomSchemes: ['intent'],를 추가해서 동작할수 있도록한다.
+
 ```dart
 onLoadResourceCustomScheme: (controller, url) async {
      await controller.stopLoading();
