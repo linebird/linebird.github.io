@@ -20,8 +20,12 @@ order: 4
 
 ## 경력
 
-* (주)아롬정보기술(2009.02 ~ 2023.현재) : Technical Architecture
-  * 2022.12 ~ 현재 : 연구소 및 개발부서 지원.
+* (주)아롬정보기술(2009.02 ~ 2023.현재) : CTO 재직 중
+  * 2023.12 ~ 현재 : 연구소 및 개발부서 지원
+  * 2023.02 ~ 2023.11 : 메디팜핏 개발
+    * Application architecture
+    * Flutter를 이용한 사용자/약사 App 개발
+    * Firebase, coocon, nicepay 연동
   * 2021.11 ~ 2022.11 : 현대자동차 IaaS 포탈 SM 지원 - 현대자동차
   * 2021.04 ~ 2021.10 : 현대자동차 IaaS 포탈 개발 - 현대자동차, 오토에버
     * SW Application architecture
@@ -29,12 +33,16 @@ order: 4
     * Global Multi region 지원
     * Keycloak & openstack federation
     * JDK11, Spring boot, Nuxt.js
-  * 2020.03 ~ 2020.12 : KT cloud 2.0 Open API 개발 - KT
+  * 2020.03 ~ 2021.03 : KT cloud 2.0 개발 및 유지보수 - KT
     * Application architecture
     * openstack cloud 서비스 제공을 위한 정책 수립 지원
     * KT cloud 2.0 Open API 개발 framework 선정 및 Prototype 제공
     * 공통 모듈 개발 제공
     * JDK8, Spring boot, Tomcat9.0
+  * 2019 : ucoludbiz SM
+  * 2018 : ucoludbiz SM, SIS MariaDB 서비스 개발, ucloudbiz Vmware수용 개발 - KT
+  * 2017 : ucoludbiz SM, ucloud biz 포탈 컨텐츠 관리시스템 구축, Packaging/Messaging 서비스 고도화, uclodbiz 컨테이너 서비스 개발 - KT
+  * 2016: ucloudbiz 포탈 및 부가서비스 유지보수, 사용자 포탈 리뉴얼 - KT
   * 2014.12 ~ 2015.03 : SDI Orchestrator 고도화 및 가상화PBX 솔루션 개발 - KT
     * Project Manager
     * Groovy/Python/Tornado
