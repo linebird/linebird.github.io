@@ -1,0 +1,2377 @@
+---
+layout: post
+title: "OpenStack Documentation Generation 참조"
+date: 2024-01-19 17:45:00 +0900
+categories: [SCore]
+tags: [openstack, ysk]
+---
+
+## [Sphinx / Read-the-Docs를 통한 Python Project 문서화]
+
+* See: https://hooni-playground.com/1101/
+* See: https://fwani.tistory.com/3
+
+* 1. Sphinx를 깔고 --> 2. Sphinx 문법으로 파일을 구성한 후 -->3. 빌드하기만 하면 된다.
+
+1. Sphinx 설치
+
+$ conda install Sphinx  # Anaconda 사용 시
+$ pip3 install Sphinx  # Anaconda 미사용 시
+
+2. Sphinx 세팅
+
+프로젝트의 최상위 디렉터리에서 docs 디렉터리를 만들어 진행
+
+$ mkdir docs
+$ cd docs
+$ sphinx-quickstart
+
+3. Sphinx 빌드
+
+위의 세팅 과정에서 생긴 Makefile을 이용해 빌드
+
+$ make html
+
+그러면 build 디렉터리에 html/index.html이 생겼을 것이다
+
+4. RTD 테마 적용
+
+RTD 웹사이트에 등록하지 않고 Local의 Sphinx 문서에 RTD 테마를 적용하고싶다면 테마를 설치하고 docs/source 디렉터리의 conf.py 파일에 별도의 세팅을 해주면 된다.
+테마는 보통 Sphinx를 설치하며 같이 설치되긴 한다.
+
+```
+$ conda install sphinx_rtd_theme  # Anaconda 사용 시
+$ pip3 install sphinx_rtd_theme  # Anaconda 미사용 시
+```
+
+html_theme = 'sphinx_rtd_theme'  # in conf.py file
+경우에 따라 conf.py 최상단의 os.path를 수정해줄 수도 있다.
+이건 환경마다 다르니 편한대로 사용하면 된다.
+테마를 적용하면 아까의 볼품없는 테마가 이렇게 변한다.
+
+5. Sphinx 마크다운 사용 예제
+
+Sphinx 템플릿과 가이드는 이곳에 정리되어있다. (https://www.writethedocs.org/guide/writing/beginners-guide-to-docs/#id1)
+그리고 구체적인 Sphinx의 문법(reStructureTree, RST)은 이곳에 정리되어있다. (https://www.sphinx-doc.org/en/master/usage/restructuredtext/basics.html)
+
+간단하게 카테고리와 마크다운 파일을 만들어보자.
+
+Sphinx에서 마크다운을 사용하기 위해서는 myst_parser 패키지를 설치한 후 conf.py에 myst_parser extension을 등록해야 한다.
+
+$ pip3 install myst_parser
+
+그 이후, source_suffix 속성을 통해 Sphinx가 읽을 수 있는 파일의 종류를 지정해주어야 한다. (디폴트는 rst만 인식하도록 되어있다)
+ [index.rst 설정 참고: https://www.sphinx-doc.org/en/master/usage/configuration.html]
+
+```
+extensions = ['myst_parser']
+source_suffix = {
+    '.rst': 'restructuredtext',
+    '.txt': 'markdown',
+    '.md': 'markdown',
+}
+```
+
+위 과정을 거치지 않으면 마크다운 파일을 인식할 수 없어 다음과 같은 에러가 발생하게 된다.
+
+> WARNING: toctree contains reference to nonexisting document
+이제 패키지에 마크다운 파일을 만들어보자.
+source 디렉터리에서 A라는 디렉터리를 만들고 그 안에 a1.md와 a2.md를 넣을 것이다.
+
+```
+$ mkdir docs/source/A
+$ cat "Hi" > docs/source/A/a1.md
+$ cat "Bye" > docs/source/A/a2.md
+```
+
+그 후 index.rst의 toctree 부분에 위에서 생성한 디렉터리와 파일을 등록해주면 된다.
+
+```
+.. toctree::
+   :maxdepth: 2
+   :caption: A:
+   A/a1.md
+   A/a2.md
+
+Welcome to my_package's documentation!
+======================================
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Table of Contents
+
+   my_package
+```
+
+<h3>Indices and tables</h3>
+
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`
+
+출처: https://kshyun87.tistory.com/63 [Coding is 취미:티스토리]
+
+주의할 점은 Sphinx는 들여쓰기로 스페이스 3개를 사용한다는 점이다.
+스페이스 4개로 들여쓰기를 하게되면 Sphinx가 제대로 인식하지 못한다.
+이제 다시 docs 디렉터리에서 빌드를 하면 다음과 같은 웹페이지를 볼 수 있게된다.
+
+1. Sphinx autodoc 사용 예제
+
+이번에는 Python 파일로부터 rst 파일을 생성해본다.
+우선 rst 파일을 다루기 위해 conf.py의 extension에 sphinx.ext.autodoc를 추가한다.
+(참조: https://github.com/openstack/nova/blob/master/doc/source/conf.py)
+
+또한, 빌드 과정 중 모듈을 찾을 수 있도록 conf.py의 상단에 주석처리된 path 관련 내용을 수정한다.
+path 수정은 사용자의 빌드 환경에 따라 다른데, 필자는 build와 source 디렉터리를 분리해서 사용하기 때문에
+ source 디렉터리 기준으로 부모(docs)의 부모(최상위) 디렉터리를 지정하여 사용한다.
+만약 이후의 빌드 과정에서 모듈을 찾지 못한다는 에러가 발생하면 path 지정이 제대로 되지 않아서이다.
+
+```
+import os
+import sys
+# sys.path.insert(0, os.path.abspath('.'))   # Default path
+sys.path.insert(0, os.path.abspath('../..'))   # 필자의 path
+```
+
+이제 테스트를 위해 프로젝트 최상위 디렉터리에 다음과 같은 테스트 패키지를 만든다.
+test 패키지 내부에 A, B라는 서브 패키지를 두고 각각 a와 b 모듈을 작성하였다.
+
+```
+project
+├── test
+│   ├── A
+│   │   ├── __init__.py
+│   │   └── a.py
+│   ├── B
+│   │   ├── __init__.py
+│   │   └── b.py
+│   └── __init__.py
+└── doc
+    ├── Makefile
+    ├── build
+    └── source
+        ├── _static
+        ├── _templates
+        ├── conf.py
+        └── index.rst
+```
+a.py와 b.py에는 테스트를 위해 만든 클래스가 들어있으며 내용은 다음과 같다.
+
+```
+"""
+====================================
+ :mod:`a` 모듈 a
+====================================
+.. moduleauthor:: hooni <hooni@hoo.ni>
+.. note:: LGPLv3
+설명
+=====
+이 모듈은 문서화 테스트를 위한 모듈입니다.
+Revision History
+-------------------
+ * [2021/04/23] - 모듈 작성
+"""
+class A:
+    """문서화 테스트를 위한 임시 클래스
+    """
+    def __init__(self, a: int):
+        """ 클래스 생성자
+        :param a: 생성자 파라미터
+        >>> a = A(10)
+        """
+        self.a = a
+    def print_value(self):
+        """ 멤버변수 a를 출력하는 메소드
+        >>> A(10).print_value()
+        10
+        """
+        print(self.a)
+```
+
+이제 Python 파일로부터 rst 파일을 생성할 차례이다.
+sphinx-apidoc 명령어를 이용하면 된다.
+이 명령어는 반드시 프로젝트의 최상위 디렉터리에서 실행해야 한다.
+test 패키지로부터 rst 파일을 생성해 docs/source에 저장하는 명령어는 다음과 같다.
+
+```
+$ sphinx-apidoc -f -o docs/source test
+> Creating file docs/source\test.rst.
+> Creating file docs/source\test.A.rst.
+> Creating file docs/source\test.B.rst.
+> Creating file docs/source\modules.rst.
+```
+
+그 결과 각 패키지 별 rst 파일과 modules.rst 파일이 생성되었다.
+modules.rst 파일은 모든 모듈의 내용이 기술돼있는 최상위 문서이다.
+이제 modules.rst를 기존의 index.rst에 연결하여 링크해주면 된다.
+
+```
+.. toctree::
+   :maxdepth: 2
+   :caption: Contents:
+   modules
+```
+
+그리고 빌드를 한 후 웹페이지를 확인하면 다음과 같이 세련된 창을 볼 수 있다.
+
+===================================================================
+
+7. RST (reStructuredText) & Sphinx 문법 정리
+
+* See: https://fwani.tistory.com/3 [FWANI's 코딩로그:티스토리]
+
+문서 내 용어
+
+O RST : reStructuredText
+O Markdown : Markdown
+O sphinx :
+
+   - 파이썬 코드(.py)의 내용을 html로 변환해서 웹페이지로 만들어주는 툴
+   - 파이썬 코드(.py)의 내용에서 주석을 찾아서 RST파일을 생성해 주는 툴
+   - 또한, rst로 작성된 것을 HTML, PDF 등으로 변경해주는 도구
+   - $ pip install sphinx 명령을 통해 설치
+
+O index.rst : 웹 문서의 첫 페이지
+O toctree : sphinx에서 index.rst를 작성 할 때 사용되는 directive
+
+```
+RST
+글자 표현
+italic 체 - * 을 양옆으로 붙임.
+*텍스트*
+bold 체 - ** 을 양옆으로 붙임.
+**텍스트**
+섹션 헤더
+
+주의 : 제목의 위/아래에 들어가는 문자의 개수는 제목내용과 같거나 많아야 한다.
+
+# 잘못된 예
+title
+==
+
+# 잘된 예
+title
+=====
+
+title
+=======
+```
+
+헤더 레벨은 정해진 규칙은 없다(문서에서 사용되는 순서대로 레벨이 정해짐).
+하지만, 하나의 프로젝트에는 #, *, =, -, ^, ",' 같은 특수 문자를 이용해 헤더 레벨을 정의 하여 쓰는 것이 좋다.
+아래는 예제.
+
+```
+# RST                   # MarkDown
+
+==============
+Section Title           # Section Title
+==============
+
+--------------
+Section Title           ## Section Title
+--------------
+
+Section Title           ### Section Title
+=============
+
+Section Title           #### Section Title
+-------------
+
+Section Title           ##### Section Title
+\`````````````
+
+Section Title           ###### Section Title
+'''''''''''''
+```
+
+목록
+
+일반목록
+
+#. 은 번호 자동생성
+
+```
+1. 목록입니다.
+2. 목록입니다.
+#. 목록입니다.
+```
+
+사전형 목록
+
+```
+들여쓰기 없음 (1)
+    네 칸을 띄고 쓰면 들여쓰기 (2)
+        네 칸씩 들여쓰기 가능 (3)
+    네 칸을 띄고 쓰면 들여쓰기 (2)
+들여쓰기 없음 (1)
+```
+
+옵션 목록
+
+```
+-a          옵션 a 설명
+-b file     옵션 b 설명
+--opt_a     옵션 opt_a 설명
+```
+
+Directive
+
+코드블락
+
+MarkDown의 ``` 으로 사용되는 부분
+code 와 code-block 은 옵션이 차이가 남, sphinx 사용시 code-block 추천
+sphinx-code-example (https://www.sphinx-doc.org/en/master/usage/restructuredtext/basics.html)
+
+
+```
+.. code::
+
+    print("hello, rst!")
+
+# Sphinx Directive 문법시 `code-block` 추천
+.. code-block::
+
+    print("hello, sphinx!")
+```
+
+이미지
+
+```
+.. image:: 이미지 파일 경로
+    :height: 250
+    :width: 250
+    :scale: 50
+    :alt: 이미지 설명
+```
+
+inline-Directive
+
+문장 중간에 |이모티콘| 같은 이미지를 넣을 수 있습니다.
+
+```
+.. |이모티콘| image:: 이모티콘경로
+```
+
+표
+
+rst는 표를 표현하는 문법이 다양
+
+데이터에 따라 적절한 문법 사용을 추천
+
+
+- 나 =의 길이는 같아야함.
+```
+ex
+
+
+
+  # 가능                 # 불가능
+    ========              ===
+    A                     A
+    ========              ==========
+    data1                 data1
+    ========              ========
+```
+
+Grid table
+
+```
++------------+------------+-----------+
+| Header 1   | Header 2   | Header 3  |
++============+============+===========+
+| body row 1 | column 2   | column 3  |
++------------+------------+-----------+
+| body row 2 | Cells may span columns.|
++------------+------------+-----------+
+| body row 3 | Cells may  | - Cells   |
++------------+ span rows. | - contain |
+| body row 4 |            | - blocks. |
++------------+------------+-----------+
+```
+
+Simple table
+
+```
+=====  =====  ======
+   Inputs     Output
+------------  ------
+  A      B    A or B
+=====  =====  ======
+False  False  False
+True   False  True
+False  True   True
+True   True   True
+=====  =====  ======
+```
+
+리스트형식
+
+```
+.. list-table::
+   :header-rows: 1
+
+   * - A
+     - B
+     - C
+   * - data1
+     - data2
+     - data3
+```
+
+csv 형식
+
+```
+.. csv-table:: 테이블 타이틀 (없어도 됨)
+   :header-rows: 1
+
+   A, B, C
+   data1, data2, data3
+```
+
+csv 파일 import 가능
+
+```
+.. csv-table:: Table Title
+   :file: CSV file path
+   :widths: 30, 70
+   :header-rows: 1
+ 
+
+ 
+
+ 
+ 
+
+     (adsbygoogle = window.adsbygoogle || []).push({});
+```
+ 
+수평선
+
+단락 분리시 Markdown의 ------------ 부분 과 같음
+4개 이상의 - 를 사용하여 표시
+주의: 위, 아래 줄에 어떠한 문자가 있어서는 안됨
+
+```
+ABC
+
+--------
+
+DEF
+```
+
+각주(FootNote)
+
+```
+1. 번호를 명시적으로 사용 [5]_
+
+.. [5] 각주 5번에 대한 노트부분
+   엔터를 해서 사용해도 결과는 한 줄
+
+결과 부분-----
+[5] 각주 5번에 대한 노트부분 엔터를 해서 사용해도 결과는 한 줄
+
+2. 번호를 자동으로 매겨주는 각주 방법, [#]_ 과 [#]_
+
+.. [#] 첫번째 각주
+.. [#] 두번째 각주
+
+결과 부분-----
+[1] 첫번째 각주
+[2] 두번째 각주
+
+----
+
+3. 이걸 [#third] 나 [#fourth] 처럼 명시적인 이름을 부여할 수 있음
+   결과는 위에 [#] 과 동일하게 번호를 순차적으로 매겨줌
+
+.. [#third] 세번째 각주
+.. [#fourth] 네번째 각주
+
+결과 부분-----
+[3] 세번째 각주
+[4] 네번째 각주
+4. Auto-symbol 각주 방법, 각주의 심볼이 숫자가 아닐 수 있음 [*]_ 과 [*]_
+
+.. [*] 첫번째
+.. [*] 두번째
+
+결과 부분-----
+[*]    첫번째
+[†]    두번째
+인용구
+인용구는 대괄호와 _로 구성, [인용구]_
+
+.. [인용구] 인용문구 예시입니다.
+
+결과 부분-----
+[인용구] 인용문구 예시입니다.
+```
+
+Hyperlink
+하이퍼링크 사용법 1번, 파이썬_
+
+.. _파이썬: http://www.python.org/
+
+하이퍼링크 사용법 2번, `파이썬 <http://www.python.org/>`_
+
+하이퍼링크로 rst문서의 제목 링크
+
+```
+Title 라인
+=========
+이것은 `Title 라인`_ 을 하이퍼링크 하는방법 입니다.
+Sphinx
+toctree
+```
+
+sphinx-quickstart 명령을 통해서 생성된 파일중 index.rst 가 document의 첫 페이지가 된다. 이것을 toctree를 이용해서 목차를 만들 수 있다.
+옵션(일부)
+
+maxdepth is used to indicates the depth of the tree. (tree의 depth)
+numbered adds relevant section numbers. (관련있는 섹션만 추가)
+titlesonly adds only the main title of each document (각 document의 메인 title만 추가)
+glob can be used to indicate that * and ? characters are used to indicate patterns. (*,? 같은 문자로 패턴사용)
+hidden hides the toctree. It can be used to include files that do not need to be shown (e.g. a bibliography). (보여지고 싶지 않은 파일을 추가할 때 사용, .gitignore 와 비슷)
+
+```
+.. toctree::
+   :maxdepth: 2
+   :glob:
+
+   directory1/directory2/*
+   directory1/directory3/*
+```
+
+toctree 문법의 옵션 참조
+
+```
+sphinx-doc: The TOC tree (https://www.sphinx-doc.org/en/1.5/markup/toctree.html)
+```
+참고문헌
+
+```
+reStructuredText 문서 : http://docutils.sourceforge.net/docs/user/rst/quickref.html#substitution-references-and-definitions 
+sphinx-doc: The TOC tree : https://www.sphinx-doc.org/en/1.5/markup/toctree.html
+Sphinx and RST syntax guide : https://thomas-cokelaer.info/tutorials/sphinx/rest_syntax.html
+한국어로 rst 문법 간략히 정리한 페이지 : http://www.incodom.kr/reStructuredText
+```
+
+===================================================================
+
+스핑크스(Sphinx)를 이용한 파이썬 코드 문서화하기개발자들은 개발하기에 바쁘다.그러나 운영 및 유지 보수의 문제를 결코 무시할 수는 없다.파이썬을 사용하는 많은 이유 중 분명 유지보수가 편리하다는 말이 있었던 것으로 기억한다.문서화?유지 보수를 쉽게 하려면 코드 작성법이 균일해야 하는 것도 있지만 또 하나는 문서화다.많은 현장에서는 슬프게도 한 가지 일만 하지는 않는다.그래서 이것하고 있다 저것하고 저것하다 다시 이것하려면 기억이 안난다.그렇기 때문에 코드의 문서화가 잘되어 있다면 함수, 클래스, 모듈 등을 잘 정리하고 있다면 쉽게 접근할 수 있어서 편리하다.문서화가 뭐지??아마 파이썬을 사용하고 있다면 친숙한 화면이 있다.예를들면 다음과 같은 홈페이지이다. https://django-guardian.readthedocs.io/en/stable/Read The Docs라고 하는 파이썬 문서를 호스팅해주는 곳이다.githubpage 같은 거라고 생각하면 될 듯 싶다.즉 문서화란 자신이 개발한 모듈을 재사용하기 위한 용도이면서 이력이기도 하다.클래스는 어떻게 되어 있나 사전처럼 읽어볼 수 있는 문서라고 생각하자.근데 문서화는데 들어가는 비용(시간, 노력 등)이 크면 배보다 배꼽이 더 큰 경우가 된다.(우린 워드작업을 싫어하는 개발자니까 ^^)그럼 어떻게 해야할까?스핑크스라는 프레임워크를 통하면 쉽게 아주 아~주 쉽게 만들수 있다.스핑크스(sphinx)는 또 뭐지?스핑크스는 파이썬 코드(.py)를 html로 변환해서 정적인 웹페이지로 만들어주는 툴이다.이를 다시 말하면 그냥 개발에 사용한 코드를 바로 문서화할 수 있다는 의미다.문서화하는 시간을 줄여준다.파이썬 코드 문서화 Step 1. 스핑크스 설치$ pip install SphinxStep 2. 문서화를 위한 도구 생성빠른 시작을 위해 다음 명령어를 입력한다.$ sphinx-quickstartWelcome to the Sphinx 1.6.6 quickstart utility.
+
+```
+Please enter values for the following settings (just press Enter to
+accept a default value, if one is given in brackets).
+
+Enter the root path for documentation.
+> Root path for the documentation [.]: docs/
+위와 같이 물어봅니다. root 경로 설정입니다. 기본은 현재 폴더입니다.You have two options for placing the build directory for Sphinx output.
+Either, you use a directory "_build" within the root path, or you separate
+"source" and "build" directories within the root path.
+> Separate source and build directories (y/n) [n]: 
+Inside the root directory, two more directories will be created; "_templates"
+for custom HTML templates and "_static" for custom stylesheets and other static
+files. You can enter another prefix (such as ".") to replace the underscore.
+> Name prefix for templates and static dir [_]:
+The project name will occur in several places in the built documentation.
+> Project name: my_package
+> Author name(s): kei
+Sphinx has the notion of a "version" and a "release" for the
+software. Each version can have multiple releases. For example, for
+Python the version is something like 2.5 or 3.0, while the release is
+something like 2.5.1 or 3.0a1.  If you don't need this dual structure,
+just set both to the same value.
+> Project version []: 1.0
+> Project release [1.0]:
+문서 버전과 릴리즈 버전 정보 입력.If the documents are to be written in a language other than English,
+you can select a language here by its language code. Sphinx will then
+translate text that it generates into that language.
+
+For a list of supported codes, see
+http://sphinx-doc.org/config.html#confval-language.
+> Project language [en]:
+문서의 언어지원 입력. 기본은 영어.한국어를 원할 경우 ko를 입력한다.그러나 여기서는 테스트니까 default값으로 하자.The file name suffix for source files. Commonly, this is either ".txt"
+or ".rst".  Only files with this suffix are considered documents.
+> Source file suffix [.rst]:
+파일 포멧 설정 기본 rst확장자를 사용.One document is special in that it is considered the top node of the
+"contents tree", that is, it is the root of the hierarchical structure
+of the documents. Normally, this is "index", but if your "index"
+document is a custom template, you can also set this to another filename.
+> Name of your master document (without suffix) [index]:
+Sphinx can also add configuration for epub output:
+> Do you want to use the epub builder (y/n) [n]:
+Please indicate if you want to use one of the following Sphinx extensions:
+> autodoc: automatically insert docstrings from modules (y/n) [n]: y
+> doctest: automatically test code snippets in doctest blocks (y/n) [n]:
+> intersphinx: link between Sphinx documentation of different projects (y/n) [n]: y
+> todo: write "todo" entries that can be shown or hidden on build (y/n) [n]: y
+> coverage: checks for documentation coverage (y/n) [n]:
+> imgmath: include math, rendered as PNG or SVG images (y/n) [n]:
+> mathjax: include math, rendered in the browser by MathJax (y/n) [n]:
+> ifconfig: conditional inclusion of content based on config values (y/n) [n]:
+> viewcode: include links to the source code of documented Python objects (y/n) [n]:
+> githubpages: create .nojekyll file to publish the document on GitHub pages (y/n) [n]:
+A Makefile and a Windows command file can be generated for you so that you
+only have to run e.g. `make html' instead of invoking sphinx-build
+directly.
+> Create Makefile? (y/n) [y]:
+> Create Windows command file? (y/n) [y]:
+
+Creating file docs/conf.py.
+Creating file docs/index.rst.
+Creating file docs/Makefile.
+Creating file docs/make.bat.
+
+Finished: An initial directory structure has been created.
+
+You should now populate your master file docs/index.rst and create other documentation
+source files. Use the Makefile to build the docs, like so:
+   make builder
+where "builder" is one of the supported builders, e.g. html, latex or linkcheck.
+```
+
+초기설정 완료.위 내용중 주황 색깔로 표시해서 넣은 것 이외에는 모두 기본값을 사용하므로 그냥 엔터를 치면된다.다음과 같이 docs폴더와 파일들이 생성되었다. Step 3 파이썬 코드를 문서화.이후 한참을 찾았다. 가이드문서를 훑어보고 다른 분들이 올린 글도 보고 여러 글을 봤는데, 어떻게 해야 문서를 생성하는지 하나 하나 시도해보고 맞춰봤다. 아래 내용은 그 내용을 정리한 내용이다.먼저 저렇게 완성이 되었다면 명심해야할 것이 있다. 문서를 만들때 필요한 설정들은 모두 conf.py에 있고 대상 문서는 .rst를 보고 만든다. 일단 우린 conf.py을 수정하자.
+
+```
+vi conf.py
+import os
+import sys
+sys.path.insert(0, os.path.abspath('..'))
+```
+
+위 부분을 추가해주자.(상단 부에 주석처리되어있을것이다.) 경로를 설정해주는 것으로 docs문서 위에 폴더로 경로를 잡은 것이다.테마 바꾸기html_theme = 'sphinx_rtd_theme'처음 테마는 클래식이 아닌 다른 값이 기본설정인데 서드파티 것을 사용했다. sphinx_rtd_theme는 기본탑재가 아니어서 설치해줘야한다.서드파티 테마 설치$ pip install sphinx_rtd_theme위 명령어로 테마를 추가하면된다.이제 웹으로 출력해서 한번 보자. 그러기 위해선 html 파일을 생성해줘야하는데 명렁어 두단어면 끝난다. docs폴더 에서 아래 명령어를 입력하면된다.리눅스
+$ make html
+
+Windows
+
+```
+$ make.dat html
+```
+
+그럼 주루룩 빌드과정을 보여주면서'_build' 폴더에 생성된 html을 볼수 있다.  그 중에서 index.html을 웹브라우저로 열어보자.요런 느낌에 녀석이 등장한다.아무 것도 없다.이제 우린 하나씩 만들어줘야한다. index.rst를 열어보자.
+
+Welcome to my_package's documentation!
+======================================
+
+```
+.. toctree::
+   :maxdepth: 2
+   :caption: Table of Contents
+
+Indices and tables
+==================
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`
+```
+
+여기서부턴 rst문법을 알고 있어야 한다. 자세한건 찾아보기 바란다. toctree란 트리구조로된 목차라고 보면된다. 우린 여기에 my_package라는 폴더 내용을 문서화 해서 추가할 것이다. 그러려면 일단 아래와 같이 my_package를 추가해주자.
+
+Welcome to my_package's documentation!
+======================================
+
+```
+.. toctree::
+   :maxdepth: 2
+   :caption: Table of Contents
+
+   my_package
+
+Indices and tables
+==================
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`
+```
+
+그 다음에는 my_package.rst를 생성하고 안에 내용을 다음과 같이 작성한다.
+
+my_package!
+===========
+
+```
+.. automodule:: my_package
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+   Modules
+
+   -------
+
+   .. automodule:: my_package.my_module
+       :members:
+```
+
+automudole은 말 그대로 모듈을 자동으로 생성시켜주는 명령이다. my_package와 my_module을 생성해준다. 참고로 자동생성이란 .py로 된 녀석을 뚝딱뚝딱해서 html로 만들어 준다는 의미다.그럼 마지막으로 docs의 상위 폴더로 이동해서 my_package폴더를 생성하고 my_module.py를 다음과 같이 생성하자."""
+
+```
+    My Module
+    ~~~~~~~~~
+
+class Test(object):
+    """두 개의 int 값을 입력받아 다양한 연산을 할 수 있도록 하는 클래스.
+
+    :param int a: a 값
+    :param int b: b 값
+    """
+
+    def __init__(self, a, b):
+        self._a = a
+        self._b = b
+
+    def is_same(self):
+        """미리 입력받은 a와 b값이 같은지 확인하여 결과를 반환합니다.
+
+        :return: boolean True or False에 대한 결과, a와 b가 값으면 True, 다르면 False
+
+        예제:
+            다음과 같이 사용하세요:
+
+            >>> Test(1, 2).is_same()
+            False
+
+        """
+        return self._a == self._b
+
+    def plus(self):
+        """미리 입력받은 a와 b값을 더한 결과를 반환합니다.
+
+        :returns: int a + b에 대한 결과
+
+        예제:
+            다음과 같이 사용하세요:
+
+            >>> Test(2, 1).plus()
+            3
+
+
+        """
+        return self._a + self._b
+```
+        
+그럼 준비 완료다. 이제 docs폴더에서 html생성 명령을 수행한다.
+        
+리눅스
+
+```
+$ make html
+```
+
+Windows
+
+```
+$ make.dat html
+```
+
+주르륵 수행되면서 html이 갱신된다. 처음과 달리 목록이 추가된 것을 볼 수 있다. 그리고 그것을 클릭하면 다음과 같이 이동한다.굉장히 간단하게 클래스와 메소드 설명을 추가했다. 장점은 아마도 폴더에 모듈을 집어 넣고 그저 주석처럼 설명만 추가해주면 문서작업은 스핑크스가 알아서 수행하기에 쉽게 완료가 된다. 그리고 이 파일은 정적파일이기 때문에 파일 자체를 열기만 하면 누구든지 접근할 수 있다. 정적파일을 호스팅하는 방법도 있고 githubpages를 이용해서 공개할 수도 있다. 또는 readthedocs.org와 같이 공개해서 볼 수도 있다.확실히 문서 작업에 드는 비용을 줄일 수 있어서 편리하다. 버전 관리와 좀더 상세한 문서작업은 rst문서작성 방법과 함께 더 공부해야 하는 부분이다.문서화를 해두니 코드를 보며 이해하는 것보다 편하고 검색도 제공하여 편리하게 사용할 수 있는 것을 경험했다.파이썬을 이용한 개발에서는 사용하길 추천한다
+
+```
+출처: https://kshyun87.tistory.com/63 [Coding is 취미:티스토리]
+```
+===================================================================
+
+Python 문서화 (1) - Sphinx 설치 및 docstring 스타일 선택
+
+
+Sphinx 란?
+Python documentation 을 위한 오픈소스 프로젝트 입니다. Java Doc 처럼 파일, 클래스, 기능별로 문서화할 수 있으며, comment를 자동 인식하여 기본적으로 html 페이지를 생성합니다.
+ 
+Sphinx에서는 comment를 무조건 다 인식할 수 있는게 아니라 인식할 수 있는 docstring 스타일이 존재합니다. 기본적으로 reStructuredText (rst) 포맷을 주로 사용하지만 Google 스타일도 있기 때문에, 스타일의 차이점과 그에 맞는 설정 방법을 설명 드리도록 하겠습니다.
+ 
+docstring 스타일
+기본적으로 주석은 """ 을 사용하며, docstring의 대상은 모듈, 클래스, 함수(메소드) 세 가지입니다.
+ 
+아래 sum( ) 함수를 예로 들어보겠습니다.  인자에 타입 체크는 Python 3부터 진행된 것으로 옵션으로 표시할 수 있습니다.
+ 
+reStructuredText 
+더 자세한 예제는 https://www.sphinx-doc.org/en/master/usage/restructuredtext/domains.html 참조
+
+```
+def sum(arg1: int, arg2: int) -> int:
+    """
+    This is sum function.
+    
+    :param int arg1: Description of arg1.
+    :param int arg2: Description of arg2.
+    :return: Description of return value.
+    :rtype: int
+    
+    :example:
+    
+    >>> a=1
+    >>> b=2
+    >>> sum(a, b)
+   	3
+    """
+    return a + b
+```
+
+```
+> param 섹션
+인자의 이름, 데이터형, 인자의 설명을 기재합니다.
+:param 타입 인수명: 인수의 설명
+> return 섹션
+return문을 사용한 함수의 리턴 값을 기재합니다.
+:return: 리턴 값에 대한 설명
+> rtype 섹션
+return값에 대한 데이터형을 기재합니다.
+:rtype: 데이터형
+> example 섹션
+본 함수에 대한 사용법을 기재합니다.
+```
+
+```
+:example:
+    >>> a = 1
+    >>> b = 2
+    >>> sum(a, b)
+        3
+```
+
+Google-style
+
+더 자세한 예제는 https://sphinxcontrib-napoleon.readthedocs.io/en/latest/example_google.html 참조 
+
+```
+def sum(arg1: int, arg2: int) -> int:
+    """
+    This is sum function.
+    
+    Args:
+    	arg1 (int): Description of arg1.
+    	arg2 (int): Description of arg2.
+        
+    Returns:
+    	int: Description of return value
+    
+    Examples:
+        
+    >>> a=1
+    >>> b=2
+    >>> sum(a, b)
+   	3
+    """
+    return a + b
+```
+
+```
+> Args 섹션
+인자의 이름, 데이터형, 인자의 설명을 기재합니다.
+
+optional 한 경우, 데이터형 뒤에 "optional" 로 추가하면 됩니다.
+
+Args:
+    인자명 (인자의 데이터형): 인자 설명
+    인자명 (인자의 데이터형, optional): 인자 설명
+> Returns 섹션
+return문을 사용한 함수의 리턴 값을 기재합니다.
+reStructuredText와는 달리 rtype을 포함합니다.
+Returns:
+    리턴 값의 데이터형: 리턴 값의 설명
+> Examples 섹션
+
+Examples:
+    함수의 사용법 기재
+    
+    >>> a = 1
+    >>> b = 2
+    >>> sum(a, b)
+        3
+```
+
+Sphinx 설치
+
+```
+pip install sphinx
+```
+
+Sphinx를 설치하면 파일들이 자동 생성되는데 프로젝트 root path 에 들어가면 혼잡하므로 docs
+라는 디렉토리를 생성하고 해당 디렉토리에서 진행합니다.
+
+```
+mkdir docs
+cd docs
+sphinx-quickstart 	# Sphinx 설치
+Welcome to the Sphinx 4.4.0 quickstart utility.
+
+Please enter values for the following settings (just press Enter to       
+accept a default value, if one is given in brackets).                     
+                                                                          
+Selected root path: .                                                     
+                                                                          
+You have two options for placing the build directory for Sphinx output.   
+Either, you use a directory "_build" within the root path, or you separate
+"source" and "build" directories within the root path.
+
+> Separate source and build directories (y/n) [n]
+
+The project name will occur in several places in the built documentation.
+> Project name:
+> Author name(s):
+> Project release []: 
+
+If the documents are to be written in a language other than English,
+you can select a language here by its language code. Sphinx will then
+translate text that it generates into that language.
+
+For a list of supported codes, see
+https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-language.
+> Project language [en]: 
+
+Creating file {PROJECT_PATH}/docs/source/conf.py.
+Creating file {PROJECT_PATH}/docs/source/index.rst.
+Creating file {PROJECT_PATH}/docs/Makefile.
+Creating file {PROJECT_PATH}/docs/make.bat.
+
+Finished: An initial directory structure has been created.
+
+You should now populate your master file {PROJECT_PATH}\docs\source\index.rst and create other documentation
+source files. Use the Makefile to build the docs, like so:
+   make builder
+where "builder" is one of the supported builders, e.g. html, latex or linkcheck.
+
+> Separate source and build directories : source 디렉토리와 build 디렉토리 분리 여부
+
+문서화할게 많으면 source 디렉토리와 build 디렉토리를 분리하는게 좋음 (y)
+
+> Project name : 문서에 출력될 프로젝트 명
+> Author name(s) : 저자
+> Project release: 프로젝트 버전 (시작인 경우, 1.0)
+> Project language: Sphinx 에서 자동 생성되는 문서가 어떤 언어로 작성될지 선택
+
+디폴트가 영어 (영어로 진행할거면 그냥 Enter)
+```
+
+docs 디렉토리 구성
+
+이렇게 docs 경로에 기본적인 파일들이 생성되었습니다.
+ 
+다음 포스팅에선 Google-style 의 docstring 을 파싱할 수 있도록 conf.py 를 수정하고, index.rst 를 수정하는 방법에 대해 설명하도록 하겠습니다.
+
+```
+출처: https://seulkom.tistory.com/entry/Python-문서화-1-Sphinx-설치-및-docstring-스타일-선택 [seulkom note:티스토리]
+```
+
+===================================================================
+
+```
+Example Google Style Python Docstrings
+See also
+
+Example NumPy Style Python Docstrings
+
+Download: example_google.py
+
+# -*- coding: utf-8 -*-
+"""Example Google style docstrings.
+
+This module demonstrates documentation as specified by the `Google Python
+Style Guide`_. Docstrings may extend over multiple lines. Sections are created
+with a section header and a colon followed by a block of indented text.
+
+Example:
+    Examples can be given using either the ``Example`` or ``Examples``
+    sections. Sections support any reStructuredText formatting, including
+    literal blocks::
+
+        $ python example_google.py
+
+Section breaks are created by resuming unindented text. Section breaks
+are also implicitly created anytime a new section starts.
+
+Attributes:
+    module_level_variable1 (int): Module level variables may be documented in
+        either the ``Attributes`` section of the module docstring, or in an
+        inline docstring immediately following the variable.
+
+        Either form is acceptable, but the two should not be mixed. Choose
+        one convention to document module level variables and be consistent
+        with it.
+
+Todo:
+    * For module TODOs
+    * You have to also use ``sphinx.ext.todo`` extension
+
+.. _Google Python Style Guide:
+   http://google.github.io/styleguide/pyguide.html
+
+"""
+
+module_level_variable1 = 12345
+
+module_level_variable2 = 98765
+"""int: Module level variable documented inline.
+
+The docstring may span multiple lines. The type may optionally be specified
+on the first line, separated by a colon.
+"""
+
+
+def function_with_types_in_docstring(param1, param2):
+    """Example function with types documented in the docstring.
+
+    `PEP 484`_ type annotations are supported. If attribute, parameter, and
+    return types are annotated according to `PEP 484`_, they do not need to be
+    included in the docstring:
+
+    Args:
+        param1 (int): The first parameter.
+        param2 (str): The second parameter.
+
+    Returns:
+        bool: The return value. True for success, False otherwise.
+
+    .. _PEP 484:
+        https://www.python.org/dev/peps/pep-0484/
+
+    """
+
+
+def function_with_pep484_type_annotations(param1: int, param2: str) -> bool:
+    """Example function with PEP 484 type annotations.
+
+    Args:
+        param1: The first parameter.
+        param2: The second parameter.
+
+    Returns:
+        The return value. True for success, False otherwise.
+
+    """
+
+
+def module_level_function(param1, param2=None, *args, **kwargs):
+    """This is an example of a module level function.
+
+    Function parameters should be documented in the ``Args`` section. The name
+    of each parameter is required. The type and description of each parameter
+    is optional, but should be included if not obvious.
+
+    If \*args or \*\*kwargs are accepted,
+    they should be listed as ``*args`` and ``**kwargs``.
+
+    The format for a parameter is::
+
+        name (type): description
+            The description may span multiple lines. Following
+            lines should be indented. The "(type)" is optional.
+
+            Multiple paragraphs are supported in parameter
+            descriptions.
+
+    Args:
+        param1 (int): The first parameter.
+        param2 (:obj:`str`, optional): The second parameter. Defaults to None.
+            Second line of description should be indented.
+        *args: Variable length argument list.
+        **kwargs: Arbitrary keyword arguments.
+
+    Returns:
+        bool: True if successful, False otherwise.
+
+        The return type is optional and may be specified at the beginning of
+        the ``Returns`` section followed by a colon.
+
+        The ``Returns`` section may span multiple lines and paragraphs.
+        Following lines should be indented to match the first line.
+
+        The ``Returns`` section supports any reStructuredText formatting,
+        including literal blocks::
+
+            {
+                'param1': param1,
+                'param2': param2
+            }
+
+    Raises:
+        AttributeError: The ``Raises`` section is a list of all exceptions
+            that are relevant to the interface.
+        ValueError: If `param2` is equal to `param1`.
+
+    """
+    if param1 == param2:
+        raise ValueError('param1 may not be equal to param2')
+    return True
+
+
+def example_generator(n):
+    """Generators have a ``Yields`` section instead of a ``Returns`` section.
+
+    Args:
+        n (int): The upper limit of the range to generate, from 0 to `n` - 1.
+
+    Yields:
+        int: The next number in the range of 0 to `n` - 1.
+
+    Examples:
+        Examples should be written in doctest format, and should illustrate how
+        to use the function.
+
+        >>> print([i for i in example_generator(4)])
+        [0, 1, 2, 3]
+
+    """
+    for i in range(n):
+        yield i
+
+
+class ExampleError(Exception):
+    """Exceptions are documented in the same way as classes.
+
+    The __init__ method may be documented in either the class level
+    docstring, or as a docstring on the __init__ method itself.
+
+    Either form is acceptable, but the two should not be mixed. Choose one
+    convention to document the __init__ method and be consistent with it.
+
+    Note:
+        Do not include the `self` parameter in the ``Args`` section.
+
+    Args:
+        msg (str): Human readable string describing the exception.
+        code (:obj:`int`, optional): Error code.
+
+    Attributes:
+        msg (str): Human readable string describing the exception.
+        code (int): Exception error code.
+
+    """
+
+    def __init__(self, msg, code):
+        self.msg = msg
+        self.code = code
+
+
+class ExampleClass(object):
+    """The summary line for a class docstring should fit on one line.
+
+    If the class has public attributes, they may be documented here
+    in an ``Attributes`` section and follow the same formatting as a
+    function's ``Args`` section. Alternatively, attributes may be documented
+    inline with the attribute's declaration (see __init__ method below).
+
+    Properties created with the ``@property`` decorator should be documented
+    in the property's getter method.
+
+    Attributes:
+        attr1 (str): Description of `attr1`.
+        attr2 (:obj:`int`, optional): Description of `attr2`.
+
+    """
+
+    def __init__(self, param1, param2, param3):
+        """Example of docstring on the __init__ method.
+
+        The __init__ method may be documented in either the class level
+        docstring, or as a docstring on the __init__ method itself.
+
+        Either form is acceptable, but the two should not be mixed. Choose one
+        convention to document the __init__ method and be consistent with it.
+
+        Note:
+            Do not include the `self` parameter in the ``Args`` section.
+
+        Args:
+            param1 (str): Description of `param1`.
+            param2 (:obj:`int`, optional): Description of `param2`. Multiple
+                lines are supported.
+            param3 (:obj:`list` of :obj:`str`): Description of `param3`.
+
+        """
+        self.attr1 = param1
+        self.attr2 = param2
+        self.attr3 = param3  #: Doc comment *inline* with attribute
+
+        #: list of str: Doc comment *before* attribute, with type specified
+        self.attr4 = ['attr4']
+
+        self.attr5 = None
+        """str: Docstring *after* attribute, with type specified."""
+
+    @property
+    def readonly_property(self):
+        """str: Properties should be documented in their getter method."""
+        return 'readonly_property'
+
+    @property
+    def readwrite_property(self):
+        """:obj:`list` of :obj:`str`: Properties with both a getter and setter
+        should only be documented in their getter method.
+
+        If the setter method contains notable behavior, it should be
+        mentioned here.
+        """
+        return ['readwrite_property']
+
+    @readwrite_property.setter
+    def readwrite_property(self, value):
+        value
+
+    def example_method(self, param1, param2):
+        """Class methods are similar to regular functions.
+
+        Note:
+            Do not include the `self` parameter in the ``Args`` section.
+
+        Args:
+            param1: The first parameter.
+            param2: The second parameter.
+
+        Returns:
+            True if successful, False otherwise.
+
+        """
+        return True
+
+    def __special__(self):
+        """By default special members with docstrings are not included.
+
+        Special members are any methods or attributes that start with and
+        end with a double underscore. Any special member with a docstring
+        will be included in the output, if
+        ``napoleon_include_special_with_doc`` is set to True.
+
+        This behavior can be enabled by changing the following setting in
+        Sphinx's conf.py::
+
+            napoleon_include_special_with_doc = True
+
+        """
+        pass
+
+    def __special_without_docstring__(self):
+        pass
+
+    def _private(self):
+        """By default private members are not included.
+
+        Private members are any methods or attributes that start with an
+        underscore and are *not* special. By default they are not included
+        in the output.
+
+        This behavior can be changed such that private members *are* included
+        by changing the following setting in Sphinx's conf.py::
+
+            napoleon_include_private_with_doc = True
+
+        """
+        pass
+
+    def _private_without_docstring(self):
+        pass
+```
+
+===================================================================
+
+Programming/[Python]Advanced
+
+[Python] 파이썬 문서화, 독스트링, Sphinx
+
+파이썬 독스트링: 코드 문서화를 위한 강력한 도구
+
+이번에는 파이썬 프로그래밍에서 중요한 역할을 하는 독스트링에 대해 알아보려고 한다.
+
+ 
+
+독스트링은 코드에 핵심적인 설명을 작성하는 도구로, 코드 문서화와 유지보수 측면에서 큰 도움을 준다.
+
+ 
+
+이 글에서는 독스트링의 개념과 기능, 작성 방법, 그리고 이를 활용하는 예시를 자세히 살펴보도록 하겠다.
+
+ 
+
+
+독스트링이란?
+독스트링이란 파이썬 코드에 첨부되는 메타데이터로, 함수, 클래스, 메소드와 같은 코드 개체의 기능과 사용법에 대한 설명을 작성하는 것을 의미한다.
+
+ 
+
+이 설명은 소스 코드 내에서 특정 부분을 주석처럼 작성하여 파이썬 인터프리터가 일반 주석과 구별할 수 있도록 한다.
+
+ 
+
+
+독스트링의 중요성
+코드 문서화: 코드를 작성할 때 독스트링을 활용하면 각 개체의 역할과 사용법을 명확하게 문서화할 수 있다. 이를 통해 다른 개발자들이 코드를 이해하고 사용할 때 큰 도움이 된다.
+자동 문서 생성: 독스트링을 작성하면 강력한 도구인 Sphinx를 통해 자동으로 문서를 생성할 수 있다. 이를 활용하면 프로젝트의 API 문서, 개발자 가이드 등을 손쉽게 만들고 업데이트할 수 있다.
+IDE와의 통합: 독스트링을 작성하면 일부 통합 개발 환경(Integrated Development Environment, IDE)에서는 해당 코드의 설명과 자동완성 기능을 제공한다. 이를 통해 더욱 효율적인 개발을 할 수 있다.
+독스트링 작성 방법 파이썬에서 독스트링은 함수, 클래스, 메소드의 정의 바로 다음 줄에 작성된다. 독스트링은 일반적으로 """쌍따옴표""" 또는 '''홑따옴표'''로 둘러싸여 있으며, 다음과 같은 작성 규칙을 따른다:
+- 개체의 역할과 목적을 간결하게 설명합니다.
+- 매개변수와 반환값에 대한 설명을 작성합니다.
+- 가능한 예제 코드나 사용 예시를 포함하여 설명합니다.
+독스트링 활용 예시 이제 독스트링을 활용하는 실제 예시를 살펴보겠다. 예를 들어, 다음과 같은 코드가 있다고 가정해보자:
+
+```
+def multiply(a, b):  
+"""  
+입력받은 두 수를 곱한 결과를 반환하는 함수입니다.
+
+매개변수:
+a (int): 곱셈의 첫 번째 피연산자
+b (int): 곱셈의 두 번째 피연산자
+
+반환값:
+int: 두 수를 곱한 결과
+"""
+	return a * b
+
+result = multiply(3, 5)  
+print(result) # Output: 15
+```
+
+위의 코드에서는 multiply() 함수의 독스트링을 작성하여 함수의 역할과 매개변수, 반환값에 대한 설명을 명확하게 제공하고 있다.
+
+ 
+
+이러한 독스트링으로 문서를 자동으로 생성하거나 IDE에서 함수에 대한 정보를 빠르게 확인할 수 있다.
+
+ 
+
+위의 예시를 참고하여 파이썬 독스트링에 대한 블로그 글을 작성하시면 된다.
+
+ 
+
+파이썬 Sphinx: 강력한 문서 생성 도구로 프로젝트 관리하기
+
+이번에는 파이썬 프로젝트의 문서화와 관리를 위한 강력한 도구인 Sphinx에 대해 알아보려고 한다.
+
+ 
+
+Sphinx는 파이썬 생태계에서 널리 사용되는 문서 생성 도구로, 코드 문서화뿐만 아니라 프로젝트 관리와 협업에 큰 도움을 준다.
+
+ 
+
+이 글에서는 Sphinx의 개념과 기능, 설치 방법, 사용 방법, 그리고 활용하는 예시를 자세히 살펴보도록 하겠다.
+
+
+Sphinx란?
+
+Sphinx는 Python Documentation의 약자로, 파이썬 프로젝트의 문서화를 위해 개발된 도구이다.
+
+ 
+
+코드에서 독스트링으로 작성한 내용을 바탕으로 HTML, PDF, EPUB 등 다양한 형식으로 문서를 생성할 수 있으며, 개발자와 사용자들이 프로젝트를 이해하고 사용하는 데 필요한 자세한 정보를 제공한다.
+
+ 
+
+Sphinx의 중요성
+포괄적인 문서화: Sphinx를 사용하면 프로젝트의 모든 구성 요소를 포괄적으로 문서화할 수 있다. 함수, 클래스, 모듈, 패키지 등 모든 코드 개체에 대한 문서를 자동으로 생성할 수 있으며, 개발자들이 프로젝트를 더 쉽게 사용할 수 있다.
+자동 업데이트: Sphinx는 코드 및 독스트링의 변경 사항을 감지하여 자동으로 문서를 업데이트할 수 있다. 이를 통해 문서와 코드의 일치를 유지하며, 문서를 최신 상태로 유지할 수 있다.
+다양한 형식으로의 출력: Sphinx는 다양한 출력 형식을 지원하여, HTML, PDF, EPUB 등으로 문서를 생성할 수 있다. 이를 통해 다양한 형태의 문서를 제공하고, 프로젝트의 사용자들이 자신에게 편한 형식으로 문서를 사용할 수 있다.
+협업과 공유: Sphinx는 여러 사람이 함께 작업하고 문서를 공유하는 데에도 용이하다. Git과 같은 버전 관리 시스템과 통합하여 협업을 간편하게 할 수 있으며, Sphinx의 기능을 활용하여 다른 개발자들과 문서를 공유할 수 있다.
+Sphinx 설치 방법 Sphinx는 파이썬 패키지로 제공되므로 pip를 통해 간단히 설치할 수 있다. 아래는 설치 방법의 간단한 예시이다:
+
+```
+$ pip install sphinx
+```
+
+Sphinx 사용 방법 Sphinx를 사용하여 프로젝트를 문서화하기 위해서는 몇 가지 단계를 거쳐야 한다:
+
+프로젝트 디렉터리에서 Sphinx 프로젝트를 초기화합니다.
+conf.py 파일에서 필요한 설정을 수정합니다.
+rst 파일에서 문서를 작성하고, 독스트링을 활용하여 코드에 대한 자세한 설명을 작성합니다.
+Sphinx 명령어를 사용하여 문서를 빌드하고 출력 형식을 선택합니다.
+생성된 문서를 확인하고 필요한 경우 수정하고 업데이트합니다.
+
+Sphinx 활용 예시 다음은 Sphinx를 활용한 실제 예시 코드이다:
+
+```
+"""  
+math\_utils.py
+
+수학 계산을 위한 유틸리티 함수들을 포함하는 모듈입니다.  
+"""
+
+def add(a, b):  
+"""  
+두 수를 더한 결과를 반환하는 함수입니다.
+
+Parameters
+----------
+a : int or float
+    덧셈의 첫 번째 피연산자
+b : int or float
+    덧셈의 두 번째 피연산자
+	
+Yields
+------
+
+
+
+Returns
+-------
+int or float
+    두 수를 더한 결과
+	
+Raises
+------
+"""
+return a + b
+```
+
+위의 코드에서는 math_utils.py 모듈에 대한 독스트링을 작성하여 각 함수의 역할과 매개변수, 반환값에 대한 설명을 제공하고 있다.
+
+ 
+
+이러한 문서화된 코드는 Sphinx를 사용하여 문서를 생성하고, 프로젝트의 사용자들이 문서를 통해 함수의 사용법을 이해할 수 있도록 도와준다.
+
+ 
+
+프로젝트 초기화
+Sphinx를 이용하여 문서를 생성하기 위해서는 프로젝트를 초기화해야 한다. 명령 프롬프트 또는 터미널에서 프로젝트가 존재하는 디렉토리로 이동한 후, 아래의 명령어를 실행한다.
+
+$ sphinx-quickstart  
+이 명령을 실행하면 프로젝트에 필요한 설정 파일과 기본 디렉토리가 생성된다.
+
+
+문서 작성하기
+Sphinx는 ReStructuredText(.rst) 형식을 사용하여 문서를 작성한다.
+
+ 
+
+문서를 작성할 때에는 각 섹션을 제목, 소제목, 본문 형식으로 구성하여 작성한다.
+
+ 
+
+예를 들어, 아래와 같이 작성할 수 있다.
+
+```
+\=============  
+제목  
+\=============
+소제목
+문서 본문 내용...
+```
+
+문서 빌드하기 문서 작성이 완료되면 Sphinx를 이용하여 문서를 빌드합니다. 프로젝트 디렉토리에서 아래의 명령어를 실행한다.
+
+```
+$ make html 
+```
+
+이 명령을 실행하면 Sphinx는 문서를 HTML 형식으로 빌드하고, 결과물은 미리 설정한 디렉토리에 생성된다.
+
+
+다양한 옵션 활용하기 Sphinx는 다양한 옵션을 제공하여 문서 생성 과정을 커스터마이징할 수 있다.
+
+ 
+
+예를 들어, 아래와 같은 옵션을 사용할 수 있다.
+
+
+옵션 사용하기
+
+Sphinx에서 옵션은 conf.py 파일에 설정된다.
+
+
+conf.py 파일에서 extensions 변수에 필요한 확장 모듈을 추가한다.
+
+
+필요한 옵션을 추가하기 위해서는 html_theme_options 또는 해당 확장 모듈의 설정 부분을 수정한다.
+
+
+이후 문서를 빌드할 때 해당 옵션이 적용된다.
+
+```
+주요 옵션
+
+html_theme_options: HTML 출력 테마에 대한 설정을 담당하는 옵션이다. 예를 들어 다양한 테마 색상, 레이아웃 등을 변경할 수 있다.
+
+
+exclude_patterns: 문서에서 제외할 파일 패턴을 지정하는 옵션이다. 예를 들어 특정 파일이나 폴더를 문서에 포함시키지 않을 때 사용한다.
+
+
+master_doc: 기본 문서 파일을 지정하는 옵션이다. 기본적으로 index.rst 파일이 기본 문서 파일로 설정되어 있다.
+
+
+extensions: 확장 모듈을 추가하고 사용하기 위해 설정하는 옵션이다. 예를 들어 코드 하이라이팅을 위한 sphinx.ext.highlight 모듈을 사용하려면 이 옵션을 추가한다.
+```
+
+옵션 사용 예시
+
+conf.py 파일에서 html_theme_options에 다양한 테마 설정 옵션을 추가한다.
+
+```
+html_theme_options = {
+    'logo': 'logo.png',
+    'color_scheme': 'light',
+    'font_size': '16px',
+    'sidebar_width': '300px'
+}
+``` 
+
+conf.py 파일에서 exclude_patterns에 문서에서 제외할 파일 패턴을 추가한다.
+
+```
+exclude_patterns = [
+    'private/*',
+    'temp/*'
+]
+```
+
+conf.py 파일에서 master_doc에 기본 문서 파일을 변경한다.
+
+```
+master_doc = 'main'
+``` 
+conf.py 파일에서 extensions에 확장 모듈을 추가합니다.
+
+```
+extensions = [
+    'sphinx.ext.autodoc',
+    'sphinx.ext.napoleon',
+    'sphinx.ext.viewcode'
+]
+``` 
+
+
+더 많은 옵션과 기능을 활용하기 위해서 자세한 내용은 Sphinx 공식 문서를 참고하시기 바란다.
+
+sphinx 공식 문서: https://www.sphinx-doc.org/
+
+```
+----------------------------------------추가 -------------------------
+
+테마(Theme) 변경: conf.py 파일에서 html_theme 옵션을 수정하여 문서의 테마를 변경할 수 있다.
+
+
+레이아웃 수정: conf.py 파일에서 html_sidebars 옵션을 통해 사이드바의 레이아웃을 수정할 수 있다.
+
+
+코드 하이라이팅: conf.py 파일에서 highlight_language 옵션을 통해 코드의 언어를 지정할 수 있다.
+```
+
+===================================================================
+
+Sphinx를 이용한 GitHub 프로젝트 문서화
+
+```
+​* See: https://m.blog.naver.com/sooftware/221838103492
+```
+
+GitHub에서 어느 정도 규모있는 프로젝트들은 GitHub Page 
+
+기능을 이용하여 해당 프로젝트 문서화를 해놓는다.
+
+​
+
+
+Sphinx를 이용한 프로젝트 문서화
+
+​
+
+위와 같이 자신들의 프로젝트를 보기 좋게 깔끔하게 문서화를 해놓는다.
+
+이러한 문서화를 Sphinx라는 라이브러리를 이용하면 쉽게 만들 수 있다.
+
+그럼 GitHub Repository 생성부터, 문서화까지 시작해보자.
+
+Repository 준비
+
+​
+
+먼저 Sphinx-Tutorial이라는 폴더를 만들었다.
+
+
+Sphinx-Tutorial Directory
+
+실제로 문서가 잘 제작되는지를 확인하기 위한 예시 파일을 만들었다.
+
+
+tutorial.py
+
+```
+import torch.nn as nn
+
+import torch.nn.functional as F
+
+class ListenAttendSpell(nn.Module):
+
+       """
+
+       Listen, Attend and Spell (LAS) Model
+
+​
+
+       Args:
+
+              - listener (nn.Module): encoder of seq2seq
+
+              - speller (nn.Module): decoder of seq2seq
+
+              - decode_function (nn.functional): A function used to generate symbols from RNN hidden state
+
+​
+
+       Reference:
+
+              「Listen, Attend and Spell」 paper
+
+              https://arxiv.org/abs/1508.01211
+
+​
+
+       How to Use:
+
+              >>> listener = Listener(feat_size, 256, 0.5, 6, True, 'gru', True)
+
+              >>> speller = Speller(vocab_size, 120, 8, 256 << (1 if use_bidirectional else 0))
+
+              >>> model = ListenAttendSpell(listener, speller)
+
+       """
+
+       def __init__(self, listener, speller, decode_function = F.log_softmax, use_pyramidal = False):
+
+              super(ListenAttendSpell, self).__init__()
+
+              self.listener = listener
+
+              self.speller = speller
+
+              self.decode_function = decode_function
+
+              self.use_pyramidal = use_pyramidal
+
+​
+
+       def forward(self, feats, targets=None, teacher_forcing_ratio=0.90, use_beam_search = False):
+
+              listener_outputs, listener_hidden = self.listener(feats)
+
+              y_hat, logit = self.speller(
+
+                     inputs=targets,
+
+                     listener_hidden=listener_hidden,
+
+                     listener_outputs=listener_outputs,
+
+                     function=self.decode_function,
+
+                     teacher_forcing_ratio=teacher_forcing_ratio,
+
+                     use_beam_search=use_beam_search
+
+              )
+
+              return y_hat, logit
+```
+
+문서 생성하기
+
+​
+
+먼저 Sphinx와 Sphinx-theme를 설치하자.
+
+​
+
+Sphinx 설치
+
+```
+$ pip install sphinx
+```
+
+sphinx-theme 설치
+
+```
+$ pip install sphinx-rtd-theme
+```
+
+Sphinx와 Sphinx-theme이 정상적으로 설치되었다면 이제 문서를 작성할 수 있다.
+
+
+Anaconda prompt나 cmd 중 편한 CLI로 Sphinx-Tutorial 폴더로  이동
+
+```
+$ sphinx-quickstart 입력
+```
+
+질문에 하나하나 답변하면 된다.
+
+y/n으로 선택하는 경우는 모두 y로 해주는 것이 좋다.
+
+(n을 해줘도 상관없지만, 추가 기능이 들어갈수록 나중에 편리해진다.)
+
+
+위 사진처럼 보통 default 값으로 제공되는 [default value]를 따라치면 된다.
+
+y/n을 제외하고는 대부분 default를 쳐주는 것이 좋다.
+
+
+위와 같이 빨간글자 없이 화면이 나오면 성공한 것이다.
+
+​
+
+
+그리고 Sphinx-Tutorial 폴더를 확인하면 위와 같이 몇개의 파일이 생성되어 있을 것이다.
+
+​
+
+
+구분을 위해 src라는 폴더를 만들어서 tutorial.py를 넣어주자.
+
+​
+
+
+Sphinx-Tutorial > source 폴더로 들어가자.
+
+​
+
+
+본인이 가지고 있는 Editor로 conf.py를 오픈한다.
+
+```
+import os
+import sys
+sys.path.append(os.path.abspath('.'))
+sys.path.append(os.path.abspath('..'))
+import sphinx_rtd_theme
+project = 'Sphinx-Tutorial'
+copyright = '2020, Sooftware'
+author = 'Sooftware'
+version = ''
+release = '0.0'
+extensions = [
+    'sphinx.ext.autosummary',
+    'sphinx.ext.doctest',
+    'sphinx.ext.intersphinx',
+    'sphinx.ext.todo',
+    'sphinx.ext.coverage',
+    'sphinx.ext.mathjax',
+    'sphinx.ext.ifconfig',
+    'sphinx.ext.napoleon',
+    "sphinx_rtd_theme",
+    'sphinx.ext.autodoc',
+    'sphinx.ext.imgmath',
+    'sphinx.ext.ifconfig',
+    'sphinx.ext.viewcode',
+    'sphinx.ext.githubpages',
+    'recommonmark',
+	'myst_parser'
+]
+templates_path = ['_templates']
+source_suffix = [
+    '.rst': 'restructuredtext',
+    '.txt': 'markdown',
+    '.md': 'markdown',
+]
+master_doc = 'index'
+language = None
+exclude_patterns = []
+pygments_style = 'sphinx'
+html_theme = 'sphinx_rtd_theme'
+html_static_path = ['_static']
+htmlhelp_basename = 'Sphinx-Tutorialdoc'
+latex_elements = {
+}
+latex_documents = [
+    (master_doc, 'Sphinx-Tutorial.tex', 'Sphinx-Tutorial Documentation',
+     'Sooftware', 'manual'),
+]
+man_pages = [
+    (master_doc, 'sphinx-tutorial', 'Sphinx-Tutorial Documentation',
+     [author], 1)
+]
+texinfo_documents = [
+    (master_doc, 'Sphinx-Tutorial', 'Sphinx-Tutorial Documentation',
+     author, 'Sphinx-Tutorial', 'One line description of project.',
+     'Miscellaneous'),
+]
+epub_title = project
+epub_exclude_files = ['search.html']
+intersphinx_mapping = {'https://docs.python.org/': None}
+todo_include_todos = True
+```
+
+conf.py를 위와 같이 수정해준다.
+
+기존에는 주석으로 뭔가 많이 적혀있는데, 현재 우리가 하려는 문서화 작업 정도는
+
+위의 코드로 충분하다.
+
+(물론 위의 코드와 다른 부분만 수정해줘도 된다.)
+
+​
+
+
+다음으로, index.rst 를 오픈한다.
+
+```
+.. Sphinx-Tutorial documentation master file, created by
+   sphinx-quickstart on Thu Mar  5 04:08:37 2020.
+   You can adapt this file completely to your liking, but it should at least
+   contain the root `toctree` directive.
+
+Welcome to Sphinx-Tutorial's documentation!
+===========================================
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Tutorial
+
+
+   Tutorial
+```
+
+다음과 같이 index.rst를 수정한다.
+
+```
+Tutorial
+=====================================================
+
+.. automodule:: src.tutorial
+    :members:
+```
+
+다음, Tutorial.rst 파일을 생성 후, 위와 같이 편집해준다.
+
+​지금까지 잘 따라왔다면 다음과 같은 폴더 구조가 되어 있어야 한다.
+
+다시 cmd 창으로 돌아가서 Sphinx-Tutorial 폴더로 이동한다.
+
+```
+$ make html 입력
+```
+​
+다음과 같은 화면이 뜬다면 성공이다.
+
+```
+$ make.bat html 입력
+```
+​
+다음과 같이 빨간 글씨 없이 나온다면 성공이다.
+
+​Sphinx-Tutorial > build > html 폴더로 이동한다.
+
+index.py를 클릭하면 다음과 같은 화면이 나올 것이다.
+
+Tutorial 란을 클릭하면 다음과 같이, 우리가 """ """ 사이에 작성한 
+
+주석 내용이 문서화 된 것을 확인할 수 있다.
+
+Sphinx는 """ """ 사이에 있는 내용을 기반으로
+
+문서를 작성하기 때문에 형식을 맞춰주는 것이 중요하다.
+
+위에 첨부해놓은 코드와 문서를 비교해보면, 어떤 식으로 적용되는지를 확인할 수 있을 것이다.
+
+Sphinx > build > html 폴더로 이동한다.
+
+전체 폴더를 복사한다.
+
+다시 Sphinx-Tutorial 폴더로 이동한다.
+
+docs 폴더를 생성한다.
+
+복사해놓은 html 폴더 안의 파일들을 붙여넣기한다.
+
+GitHub Page로 배포하기
+
+이제 이렇게 만든 웹 페이지를 GitHub Page로 배포해보자.
+
+먼저, 나는 Sphinx-Tutorial이라는 레포지토리를 생성 후 push까지 완료했다.
+
+(레포지토리 생성 방법까지 하면 너무 복잡할것 같아 생략)
+
+위의 빨간 상자쪽 Setting 클릭
+
+스크롤을 내려서 위와 같은 GitHub Pages를 찾는다.
+
+(GitHub Pro가 아니라면, public repository만 GitHub Pages 가능)
+
+Source 란에서 branch /docs 폴더를 선택한다.
+
+그러면 위의 화면과 같이 바뀌게 된다.
+
+해당 링크를 연다.
+
+Sphinx-Tutorial
+
+그럼 다음과 같이 정상적으로 GitHub Page가 생성된 것을 확인할 수 있다.
+
+```
+Sphinx-Tutorial
+```
+
+여기까지 Sphinx & GitHub Pages를 이용하여
+
+파이썬 프로젝트를 문서화하는 방법을 알아보았다.
+
+```
+https://sh951011.github.io/Korean-Speech-Recognition/
+
+ 
+Welcome to Korean Speech Recognition’s documentation! — Korean Speech Recognition 1.0 documentation
+Welcome to Korean Speech Recognition’s documentation! Notes Introduction Preparation before Training More Details Architecture Models Package Reference Feature Dataset Loss Hparams
+
+sh951011.github.io
+```
+
+위의 링크는 기능을 조금 더 사용해서 만든 내 프로젝트 Document 페이지이다.
+
+위 프로젝트 문서 페이지를 만드려다가 해당 내용을
+
+한글로 잘 정리된 글이 안 보여서 포스팅해보았다.
+
+===================================================================
+
+파이썬(python) 라이브러리
+=============================================
+
+- sphinx (docstirng 자동 문서화) : ###카카오에서 만든 문서임###
+
+- See: https://11001.tistory.com/127
+
+python 코드 내에 작성한 docstirng을 자동으로 문서화 해주는 아주 강력한 라이브러리다.
+
+```
+def 함수명():
+
+   ''' 내용 ''' → 주석안에 특정 규칙에 맞게 작성해둔 docstring을 파싱한다.
+ ```
+
+예시
+
+아래 예시는 Goolge Style 의 docstring 이다. (Napoleon 이라는 확장을 사용하여 파싱해야 함)
+기본 docstring 형태는 알아서 찾아보도록.. 나는 개인적으로 Google Style이 가독성이 좋아서 선호한다.
+
+```
+def convert_worksheet_to_df(workbook, sheet_name=['Sheet'], include_index=False, include_column=False):
+    """ Excel 파일에서 원하는 Sheet를 지정해 list(Dataframe) 으로 반환
+
+    Args:
+        file_path (str): 저장할 대상 Excel Workbook
+        sheet_name (list): Excel Workbook의 Sheet명
+        include_index (bool, optional): index 포함여부
+        include_column (bool, optional): column(header) 포함여부
+
+    Returns:
+        dict (sheet_name : pandas.DataFrame)
+        
+    Raises:
+        ValueError: File path를 입력하지 않은 경우
+        FileNotFoundError: File path의 경로에 파일 찾을 수 없는 경우
+
+    """
+ ```
+
+결과물
+
+```
+sphinx install
+```
+
+현재 위치아래에 생성되므로 원하는 위치에 docs 폴더를 만들고 안에 들어가서 수행한다.
+
+```
+pip install sphinx 수행
+```
+
+우리는 Google Style docstring을 사용할 것이므로 nappoleon 도 추가로 설치한다.
+
+```
+pip install sphinxcontrib-napoleon
+```
+ 
+Napoleon 공식 문서 :
+
+```
+Napoleon - Marching toward legible docstrings — napoleon 0.7 documentation
+```
+ 
+
+기본 디렉토리 구조
+하나의 폴더 안에 docs와 my_pacakge(스크립트가 들어간 디렉토리)를 두고 사용하면 된다.
+
+아래는 sphinx-quickstart docs 를 수행한 뒤의 디렉토리 모습이다.
+
+ 
+
+폴더 분리하지 않은 경우
+
+``` 
+Separate source and build directories (y/n) [n]: n
+
+docs
+├── build
+├── make.bat
+├── Makefile
+├── conf.py
+├── index.rst
+├── _static                            
+└── _templates
+
+my_pacakage
+├── __init_.py
+└── my_module.py
+```
+ 
+폴더 분리한 경우
+
+```
+Separate source and build directories (y/n) [n]: y
+
+source 폴더가 생성 된다. 관리 편의성을 위하여 특별한 사유 없으면 분리해서 사용하도록 하자 <-----
+
+ 
+
+docs
+├── build
+├── make.bat
+├── Makefile
+└── source
+   ├── conf.py
+   ├── index.rst
+   ├── _static                            
+   └── _templates
+  
+my_pacakage
+├── __init_.py
+└── my_module.py
+
+ 
+
+build/
+
+An empty directory (for now) that will hold the rendered documentation.
+
+make.bat and Makefile
+
+Convenience scripts to simplify some common Sphinx operations, such as rendering the content.
+
+source/conf.py
+
+A Python script holding the configuration of the Sphinx project. It contains the project name and release you specified to sphinx-quickstart, as well as some extra configuration keys.
+
+source/index.rst
+
+The root document of the project, which serves as welcome page and contains the root of the “table of contents tree” (or toctree).
+```
+ 
+Quick Start 시작
+스크립트들이 있는 모듈 디렉토리의 상위 디렉토리에서 docs폴더 생성 후
+sphinx-quickstart docs 를 수행하면 docs아래에 sphinx에 관련된 폴더를 생성해준다.
+
+``` 
+Case 1
+
+Separate source and build directories (y/n) [n]: n
+
+C:\Users\pyexcel\docs>sphinx-quickstart
+Welcome to the Sphinx 3.2.1 quickstart utility.
+
+Please enter values for the following settings (just press Enter to
+accept a default value, if one is given in brackets).
+
+Selected root path: .
+
+You have two options for placing the build directory for Sphinx output.
+Either, you use a directory "_build" within the root path, or you separate
+"source" and "build" directories within the root path.
+> Separate source and build directories (y/n) [n]: n
+
+The project name will occur in several places in the built documentation.
+> Project name: pyexcel
+> Author name(s): hoon
+> Project release []: 1.0
+
+If the documents are to be written in a language other than English,
+you can select a language here by its language code. Sphinx will then
+translate text that it generates into that language.
+
+For a list of supported codes, see
+https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-language.
+> Project language [en]: ko
+
+Creating file C:\Users\pyexcel\docs\conf.py.
+Creating file C:\Users\pyexcel\docs\index.rst.
+Creating file C:\Users\pyexcel\docs\Makefile.
+Creating file C:\Users\pyexcel\docs\make.bat.
+
+Finished: An initial directory structure has been created.
+
+You should now populate your master file C:\Users\pyexcel\docs\index.rst and create other documentation
+source files. Use the Makefile to build the docs, like so:
+   make builder
+where "builder" is one of the supported builders, e.g. html, latex or linkcheck.
+```
+
+```
+Case 2
+
+Separate source and build directories (y/n) [n]: y
+
+C:\Users\pyexcel\docs>sphinx-quickstart
+Welcome to the Sphinx 3.2.1 quickstart utility.
+
+Please enter values for the following settings (just press Enter to
+accept a default value, if one is given in brackets).
+
+Selected root path: .
+
+You have two options for placing the build directory for Sphinx output.
+Either, you use a directory "_build" within the root path, or you separate
+"source" and "build" directories within the root path.
+> Separate source and build directories (y/n) [n]: y
+
+The project name will occur in several places in the built documentation.
+> Project name: pyexcel
+> Author name(s): hoon
+> Project release []: 1.0
+
+If the documents are to be written in a language other than English,
+you can select a language here by its language code. Sphinx will then
+translate text that it generates into that language.
+
+For a list of supported codes, see
+https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-language.
+> Project language [en]: ko
+
+Creating file C:\Users\pyexcel\docs\source\conf.py.
+Creating file C:\Users\pyexcel\docs\source\index.rst.
+Creating file C:\Users\pyexcel\docs\Makefile.
+Creating file C:\Users\pyexcel\docs\make.bat.
+
+Finished: An initial directory structure has been created.
+
+You should now populate your master file C:\Users\pyexcel\docs\source\index.rst and create other documentation
+source files. Use the Makefile to build the docs, like so:
+   make builder
+where "builder" is one of the supported builders, e.g. html, latex or linkcheck.
+``` 
+
+Autodoc 사용하기
+Sphinx는 파이썬 소스코드로부터 자동으로 문서를 생성해 주는 'Autodoc'을 제공한다.
+
+
+conf.py 설정
+-autodoc을 사용하기 위해서는 source/conf.py의 'extensions' 부분에 반드시 아래와 같이 autodoc이 추가되어 있어야 한다.
+
+```
+... (생략) ...
+# Add any Sphinx extension module names here, as strings. They can be
+# extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
+# ones.
+extensions = [
+    'sphinx.ext.autodoc','sphinx.ext.todo','sphinx.ext.napoleon'
+]
+todo_include_todos = True
+... (생략) ...
+sphinx.ext.napoleon : Google Style docstring 사용시 파싱을 해주는 extensions이다.
+sphinx.ext.todo : Google Style docstring 사용시 Todo: 라고 적은 부분을 변환해줌. todo_include_todos=True값도 세트로 같이 설정해야 한다.
+sphinx.ext.autodoc : 모듈을 자동으로 문서화해주는 extensions이다.
+ ```
+
+그리고, 파이썬 코드가 있는 path도 sys.path에 들어있어야 하므로 conf.py에 추가한다. path는 반드시 절대경로로 들어있어야 하므로 상대경로 일 경우 os.path.abspath를 이용해 절대경로로 바꿔서 설정한다.
+
+```
+# If extensions (or modules to document with autodoc) are in another directory,
+# add these directories to sys.path here. If the directory is relative to the
+# documentation root, use os.path.abspath to make it absolute, like shown here.
+#
+import os
+import sys
+sys.path.insert(0, os.path.abspath('../..')) # docs/source/conf.py 인 경우
+sys.path.insert(0, os.path.abspath('..'))    # docs/conf.py 인 경우
+# 만약 경로 못찾는다 나오면 아래와 같이 풀경로 넣어야함
+sys.path.insert(0, os.path.abspath('C:\\Users\\pyexcel\\my_package'))
+``` 
+
+index.rst 설정
+source/index.rst는 document의 첫페이지가 된다. 아래와 같이 toctree를 이용해서 목차를 만들 수 있다. 목차에 입력한 my_package는 index.rst와 같은 경로에 있는 'my_package.rst' 를 자동으로 찾아서 목차로 만들어 준다.
+
+#index.rst 예제
+
+```
+My documentation
+================
+
+Content:
+
+.. toctree::
+    :maxdepth: 2
+
+    my_package
+
+Indices and tables
+==================
+
+* :ref: `genindex`
+* :ref: `modindex`
+* :ref: `search`
+``` 
+
+sphinx-apidoc 사용
+모듈이 생성/삭제 되었을 경우 재수행 필요
+스크립트 내용만 수정했을때는 굳이 재수행하지 않아도 된다.
+
+__init__.py 파일은 포함되지 않는다.
+
+sphinx-apidoc는 autodoc 확장을 사용하여 자동 API 문서 도구 스타일로 전체 패키지를 문서화하여 .rst 파일을 생성하는 CLI 유틸리티입니다. 명령의 형식은 다음과 같습니다.
+
+```
+형식
+sphinx-apidoc [ 옵션 ] -o < OUTPUT_PATH > < MODULE_PATH > [ EXCLUDE_PATTERN ...]
+
+[옵션] -F : 이미 존재하는 .rst 파일들을 강제 overwrite (덮어쓰기) 하겠다는 옵션
+-o OUTPUT_PATH : 생성된 소스가 있는 디렉토리입니다. 
+MODULE_PATH : 문서화할 Python 패키지의 경로
+EXCLUDE_PATTERN : 생성에서 제외될 fnmatch 스타일 파일 및/또는 디렉토리 패턴입니다.
+--serperate : 각 모듈에 대한 문서를 자체 페이지에 넣습니다.
+이 옵션을 주면 모듈 내 파일 마다 .rst 파일이 생성된다.
+옵션 주지 않으면 모듈명.rst 하나에 전체 파일 정보가 들어간다.
+```
+
+단점
+
+```
+결과 문서에 색인, 목차가 없음. 개체가 많으면 sphinx.ext.autosummary 사용하도록
+```
+ 
+예시 
+
+```
+sphinx-apidoc -F -o ./docs/source ./my_package
+
+my_pacakge라는 이름의 모듈경로의 패키지를 자동 문서화하여 .rst 파일을 생성하고 docs 위치에 위치시킨다. 이미 같은 이름의 .rst 존재한다면 강제 덮어쓰기 한다.
+```
+
+※ docs와 module의 상위 폴더에서 수행해야 함.
+
+```
+C:\Users\pyexcel>sphinx-apidoc -F -o docs my_package/
+Creating file ./docs/source\my_package.rst.
+File C:\Users\pyexcel\docs\source\conf.py already exists, skipping.
+File C:\Users\pyexcel\docs\source\index.rst already exists, skipping.
+Creating file C:\Users\pyexcel\docs\source\Makefile.
+Creating file C:\Users\pyexcel\docs\source\make.bat.
+``` 
+
+```
+sphinx-apidoc -F -o ./docs/source ./my_package --separate
+```
+
+→ docs 아래에 Makefile. make.bat. 가 이미 있지만 docs/source/ 아래에 새로 생성된다. 왜이런지 확인 필요하다 ㅠ
+
+```
+C:\Users\hoon\pyexcel>sphinx-apidoc -F -o docs my_package/ --separate
+Creating file docs\my_package.rst.
+Creating file docs\my_package.pandastool.rst.
+Creating file docs\my_package.pyexceltool.rst.
+Creating file docs\my_package.pywinexceltool.rst.
+Creating file C:\Users\pyexcel\docs\conf.py.
+Creating file C:\Users\pyexcel\docs\index.rst.
+File C:\Users\pyexcel\docs\Makefile already exists, skipping.
+File C:\Users\pyexcel\docs\make.bat already exists, skipping.
+```
+
+결과
+
+```
+index.rst 의 doctree에 my_package가 추가되어 index.html 접속하면 my_package가 보인다.
+```
+
+``` 
+Make html 수행
+```
+
+rst문서를 참조하여 HTML파일들이 생성된다.
+make.bat 을 까보면 내부적으로 sphinx-build를 사용하므로 둘 중 아무거나로 수행하면 된다.
+ 
+
+make.bat 파일이 위치한 docs 폴더에서 명령어 make html 수행
+
+```
+C:\Users\pyexcel>cd docs
+
+C:\Users\pyexcel\docs>make html
+Running Sphinx v3.2.1
+loading translations [ko]... done
+making output directory... done
+building [mo]: targets for 0 po files that are out of date
+building [html]: targets for 1 source files that are out of date
+updating environment: [new config] 1 added, 0 changed, 0 removed
+reading sources... [100%] index
+looking for now-outdated files... none found
+pickling environment... done
+checking consistency... done
+preparing documents... done
+writing output... [100%] index
+generating indices...  genindexdone
+writing additional pages...  searchdone
+copying static files... ... done
+copying extra files... done
+dumping search index in English (code: en)... done
+dumping object inventory... done
+build succeeded.
+
+The HTML pages are in build\html.
+``` 
+
+결과 파일
+
+```
+docs\source_build\html\ 아래에 html 파일이 생성된다.
+index.html 이 최상단 웹페이지다. 열어본다.
+```
+sphinx-build
+rst문서를 참조하여 HTML파일들이 생성된다. make html 명령어로 대신 수행 가능
+
+공식 문서
+
+```
+sphinx-build — Sphinx documentation
+```
+
+형식
+
+```
+sphinx-build [options] <sourcedir> <outputdir> [filenames …]
+sourcedir : conf.py 파일이 있는 상위 폴더를 넣어야 함
+-b 옵션으로 는 다양한 형식의 문서를 생성 할 수 있습니다. (기본값은 HTML)
+명령줄에서 빌더 이름을 지정하여 형식을 선택합니다. 빌더는 문서 처리와 관련된 다른 작업도 수행할 수 있습니다. 사용 가능한 빌더 목록은 를 참조하십시오 .
+
+-b singlehtml : 하나의 html 파일로 빌드
+예시
+
+sphinx-build -b singlehtml ./docs/source ./docs/build
+``` 
+
+sphinx.ext.autosummary 확장
+이 기능은 아직 테스트해보지 못하여 추후 사용해보면 포스팅 예정
+ 
+
+문서 테마 변경
+
+```
+source/conf.py의 'html_theme'에 원하는 테마를 입력한 후 make html을 실행하면 자동으로 css를 받아오고 html을 생성해준다.
+```
+
+테마 구경 :
+
+Sphinx Themes Gallery
+여러가지 사용해봐야 알겠지만… 지금까지는 adc 테마가 그나마 가독성이 괜찮아보여서 사용중
+
+adc 테마 사용시
+
+```
+1. pip install sphinx-adc-theme
+
+2. conf.py 파일에 아래 내용 추가
+```
+
+```
+import sphinx_adc_theme
+html_theme = 'sphinx_adc_theme'
+html_theme_path = [sphinx_adc_theme.get_html_theme_path()]
+```
+
+
