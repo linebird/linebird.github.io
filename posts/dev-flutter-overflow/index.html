@@ -1,0 +1,248 @@
+<!DOCTYPE html><html lang="en" mode="light" ><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><meta name="theme" content="Chirpy v2.7.2"><meta name="generator" content="Jekyll v4.2.0" /><meta property="og:title" content="Flutter UI overflows" /><meta name="author" content="유진수" /><meta property="og:locale" content="en_US" /><meta name="description" content="overflow" /><meta property="og:description" content="overflow" /><link rel="canonical" href="https://linebird.github.io/posts/dev-flutter-overflow/" /><meta property="og:url" content="https://linebird.github.io/posts/dev-flutter-overflow/" /><meta property="og:site_name" content="New software technology trend" /><meta property="og:type" content="article" /><meta property="article:published_time" content="2023-04-20T15:12:00+09:00" /><meta name="twitter:card" content="summary" /><meta property="twitter:title" content="Flutter UI overflows" /><meta name="twitter:site" content="@linebird" /><meta name="twitter:creator" content="@유진수" /><meta name="google-site-verification" content="google_meta_tag_verification" /> <script type="application/ld+json"> {"author":{"@type":"Person","name":"유진수"},"description":"overflow","url":"https://linebird.github.io/posts/dev-flutter-overflow/","@type":"BlogPosting","headline":"Flutter UI overflows","dateModified":"2023-05-16T10:11:18+09:00","datePublished":"2023-04-20T15:12:00+09:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://linebird.github.io/posts/dev-flutter-overflow/"},"@context":"https://schema.org"}</script><title>Flutter UI overflows | New software technology trend</title><link rel="shortcut icon" href="/assets/img/favicons/favicon.ico" type="image/x-icon"><link rel="icon" href="/assets/img/favicons/favicon.ico" type="image/x-icon"><link rel="apple-touch-icon" href="/assets/img/favicons/apple-icon.png"><link rel="apple-touch-icon" href="/assets/img/favicons/apple-icon-precomposed.png"><link rel="apple-touch-icon" sizes="57x57" href="/assets/img/favicons/apple-icon-57x57.png"><link rel="apple-touch-icon" sizes="60x60" href="/assets/img/favicons/apple-icon-60x60.png"><link rel="apple-touch-icon" sizes="72x72" href="/assets/img/favicons/apple-icon-72x72.png"><link rel="apple-touch-icon" sizes="76x76" href="/assets/img/favicons/apple-icon-76x76.png"><link rel="apple-touch-icon" sizes="114x114" href="/assets/img/favicons/apple-icon-114x114.png"><link rel="apple-touch-icon" sizes="120x120" href="/assets/img/favicons/apple-icon-120x120.png"><link rel="apple-touch-icon" sizes="144x144" href="/assets/img/favicons/apple-icon-144x144.png"><link rel="apple-touch-icon" sizes="152x152" href="/assets/img/favicons/apple-icon-152x152.png"><link rel="apple-touch-icon" sizes="180x180" href="/assets/img/favicons/apple-icon-180x180.png"><link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicons/android-icon-192x192.png"><link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicons/favicon-32x32.png"><link rel="icon" type="image/png" sizes="96x96" href="/assets/img/favicons/favicon-96x96.png"><link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicons/favicon-16x16.png"><link rel="manifest" href="/assets/img/favicons/manifest.json"><meta name='msapplication-config' content='/assets/img/favicons/browserconfig.xml'><meta name="msapplication-TileColor" content="#ffffff"><meta name="msapplication-TileImage" content="/assets/img/favicons/ms-icon-144x144.png"><meta name="theme-color" content="#ffffff"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous"><link rel="dns-prefetch" href="https://fonts.gstatic.com"><link rel="preconnect" href="https://www.google-analytics.com" crossorigin="use-credentials"><link rel="dns-prefetch" href="https://www.google-analytics.com"><link rel="preconnect" href="https://www.googletagmanager.com" crossorigin="anonymous"><link rel="dns-prefetch" href="https://www.googletagmanager.com"><link rel="preconnect" href="cdn.jsdelivr.net"><link rel="dns-prefetch" href="cdn.jsdelivr.net"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha256-LA89z+k9fjgMKQ/kq4OO2Mrf8VltYml/VES+Rg0fh20=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.11.2/css/all.min.css" integrity="sha256-+N4/V/SbAFiW1MPBCXnfnP9QSN3+Keu+NlB+0ev/YKQ=" crossorigin="anonymous"><link rel="preload" href="/assets/css/post.css" as="style"><link rel="stylesheet" href="/assets/css/post.css"><link rel="preload" as="style" href="/assets/css/lib/bootstrap-toc.min.css"><link rel="stylesheet" href="/assets/css/lib/bootstrap-toc.min.css" /> <script src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script> <script defer src="https://cdn.jsdelivr.net/combine/npm/popper.js@1.15.0,npm/bootstrap@4/dist/js/bootstrap.min.js"></script> <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5535513387307938" crossorigin="anonymous"></script> <script async src="/assets/js/post.min.js"></script> <script defer src="/app.js"></script> <script defer src="https://www.googletagmanager.com/gtag/js?id="></script> <script> document.addEventListener("DOMContentLoaded", function(event) { window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', ''); }); </script><body data-spy="scroll" data-target="#toc"><div id="sidebar" class="d-flex flex-column align-items-end"><div class="profile-wrapper text-center"><div id="avatar"> <a href="/" alt="avatar" class="mx-auto"> <img src="/assets/img/profile/linebird.png" alt="avatar" onerror="this.style.display='none'"> </a></div><div class="site-title mt-3"> <a href="/">New software technology trend</a></div><div class="site-subtitle font-italic">Software news and articles</div></div><ul class="w-100"><li class="nav-item"> <a href="/" class="nav-link"> <i class="fa-fw fas fa-home ml-xl-3 mr-xl-3 unloaded"></i> <span>HOME</span> </a><li class="nav-item"> <a href="/tabs/categories/" class="nav-link"> <i class="fa-fw fas fa-stream ml-xl-3 mr-xl-3 unloaded"></i> <span>CATEGORIES</span> </a><li class="nav-item"> <a href="/tabs/tags/" class="nav-link"> <i class="fa-fw fas fa-tags ml-xl-3 mr-xl-3 unloaded"></i> <span>TAGS</span> </a><li class="nav-item"> <a href="/tabs/archives/" class="nav-link"> <i class="fa-fw fas fa-archive ml-xl-3 mr-xl-3 unloaded"></i> <span>ARCHIVES</span> </a><li class="nav-item"> <a href="/tabs/about/" class="nav-link"> <i class="fa-fw fas fa-info ml-xl-3 mr-xl-3 unloaded"></i> <span>ABOUT</span> </a></ul><div class="sidebar-bottom mt-auto d-flex flex-wrap justify-content-center"> <a href="https://github.com/linebird" aria-label="github" target="_blank" rel="noopener"> <i class="fab fa-github-alt"></i> </a> <a href="https://twitter.com/linebird" aria-label="twitter" target="_blank" rel="noopener"> <i class="fab fa-twitter"></i> </a> <a href=" javascript:location.href = 'mailto:' + ['linebird71','gmail.com'].join('@')" aria-label="email" > <i class="fas fa-envelope"></i> </a> <a href="/feed.xml" aria-label="rss" > <i class="fas fa-rss"></i> </a></div></div><div id="topbar-wrapper" class="row justify-content-center topbar-down"><div id="topbar" class="col-11 d-flex h-100 align-items-center justify-content-between"> <span id="breadcrumb"> <span> <a href="/"> Posts </a> </span> <span>Flutter UI overflows</span> </span> <i id="sidebar-trigger" class="fas fa-bars fa-fw"></i><div id="topbar-title"> Post</div><i id="search-trigger" class="fas fa-search fa-fw"></i> <span id="search-wrapper" class="align-items-center"> <i class="fas fa-search fa-fw"></i> <input class="form-control" id="search-input" type="search" aria-label="search" placeholder="Search..."> <i class="fa fa-times-circle fa-fw" id="search-cleaner"></i> </span> <span id="search-cancel" >Cancel</span></div></div><div id="main-wrapper"><div id="main"><div class="row"><div id="post-wrapper" class="col-12 col-lg-11 col-xl-8"><div class="post pl-1 pr-1 pl-sm-2 pr-sm-2 pl-md-4 pr-md-4"><h1 data-toc-skip>Flutter UI overflows</h1><div class="post-meta text-muted d-flex flex-column"><div> <span class="timeago " data-toggle="tooltip" data-placement="bottom" title="Thu, Apr 20, 2023, 3:12 PM +0900" > Apr 20, 2023 <i class="unloaded">2023-04-20T15:12:00+09:00</i> </span> by <span class="author"> 유진수 </span></div><div> <span> Updated <span class="timeago lastmod" data-toggle="tooltip" data-placement="bottom" title="Tue, May 16, 2023, 10:11 AM +0900" > May 16, 2023 <i class="unloaded">2023-05-16T10:11:18+09:00</i> </span> </span> <span class="readtime" data-toggle="tooltip" data-placement="bottom" title="1597 words">8 min</span></div></div><div class="post-content"><h2 id="overflow">overflow</h2><ol><li>widget이 화면을 넘어갈 때<li>Text widget 글자수가 길어졌을 경우<li>overflowed by * pixels</ol><h3 id="container-overflow">Container overflow</h3><blockquote><p>컨테이너 안에 자식을 추가하면 컨테이너가 자식을 감싸고 자식 위젯에 따라 컨테이너 크기를 조정하게 됨.</p></blockquote><h4 id="container-표시-기분">container 표시 기분</h4><p>컨테이너 위젯에 <em>width, height 속성을 100</em>으로 함. 컨테이터 위젯에 Text 위젯을 넣고, 긴 문장의 text를 입력. “동해물과 백두산이 마르고 달도록 하느님이 보우하사 우리 나라 만세 무궁화 삼천리 화려강산 대한사람 대한으로 길이 보전하세”</p><pre><code class="language-flutter">        body: SafeArea(
+          child: Container(
+            width: 100,
+            height: 100,
+            decoration: BoxDecoration(
+              color: FlutterFlowTheme.of(context).secondaryBackground,
+            ),
+            child: Padding(
+              padding: EdgeInsetsDirectional.fromSTEB(8, 8, 8, 8),
+              child: Text(
+                '동해물과 백두산이 마르고 달도록 하느님이 보우하사 우리 나라 만세 무궁화 삼천리 화려강산 대한사람 대한으로 길이 보전하세',
+                style: FlutterFlowTheme.of(context).bodyMedium,
+              ),
+            ),
+          ),
+        ),
+      )
+</code></pre><p>[overflow 결과]<br /> 애국가 가사가 잘리어서 표시됨. 아래 그림처럼 일부 가사만 보임.<br /> <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="/assets/img/202304/container_overflow01.png" alt="container overflow" /><br /> 사용 사례에 따라 컨테이너를 그 안에 있는 자식 위젯(이 경우 텍스트 위젯)에 맞게 조정할 수 있는 다양한 방법이 있을 수 있음.</p><h4 id="container-표시-case1">Container 표시 Case1</h4><p>Container widget의 height, width를 제거한 경우…</p><pre><code class="language-flutter">        body: SafeArea(
+          child: Container(
+            decoration: BoxDecoration(
+              color: FlutterFlowTheme.of(context).secondaryBackground,
+            ),
+            child: Padding(
+              padding: EdgeInsetsDirectional.fromSTEB(8, 8, 8, 8),
+              child: Text(
+                '동해물과 백두산이 마르고 달도록 하느님이 보우하사 우리 나라 만세 무궁화 삼천리 화려강산 대한사람 대한으로 길이 보전하세',
+                style: FlutterFlowTheme.of(context).bodyMedium,
+              ),
+            ),
+          ),
+        ),
+      ),
+</code></pre><p>[height, width를 제거 결과]</p><pre><code class="language-flutter">
+</code></pre><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="/assets/img/202304/container_overflow02.png" alt="container overflow2" /></p><h4 id="container-표시-case2">Container 표시 Case2</h4><p>Container widget이 자식을 가로로만 래핑하도록 하려면(height 고정되어 있지만 width는 조정) height의 고정 값을 지정하고 width 값을 제거</p><pre><code class="language-flutter">        body: SafeArea(
+          child: Container(
+            height: 100,
+            decoration: BoxDecoration(
+              color: FlutterFlowTheme.of(context).secondaryBackground,
+            ),
+            child: Padding(
+              padding: EdgeInsetsDirectional.fromSTEB(8, 8, 8, 8),
+              child: Text(
+                '동해물과 백두산이 마르고 달도록 하느님이 보우하사 우리 나라 만세 무궁화 삼천리 화려강산 대한사람 대한으로 길이 보전하세',
+                style: FlutterFlowTheme.of(context).bodyMedium,
+              ),
+            ),
+          ),
+        ),
+      )
+</code></pre><p>[height 고정, width를 제거 결과]<br /> <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="/assets/img/202304/container_overflow03.png" alt="container overflow2" /></p><h4 id="container-표시-case3">Container 표시 Case3</h4><p>Container widget의 자식을 세로로만 래핑하도록 하려면(width는 고정되어 있지만 height 조정) width 고정 값을 지정하고 height 값을 제거</p><pre><code class="language-flutter">        body: SafeArea(
+          child: Container(
+            width: 100,
+            decoration: BoxDecoration(
+              color: FlutterFlowTheme.of(context).secondaryBackground,
+            ),
+            child: Padding(
+              padding: EdgeInsetsDirectional.fromSTEB(8, 8, 8, 8),
+              child: Text(
+                '동해물과 백두산이 마르고 달도록 하느님이 보우하사 우리 나라 만세 무궁화 삼천리 화려강산 대한사람 대한으로 길이 보전하세',
+                style: FlutterFlowTheme.of(context).bodyMedium,
+              ),
+            ),
+          ),
+        ),
+      )
+</code></pre><p>[width 고정, height를 제거 결과]<br /> <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="/assets/img/202304/container_overflow04.png" alt="container overflow2" /></p><h3 id="text-overflow">Text Overflow</h3><blockquote><p>일반적으로 텍스트 위젯이 행 안에 단독으로 또는 다른 위젯과 함께 배치되면 텍스트 위젯의 오버플로가 발생. 이는 텍스트가 가로로 확장되기를 원하지만 행의 경계 내에서 자신을 제한하는 방법을 모르기 때문에 발생.</p></blockquote><pre><code class="language-flutter">Column(
+  mainAxisSize: MainAxisSize.max,
+  crossAxisAlignment: CrossAxisAlignment.stretch,
+  children: [
+    Row(
+      mainAxisSize: MainAxisSize.max,
+      children: [
+        Image.network(
+          'https://picsum.photos/seed/522/600',
+          width: 100,
+          height: 100,
+          fit: BoxFit.cover,
+        ),
+        Text(
+          '일반적으로 텍스트 위젯이 행 안에 단독으로 또는 다른 위젯과 함께 배치되면 텍스트 위젯의 오버플로가 발생합니다. 이는 텍스트가 가로로 확장되기를 원하지만 행의 경계 내에서 자신을 제한하는 방법을 모르기 때문에 발생합니다',
+          style: FlutterFlowTheme.of(context).bodyMedium,
+        ),
+      ],
+    ),
+  ],
+)
+</code></pre><p>[오버플로우 결과]<br /> <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="/assets/img/202304/text_overflow01.png" alt="text overflow" /></p><h4 id="해결방법-1">해결방법 1</h4><p><strong>Expanded</strong>를 사용하여 Text widget을 감싼다.</p><pre><code class="language-flutter">// Expended wrap
+Expanded(
+  child: Text(
+    '일반적으로 텍스트 위젯이 행 안에 단독으로 또는 다른 위젯과 함께 배치되면 텍스트 위젯의 오버플로가 발생합니다. 이는 텍스트가 가로로 확장되기를 원하지만 행의 경계 내에서 자신을 제한하는 방법을 모르기 때문에 발생합니다',
+    style: FlutterFlowTheme.of(context).bodyMedium,
+  ),
+)
+</code></pre><p>[결과]<br /> <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="/assets/img/202304/text_overflow02.png" alt="text overflow 해결" /></p><h4 id="해결방법-2">해결방법 2</h4><p>경우에 따라 텍스트를 지정된 줄 수로 제한하고 싶을 수도 있다. 예를 들어 다양한 길이의 설명이 있는 책 목록을 표시하고 싶지만 UI를 일관되고 깔끔하게 유지하기 위해 설명을 두 줄로만 제한하고 싶다고 가정. <strong>Max Lines</strong> 속성을 사용하면 됩니다.</p><h2 id="column-and-row-overflow">Column and Row Overflow</h2><blockquote><p>Column 위젯의 크기는 그 안에 있는 자식에 의해 결정. 자식이 기기의 화면 높이보다 세로 공간(즉, 열의 주축을 따라)을 더 많이 차지하는 경향이 있는 경우 오버플로 문제가 발생할 수 있음.</p></blockquote><h3 id="column-overflow-example">Column overflow example</h3><pre><code class="language-flutter">        ...
+        body: SafeArea(
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              Container(
+                width: 400.9,
+                height: 217.6,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [
+                      FlutterFlowTheme.of(context).primary,
+                      FlutterFlowTheme.of(context).secondary
+                    ],
+                    stops: [0, 1],
+                    begin: AlignmentDirectional(0, -1),
+                    end: AlignmentDirectional(0, 1),
+                  ),
+                ),
+                child: Text(
+                  '1번 컨테이너',
+                  style: FlutterFlowTheme.of(context).bodyMedium,
+                ),
+              ),
+              Container(
+                width: 400.9,
+                height: 217.6,
+                decoration: BoxDecoration(
+                  color: FlutterFlowTheme.of(context).success,
+                  shape: BoxShape.rectangle,
+                  border: Border.all(
+                    color: Color(0xFFCB1515),
+                  ),
+                ),
+                child: Text(
+                  '2번 컨테이너',
+                  style: FlutterFlowTheme.of(context).bodyMedium,
+                ),
+              ),
+              Container(
+                width: 400.9,
+                height: 217.6,
+                decoration: BoxDecoration(
+                  color: FlutterFlowTheme.of(context).secondary,
+                ),
+                child: Text(
+                  '3번 컨테이너',
+                  style: FlutterFlowTheme.of(context).bodyMedium,
+                ),
+              ),
+              Container(
+                width: 400.9,
+                height: 217.6,
+                decoration: BoxDecoration(
+                  color: FlutterFlowTheme.of(context).primaryBackground,
+                ),
+                child: Text(
+                  '4번 컨테이너',
+                  style: FlutterFlowTheme.of(context).bodyMedium,
+                ),
+              ),
+            ],
+          ),
+        ),
+</code></pre><p>[결과]<br /> <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="/assets/img/202304/column_overflow.png" alt="column overflow" /></p><h4 id="해결방법">해결방법</h4><p><strong>SingleChildScrollView</strong>를 사용하여 Column widget을 wrapping</p><pre><code class="language-flutter">        ...
+    body: SafeArea(
+        child: SingleChildScrollView(
+            child: Column(
+            mainAxisSize: MainAxisSize.max,
+            children: [
+                Container(
+                width: 400.9,
+                height: 217.6,
+                decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                    colors: [
+                        FlutterFlowTheme.of(context).primary,
+                        FlutterFlowTheme.of(context).secondary
+                    ],
+                    stops: [0, 1],
+                    begin: AlignmentDirectional(0, -1),
+                    end: AlignmentDirectional(0, 1),
+                    ),
+                ),
+                child: Text(
+                    '1번 컨테이너',
+                    style: FlutterFlowTheme.of(context).bodyMedium,
+                ),
+                ),
+                Container(
+</code></pre><h3 id="row-overflow-example">Row overflow example</h3><pre><code class="language-flutter">        ...
+        body: SafeArea(
+          child: Row(
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              Container(
+                width: 295.4,
+                height: 100,
+                decoration: BoxDecoration(
+                  color: FlutterFlowTheme.of(context).primary,
+                ),
+                child: Text(
+                  '컨테이너 1',
+                  style: FlutterFlowTheme.of(context).bodyMedium,
+                ),
+              ),
+              Container(
+                width: 295.4,
+                height: 100,
+                decoration: BoxDecoration(
+                  color: FlutterFlowTheme.of(context).secondary,
+                ),
+                child: Text(
+                  '컨테이너 2',
+                  style: FlutterFlowTheme.of(context).bodyMedium,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+</code></pre><p>[결과]<br /> <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="/assets/img/202304/row_overflow.png" alt="row overflow" /></p><h4 id="해결방법-1">해결방법</h4><p>Column과 동일하게 <strong>SingleChildScrollView</strong>로 Row widget wrapping</p><pre><code class="language-flutter">        body: SafeArea(
+          child: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Container(
+                  width: 295.4,
+                  height: 100,
+                  decoration: BoxDecoration(
+                    color: FlutterFlowTheme.of(context).primary,
+                  ),
+                  child: Text(
+                    '컨테이너 1',
+                    style: FlutterFlowTheme.of(context).bodyMedium,
+                  ),
+                ),
+                Container(
+                  width: 295.4,
+                  height: 100,
+                  decoration: BoxDecoration(
+                    color: FlutterFlowTheme.of(context).secondary,
+                  ),
+                  child: Text(
+                    '컨테이너 2',
+                    style: FlutterFlowTheme.of(context).bodyMedium,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+</code></pre></div><div class="post-tail-wrapper text-muted"><div class="post-meta mb-3"> <i class="far fa-folder-open fa-fw mr-1"></i> <a href='/categories/blogging/'>Blogging</a></div><div class="post-tags"> <i class="fa fa-tags fa-fw mr-1"></i> <a href="/tags/flutter/" class="post-tag no-text-decoration" >flutter</a> <a href="/tags/overflow/" class="post-tag no-text-decoration" >overflow</a></div><div class="post-tail-bottom d-flex justify-content-between align-items-center mt-3 pt-5 pb-2"><div class="license-wrapper"> This post is licensed under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a> by the author.</div><div class="share-wrapper"> <span class="share-label text-muted mr-1">Share</span> <span class="share-icons"> <a href="https://twitter.com/intent/tweet?text=Flutter UI overflows - New software technology trend&url=https://linebird.github.io/posts/dev-flutter-overflow/" data-toggle="tooltip" data-placement="top" title="Twitter" target="_blank" rel="noopener" aria-label="Twitter"> <i class="fa-fw fab fa-twitter"></i> </a> <a href="https://www.facebook.com/sharer/sharer.php?title=Flutter UI overflows - New software technology trend&u=https://linebird.github.io/posts/dev-flutter-overflow/" data-toggle="tooltip" data-placement="top" title="Facebook" target="_blank" rel="noopener" aria-label="Facebook"> <i class="fa-fw fab fa-facebook-square"></i> </a> <a href="https://telegram.me/share?text=Flutter UI overflows - New software technology trend&url=https://linebird.github.io/posts/dev-flutter-overflow/" data-toggle="tooltip" data-placement="top" title="Telegram" target="_blank" rel="noopener" aria-label="Telegram"> <i class="fa-fw fab fa-telegram"></i> </a> <i class="fa-fw fas fa-link small" onclick="copyLink()" data-toggle="tooltip" data-placement="top" title="Copy link"></i> </span></div></div></div></div></div><div id="panel-wrapper" class="col-xl-3 pl-2 text-muted topbar-down"><div class="access"><div id="access-lastmod" class="post"> <span>Recent Update</span><ul class="post-content pl-0 pb-1 ml-1 mt-2"><li><a href="/posts/weeklyreport-arom-20240429/">SCP 프로젝트 주간보고(4월22일 ~ 4월26일)</a><li><a href="/posts/weeklyreport-arom-20240408/">SCP 프로젝트 주간보고(4월1일 ~ 4월5일)</a><li><a href="/posts/weeklyreport-arom-20240401/">SCP 프로젝트 주간보고(3월25일 ~ 3월29일)</a><li><a href="/posts/python-sqlalcheme-20240320/">SQLAlcheme model 자동생성 방법</a><li><a href="/posts/weeklyreport-arom-20240311/">SCP 프로젝트 주간보고(3월4일 ~ 3월8일)</a></ul></div><div id="access-tags"> <span>Trending Tags</span><div class="d-flex flex-wrap mt-3 mb-1 mr-3"> <a class="post-tag" href="/tags/aromit/">aromit</a> <a class="post-tag" href="/tags/%EC%A3%BC%EA%B0%84%EB%B3%B4%EA%B3%A0/">주간보고</a> <a class="post-tag" href="/tags/flutter/">flutter</a> <a class="post-tag" href="/tags/openstack/">openstack</a> <a class="post-tag" href="/tags/java/">java</a> <a class="post-tag" href="/tags/news/">news</a> <a class="post-tag" href="/tags/ysk/">ysk</a> <a class="post-tag" href="/tags/python/">python</a> <a class="post-tag" href="/tags/database/">database</a> <a class="post-tag" href="/tags/javascript/">javascript</a></div></div></div><div id="toc-wrapper" class="pl-0 pr-4 mb-5"> <span class="pl-3 pt-2 mb-2">Contents</span><nav id="toc" data-toggle="toc"></nav></div></div></div><div class="row"><div class="col-12 col-lg-11 col-xl-8"><div id="post-extend-wrapper" class="pl-1 pr-1 pl-sm-2 pr-sm-2 pl-md-4 pr-md-4"><div id="related-posts" class="mt-5 mb-2 mb-sm-4"><h3 class="pt-2 mt-1 mb-4 ml-1" data-toc-skip>Further Reading</h3><div class="card-deck mb-4"><div class="card"> <a href="/posts/dev-flutter-overflow02/"><div class="card-body"> <span class="timeago small" > May 10, 2023 <i class="unloaded">2023-05-10T19:02:00+09:00</i> </span><h3 class="pt-0 mt-1 mb-3" data-toc-skip>Flutter UI overflows 02</h3><div class="text-muted small"><p> overflow 에러 화면 수정 실례 개발자 테스트 시에는 발견되지 않는 오류의 사례가 테스터에게서 또는 고객에게서 발생하곤 한다. 아래에 소개할 2개의 overflow와 관련해서는 회사 대표님이 테스트하다가 발생한 오류를 수정한 결과를 공유한다. 참고로 테스터는 눈이 노안인 관계로 폰의 설정을 아래와 같이 하여 사용하고 있었다. ...</p></div></div></a></div><div class="card"> <a href="/posts/flutter-01/"><div class="card-body"> <span class="timeago small" > Jan 9, 2023 <i class="unloaded">2023-01-09T13:15:00+09:00</i> </span><h3 class="pt-0 mt-1 mb-3" data-toc-skip>flutter 기록 - 001</h3><div class="text-muted small"><p> 개발환경 설정 Flutter PC에 설치하기 위해 flutter 사이트 방문 Flutter SDK 다운로드 원하는 위치에 압축풀기( C:\flutter ) flutter를 환경변수의 path 등록 flutter doctor 명령어 수행 의존성 실패 등을 설치 ...</p></div></div></a></div><div class="card"> <a href="/posts/flutter-02/"><div class="card-body"> <span class="timeago small" > Jan 9, 2023 <i class="unloaded">2023-01-09T13:15:00+09:00</i> </span><h3 class="pt-0 mt-1 mb-3" data-toc-skip>flutter - GetX</h3><div class="text-muted small"><p> GetX GetX는 상태 관리 패키지로 많이 알려져있지만, 사실 이보다는 더 많은 기능을 가지고 있다. Flutter에서 GetX를 사용하게 되면, 상태 관리뿐만 아니라, Route, 다국어 지원, 화면 크기 가져오기, API 호출 기능 등 다양한 기능을 제공한다. 아래의 링크를 참조하면 도움이 됨 [GetX] 상태 관리 [GetX...</p></div></div></a></div></div></div><div class="post-navigation d-flex justify-content-between"> <a href="/posts/chatgpt-01/" class="btn btn-outline-primary"><p>ChatGPT learnnings - 01</p></a> <a href="/posts/dev-flutter-nice/" class="btn btn-outline-primary"><p>Flutter에서 NICE 본인인증</p></a></div></div></div></div><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lozad/dist/lozad.min.js"></script> <script type="text/javascript"> const imgs = document.querySelectorAll('.post-content img'); const observer = lozad(imgs); observer.observe(); </script><footer class="d-flex w-100 justify-content-center"><div class="d-flex justify-content-between align-items-center"><div class="footer-left"><p class="mb-0"> © 2024 <a href="https://twitter.com/linebird">Jinsoo Yoo</a>. <span data-toggle="tooltip" data-placement="top" title="Except where otherwise noted, the blog posts on this site are licensed under the Creative Commons Attribution 4.0 International (CC BY 4.0) License by the author.">Some rights reserved.</span></p></div><div class="footer-right"><p class="mb-0"> Powered by <a href="https://jekyllrb.com" target="_blank" rel="noopener">Jekyll</a> with <a href="https://github.com/cotes2020/jekyll-theme-chirpy/" target="_blank" rel="noopener">Chirpy</a> theme.</p></div></div></footer></div><div id="search-result-wrapper" class="d-flex justify-content-center unloaded"><div class="col-12 col-xl-11 post-content"><div id="search-hints"><h4 class="text-muted mb-4">Trending Tags</h4><a class="post-tag" href="/tags/aromit/">aromit</a> <a class="post-tag" href="/tags/%EC%A3%BC%EA%B0%84%EB%B3%B4%EA%B3%A0/">주간보고</a> <a class="post-tag" href="/tags/flutter/">flutter</a> <a class="post-tag" href="/tags/openstack/">openstack</a> <a class="post-tag" href="/tags/java/">java</a> <a class="post-tag" href="/tags/news/">news</a> <a class="post-tag" href="/tags/ysk/">ysk</a> <a class="post-tag" href="/tags/python/">python</a> <a class="post-tag" href="/tags/database/">database</a> <a class="post-tag" href="/tags/javascript/">javascript</a></div><div id="search-results" class="d-flex flex-wrap justify-content-center text-muted mt-3"></div></div></div></div><div id="mask"></div><a id="back-to-top" href="#" aria-label="back-to-top" class="btn btn-lg btn-box-shadow" role="button"> <i class="fas fa-angle-up"></i> </a> <script src="https://cdn.jsdelivr.net/npm/simple-jekyll-search@1.7.3/dest/simple-jekyll-search.min.js"></script> <script> SimpleJekyllSearch({ searchInput: document.getElementById('search-input'), resultsContainer: document.getElementById('search-results'), json: '/assets/js/data/search.json', searchResultTemplate: '<div class="pl-1 pr-1 pl-sm-2 pr-sm-2 pl-lg-4 pr-lg-4 pl-xl-0 pr-xl-0"> <a href="https://linebird.github.io{url}">{title}</a><div class="mt-1 mb-1 post-meta d-flex flex-column flex-sm-row text-muted"><div class="mr-sm-4"><i class="far fa-folder fa-fw"></i>{categories}</div><div><i class="fa fa-tag fa-fw"></i>{tags}</div></div><p>{snippet}</p></div>', noResultsText: '<p class="mt-5">검색 결과가 없습니다.</p>' }); </script>

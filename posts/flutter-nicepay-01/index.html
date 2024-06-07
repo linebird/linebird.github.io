@@ -1,0 +1,509 @@
+<!DOCTYPE html><html lang="en" mode="light" ><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><meta name="theme" content="Chirpy v2.7.2"><meta name="generator" content="Jekyll v4.2.0" /><meta property="og:title" content="NICE pay 연동 - 01" /><meta name="author" content="유진수" /><meta property="og:locale" content="en_US" /><meta name="description" content="개발하게 된 이유" /><meta property="og:description" content="개발하게 된 이유" /><link rel="canonical" href="https://linebird.github.io/posts/flutter-nicepay-01/" /><meta property="og:url" content="https://linebird.github.io/posts/flutter-nicepay-01/" /><meta property="og:site_name" content="New software technology trend" /><meta property="og:type" content="article" /><meta property="article:published_time" content="2023-07-14T18:27:00+09:00" /><meta name="twitter:card" content="summary" /><meta property="twitter:title" content="NICE pay 연동 - 01" /><meta name="twitter:site" content="@linebird" /><meta name="twitter:creator" content="@유진수" /><meta name="google-site-verification" content="google_meta_tag_verification" /> <script type="application/ld+json"> {"author":{"@type":"Person","name":"유진수"},"description":"개발하게 된 이유","url":"https://linebird.github.io/posts/flutter-nicepay-01/","@type":"BlogPosting","headline":"NICE pay 연동 - 01","dateModified":"2023-07-14T18:42:40+09:00","datePublished":"2023-07-14T18:27:00+09:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://linebird.github.io/posts/flutter-nicepay-01/"},"@context":"https://schema.org"}</script><title>NICE pay 연동 - 01 | New software technology trend</title><link rel="shortcut icon" href="/assets/img/favicons/favicon.ico" type="image/x-icon"><link rel="icon" href="/assets/img/favicons/favicon.ico" type="image/x-icon"><link rel="apple-touch-icon" href="/assets/img/favicons/apple-icon.png"><link rel="apple-touch-icon" href="/assets/img/favicons/apple-icon-precomposed.png"><link rel="apple-touch-icon" sizes="57x57" href="/assets/img/favicons/apple-icon-57x57.png"><link rel="apple-touch-icon" sizes="60x60" href="/assets/img/favicons/apple-icon-60x60.png"><link rel="apple-touch-icon" sizes="72x72" href="/assets/img/favicons/apple-icon-72x72.png"><link rel="apple-touch-icon" sizes="76x76" href="/assets/img/favicons/apple-icon-76x76.png"><link rel="apple-touch-icon" sizes="114x114" href="/assets/img/favicons/apple-icon-114x114.png"><link rel="apple-touch-icon" sizes="120x120" href="/assets/img/favicons/apple-icon-120x120.png"><link rel="apple-touch-icon" sizes="144x144" href="/assets/img/favicons/apple-icon-144x144.png"><link rel="apple-touch-icon" sizes="152x152" href="/assets/img/favicons/apple-icon-152x152.png"><link rel="apple-touch-icon" sizes="180x180" href="/assets/img/favicons/apple-icon-180x180.png"><link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicons/android-icon-192x192.png"><link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicons/favicon-32x32.png"><link rel="icon" type="image/png" sizes="96x96" href="/assets/img/favicons/favicon-96x96.png"><link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicons/favicon-16x16.png"><link rel="manifest" href="/assets/img/favicons/manifest.json"><meta name='msapplication-config' content='/assets/img/favicons/browserconfig.xml'><meta name="msapplication-TileColor" content="#ffffff"><meta name="msapplication-TileImage" content="/assets/img/favicons/ms-icon-144x144.png"><meta name="theme-color" content="#ffffff"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous"><link rel="dns-prefetch" href="https://fonts.gstatic.com"><link rel="preconnect" href="https://www.google-analytics.com" crossorigin="use-credentials"><link rel="dns-prefetch" href="https://www.google-analytics.com"><link rel="preconnect" href="https://www.googletagmanager.com" crossorigin="anonymous"><link rel="dns-prefetch" href="https://www.googletagmanager.com"><link rel="preconnect" href="cdn.jsdelivr.net"><link rel="dns-prefetch" href="cdn.jsdelivr.net"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha256-LA89z+k9fjgMKQ/kq4OO2Mrf8VltYml/VES+Rg0fh20=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.11.2/css/all.min.css" integrity="sha256-+N4/V/SbAFiW1MPBCXnfnP9QSN3+Keu+NlB+0ev/YKQ=" crossorigin="anonymous"><link rel="preload" href="/assets/css/post.css" as="style"><link rel="stylesheet" href="/assets/css/post.css"><link rel="preload" as="style" href="/assets/css/lib/bootstrap-toc.min.css"><link rel="stylesheet" href="/assets/css/lib/bootstrap-toc.min.css" /> <script src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script> <script defer src="https://cdn.jsdelivr.net/combine/npm/popper.js@1.15.0,npm/bootstrap@4/dist/js/bootstrap.min.js"></script> <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5535513387307938" crossorigin="anonymous"></script> <script async src="/assets/js/post.min.js"></script> <script defer src="/app.js"></script> <script defer src="https://www.googletagmanager.com/gtag/js?id="></script> <script> document.addEventListener("DOMContentLoaded", function(event) { window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', ''); }); </script><body data-spy="scroll" data-target="#toc"><div id="sidebar" class="d-flex flex-column align-items-end"><div class="profile-wrapper text-center"><div id="avatar"> <a href="/" alt="avatar" class="mx-auto"> <img src="/assets/img/profile/linebird.png" alt="avatar" onerror="this.style.display='none'"> </a></div><div class="site-title mt-3"> <a href="/">New software technology trend</a></div><div class="site-subtitle font-italic">Software news and articles</div></div><ul class="w-100"><li class="nav-item"> <a href="/" class="nav-link"> <i class="fa-fw fas fa-home ml-xl-3 mr-xl-3 unloaded"></i> <span>HOME</span> </a><li class="nav-item"> <a href="/tabs/categories/" class="nav-link"> <i class="fa-fw fas fa-stream ml-xl-3 mr-xl-3 unloaded"></i> <span>CATEGORIES</span> </a><li class="nav-item"> <a href="/tabs/tags/" class="nav-link"> <i class="fa-fw fas fa-tags ml-xl-3 mr-xl-3 unloaded"></i> <span>TAGS</span> </a><li class="nav-item"> <a href="/tabs/archives/" class="nav-link"> <i class="fa-fw fas fa-archive ml-xl-3 mr-xl-3 unloaded"></i> <span>ARCHIVES</span> </a><li class="nav-item"> <a href="/tabs/about/" class="nav-link"> <i class="fa-fw fas fa-info ml-xl-3 mr-xl-3 unloaded"></i> <span>ABOUT</span> </a></ul><div class="sidebar-bottom mt-auto d-flex flex-wrap justify-content-center"> <a href="https://github.com/linebird" aria-label="github" target="_blank" rel="noopener"> <i class="fab fa-github-alt"></i> </a> <a href="https://twitter.com/linebird" aria-label="twitter" target="_blank" rel="noopener"> <i class="fab fa-twitter"></i> </a> <a href=" javascript:location.href = 'mailto:' + ['linebird71','gmail.com'].join('@')" aria-label="email" > <i class="fas fa-envelope"></i> </a> <a href="/feed.xml" aria-label="rss" > <i class="fas fa-rss"></i> </a></div></div><div id="topbar-wrapper" class="row justify-content-center topbar-down"><div id="topbar" class="col-11 d-flex h-100 align-items-center justify-content-between"> <span id="breadcrumb"> <span> <a href="/"> Posts </a> </span> <span>NICE pay 연동 - 01</span> </span> <i id="sidebar-trigger" class="fas fa-bars fa-fw"></i><div id="topbar-title"> Post</div><i id="search-trigger" class="fas fa-search fa-fw"></i> <span id="search-wrapper" class="align-items-center"> <i class="fas fa-search fa-fw"></i> <input class="form-control" id="search-input" type="search" aria-label="search" placeholder="Search..."> <i class="fa fa-times-circle fa-fw" id="search-cleaner"></i> </span> <span id="search-cancel" >Cancel</span></div></div><div id="main-wrapper"><div id="main"><div class="row"><div id="post-wrapper" class="col-12 col-lg-11 col-xl-8"><div class="post pl-1 pr-1 pl-sm-2 pr-sm-2 pl-md-4 pr-md-4"><h1 data-toc-skip>NICE pay 연동 - 01</h1><div class="post-meta text-muted d-flex flex-column"><div> <span class="timeago " data-toggle="tooltip" data-placement="bottom" title="Fri, Jul 14, 2023, 6:27 PM +0900" > Jul 14, 2023 <i class="unloaded">2023-07-14T18:27:00+09:00</i> </span> by <span class="author"> 유진수 </span></div><div> <span> Updated <span class="timeago lastmod" data-toggle="tooltip" data-placement="bottom" title="Fri, Jul 14, 2023, 6:42 PM +0900" > Jul 14, 2023 <i class="unloaded">2023-07-14T18:42:40+09:00</i> </span> </span> <span class="readtime" data-toggle="tooltip" data-placement="bottom" title="2673 words">14 min</span></div></div><div class="post-content"><h2 id="개발하게-된-이유">개발하게 된 이유</h2><p>회사 앱 개발을 하면서 결제 서비스가 필요한 상황이었음. 개발자가 기존 회사에서 활용하던 iamport의 라이브러리를 사용하여 개발을 진행함. 상품을 판매하는 협력사에서 <strong>수수료가 비싸다</strong>고 <strong>PG사와 직접 연동</strong>하여 개발해달라고 요청이 들어옴. <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="/assets/img/2023/07/pgapi_task.jpg" alt="개발업무" /></p><h2 id="pg-연동">PG 연동</h2><h3 id="pg가-뭐지">PG가 뭐지?</h3><p>Payment Gateway. PG사는 온라인 상거래에서 결제 처리를 위한 시스템을 제공하는 회사. PG사는 상인과 고객 사이에서 결제 정보를 전달하고, 신용카드나 체크카드 등의 결제 수단을 사용하여 실제 결제를 처리하는 역할 수행. PG사는 신용카드 회사와은행과 협력하여 결제 처리를 담당하며, 상점의 웹사이트나 앱에 통합되어 사용됨. <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="https://static.toss-internal.com/ipd-tcs/toss_core/live/217f228d-39c9-4e50-beae-049d900bd9bc" alt="pg" /></p><h3 id="그럼-van은">그럼 VAN은?</h3><p>Value Added Network. VAN사는 전자 데이터 통신 서비스를 제공하는 회사를 가리킨다. 주로 <strong>전자 금융 트랜잭션을 위한 통신 네트워크를 구축하고 운영</strong>함. VAN사는 상인과 신용카드 처리 회사, 은행 등 각종 금융 기관 사이의 통신을 담당하여 결제 정보와 금융 데이터를 안전하고 신속하게 교환할 수 있도록 지원함. 주로 신용카드 승인 요청과 응답, 전자 데이터 교환 등에 사용됨. <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="https://static.toss-internal.com/ipd-tcs/toss_core/live/88a1c408-34f9-49b4-b17e-77f793a50bac" alt="van" /></p><h3 id="pg와-van-차이점">PG와 VAN 차이점</h3><p>가장 큰 차이는 ‘수수료’<br /> VAN사는 가맹점에게 수수료를 받지 않고, 카드사로부터 수수료를 받으나, PG사는 오히려 PG사가 카드사에 수수료를 내고 결제를 연동하는 구조임. 당연히 PG사의 ‘수수료’가 높을 수 밖에 없음.</p><h2 id="nice-payment-workflow">NICE payment workflow</h2><p>Server 승인 모델과 Client 승인 모델의 두 종류가 존재한다. 여기서 주의할 점은 <strong>returnUrl</strong>이다. 안드로이드/iOS의 앱은 서버가 아님!!<br /> 승인 결과를 받기위해서는 url이 필요…. 즉, <strong><em>웹서버가 필요하다</em></strong>는 것.</p><blockquote><p>Server 승인 모델 - 결제창 <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="https://github.com/nicepayments/nicepay-manual/raw/main/image/payment-window-server-sdk.svg" alt="서버승인모델" /></p></blockquote><blockquote><p>Client 승인 모델 - 결제창 <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="https://github.com/nicepayments/nicepay-manual/raw/main/image/payment-client-authorization.svg" alt="서버승인모델" /></p></blockquote><h2 id="flutter에서-nicepay-연동">Flutter에서 NICEPay 연동</h2><p>PG사인 NICEPay에서는 온라인결제를 위한 개발 가이드를 <a href="https://github.com/nicepayments/nicepay-manual/tree/main">메뉴얼</a>로 제공하고 있음. “Node.js”, “Python”, “Ruby”, “ASP”, “JAVA”, “PHP”, “.NET” 샘플 코드를 제공함.<br /> 그런데… flutter는 없네!!!<br /> flutter를 위한 메뉴얼 또는 라이브러리를 제공하지 않고 있어, 이 글을 작성하게 됨</p><blockquote><p>flutter에서 결제 연동을 위해서는 다음과 같은 개발을 할 수 있어야 함.<br /> 첫째, 웹 서버 프로그램 작성. 둘째, 당연히 flutter 작성. 셋째, 안드로이드와 iOS 네이티브 작성.<br /> 결론적으로 jsp, js, dart/flutter, swift, kotlin/java에 대한 지식이 있어야 함. ㅡ_ㅡa</p></blockquote><h3 id="1-웹-서버-프로그램">1. 웹 서버 프로그램</h3><p>기존에 회사 내에서 사용하던 “본인인증”용 웹서버를 같이 활용하기로 결정.<br /> Flutter 앱에서 웹 서버로 결제정보를 호출하면, NicePay 결제창을 활성화한다. 카드 결제만 수용한다.</p><h4 id="1-controller">1) Controller</h4><p>기존 사용하고 있던 소스에서 Spring Controller를 추가하고 model&amp;view 방식으로 처리하였다.<br /> NicePay와 관련한 계정 정보 등은 application.properties 파일에 설정.<br /> app에서 결제 정보를 POST로 보내면 model에 attributes로 추가하여, JSP 페이지를 로딩한다. flutter에서는 webview로 해당 페이지로 NicePay 결제창과 연동하게 된다.<br /> payment 메소드에서 결제 요청을 받고, resultPayment에서 결제 결과를 받는다.</p><div class="language-java highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+</pre><td class="rouge-code"><pre><span class="nd">@Controller</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">NicepayController</span> <span class="o">{</span>
+    <span class="nd">@Value</span><span class="o">(</span><span class="s">"${nicepay.merchantid}"</span><span class="o">)</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">merchantID</span><span class="o">;</span>
+    <span class="nd">@Value</span><span class="o">(</span><span class="s">"${nicepay.merchantkey}"</span><span class="o">)</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">merchantKey</span><span class="o">;</span>
+    <span class="nd">@Value</span><span class="o">(</span><span class="s">"${nicepay.merchanturl}"</span><span class="o">)</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">merchantUrl</span><span class="o">;</span>
+
+    <span class="nd">@RequestMapping</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">"/payment"</span><span class="o">,</span> <span class="n">method</span> <span class="o">=</span> <span class="nc">RequestMethod</span><span class="o">.</span><span class="na">POST</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="nc">String</span> <span class="nf">payment</span><span class="o">(</span><span class="nc">Model</span> <span class="n">model</span><span class="o">,</span> <span class="nc">HttpServletRequest</span> <span class="n">req</span><span class="o">){</span>
+        <span class="n">model</span><span class="o">.</span><span class="na">addAttribute</span><span class="o">(</span><span class="s">"orderId"</span><span class="o">,</span> <span class="no">UUID</span><span class="o">.</span><span class="na">randomUUID</span><span class="o">().</span><span class="na">toString</span><span class="o">());</span>
+        <span class="n">model</span><span class="o">.</span><span class="na">addAttribute</span><span class="o">(</span><span class="s">"merchantId"</span><span class="o">,</span> <span class="n">merchantID</span><span class="o">);</span>
+        <span class="n">model</span><span class="o">.</span><span class="na">addAttribute</span><span class="o">(</span><span class="s">"merchantKey"</span><span class="o">,</span> <span class="n">merchantKey</span><span class="o">);</span>
+        <span class="n">model</span><span class="o">.</span><span class="na">addAttribute</span><span class="o">(</span><span class="s">"merchantUrl"</span><span class="o">,</span> <span class="n">merchantUrl</span><span class="o">);</span>
+        <span class="n">model</span><span class="o">.</span><span class="na">addAttribute</span><span class="o">(</span><span class="s">"goodsName"</span><span class="o">,</span> <span class="n">req</span><span class="o">.</span><span class="na">getParameter</span><span class="o">(</span><span class="s">"goodsName"</span><span class="o">));</span>
+        <span class="n">model</span><span class="o">.</span><span class="na">addAttribute</span><span class="o">(</span><span class="s">"price"</span><span class="o">,</span> <span class="n">req</span><span class="o">.</span><span class="na">getParameter</span><span class="o">(</span><span class="s">"price"</span><span class="o">));</span>
+        <span class="n">model</span><span class="o">.</span><span class="na">addAttribute</span><span class="o">(</span><span class="s">"buyerName"</span><span class="o">,</span> <span class="n">req</span><span class="o">.</span><span class="na">getParameter</span><span class="o">(</span><span class="s">"buyerName"</span><span class="o">));</span>
+        <span class="n">model</span><span class="o">.</span><span class="na">addAttribute</span><span class="o">(</span><span class="s">"buyerTel"</span><span class="o">,</span> <span class="n">req</span><span class="o">.</span><span class="na">getParameter</span><span class="o">(</span><span class="s">"buyerTel"</span><span class="o">));</span>
+        <span class="k">return</span> <span class="s">"payment"</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="nd">@RequestMapping</span><span class="o">(</span><span class="s">"/payment/result"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="nc">String</span> <span class="nf">resultPayment</span><span class="o">(</span><span class="nc">Model</span> <span class="n">model</span><span class="o">,</span> <span class="nc">HttpServletRequest</span> <span class="n">request</span><span class="o">){</span>
+        <span class="n">model</span><span class="o">.</span><span class="na">addAttribute</span><span class="o">(</span><span class="s">"merchantKey"</span><span class="o">,</span> <span class="n">merchantKey</span><span class="o">);</span>
+        <span class="n">model</span><span class="o">.</span><span class="na">addAttribute</span><span class="o">(</span><span class="s">"merchantUrl"</span><span class="o">,</span> <span class="n">merchantUrl</span><span class="o">);</span>
+        <span class="k">return</span> <span class="s">"payment_result"</span><span class="o">;</span>
+    <span class="o">}</span>      
+<span class="o">}</span>
+</pre></table></code></div></div><h4 id="2-jsp">2) JSP</h4><p>JSP 페이지는 NicePay에서 제공한 source를 수정하여 사용하였다.<br /> NicePay의 JSP 소스는 여기를 참고하면 되고, 아래에 수정된 중요 부분만 발췌하여 설명한다.</p><ul><li>payment.jsp –&gt; 결제 요청 처리<li>payment_result.jsp –&gt; 결제 결과 처리</ul><p>첫번째, payment.jsp에서 Controller로 전달받은 결제정보를 Form에 보낼 변수에 할당하도록 수정하였다. request.getAttribute()로 데이터를 변수에 할당한다.</p><div class="language-jsp highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+</pre><td class="rouge-code"><pre><span class="nt">&lt;%</span>
+<span class="o">/*</span>
+<span class="o">*******************************************************</span>
+<span class="o">*</span> <span class="o">&lt;</span><span class="n">결제요청</span> <span class="n">파라미터</span><span class="err">&gt;</span>
+<span class="o">*</span> <span class="n">결제시</span> <span class="nc">Form</span> <span class="n">에</span> <span class="n">보내는</span> <span class="n">결제요청</span> <span class="n">파라미터입니다</span><span class="o">.</span>
+<span class="o">*</span> <span class="n">샘플페이지에서는</span> <span class="n">기본</span><span class="o">(</span><span class="n">필수</span><span class="o">)</span> <span class="n">파라미터만</span> <span class="n">예시되어</span> <span class="n">있으며</span><span class="o">,</span> 
+<span class="o">*</span> <span class="n">추가</span> <span class="n">가능한</span> <span class="n">옵션</span> <span class="n">파라미터는</span> <span class="n">연동메뉴얼을</span> <span class="n">참고하세요</span><span class="o">.</span>
+<span class="o">*******************************************************</span>
+<span class="o">*/</span>
+<span class="nc">String</span> <span class="n">merchantUrl</span>      <span class="o">=</span> <span class="o">(</span><span class="nc">String</span><span class="o">)</span><span class="n">request</span><span class="o">.</span><span class="na">getAttribute</span><span class="o">(</span><span class="s">"merchantUrl"</span><span class="o">);</span>
+<span class="nc">String</span> <span class="n">merchantID</span> 		<span class="o">=</span> <span class="o">(</span><span class="nc">String</span><span class="o">)</span><span class="n">request</span><span class="o">.</span><span class="na">getAttribute</span><span class="o">(</span><span class="s">"merchantId"</span><span class="o">);</span> 				<span class="c1">// 상점아이디</span>
+<span class="nc">String</span> <span class="n">merchantKey</span> 		<span class="o">=</span> <span class="o">(</span><span class="nc">String</span><span class="o">)</span><span class="n">request</span><span class="o">.</span><span class="na">getAttribute</span><span class="o">(</span><span class="s">"merchantKey"</span><span class="o">);</span> 				<span class="c1">// 상점키</span>
+<span class="nc">String</span> <span class="n">goodsName</span> 		<span class="o">=</span> <span class="o">(</span><span class="nc">String</span><span class="o">)</span><span class="n">request</span><span class="o">.</span><span class="na">getAttribute</span><span class="o">(</span><span class="s">"goodsName"</span><span class="o">);</span> 				<span class="c1">// 결제상품명</span>
+<span class="nc">String</span> <span class="n">price</span> 			<span class="o">=</span> <span class="o">(</span><span class="nc">String</span><span class="o">)</span><span class="n">request</span><span class="o">.</span><span class="na">getAttribute</span><span class="o">(</span><span class="s">"price"</span><span class="o">);</span> 					<span class="c1">// 결제상품금액	</span>
+<span class="nc">String</span> <span class="n">buyerName</span> 		<span class="o">=</span> <span class="o">(</span><span class="nc">String</span><span class="o">)</span><span class="n">request</span><span class="o">.</span><span class="na">getAttribute</span><span class="o">(</span><span class="s">"buyerName"</span><span class="o">);</span> 				<span class="c1">// 구매자명</span>
+<span class="nc">String</span> <span class="n">buyerTel</span> 		<span class="o">=</span> <span class="o">(</span><span class="nc">String</span><span class="o">)</span><span class="n">request</span><span class="o">.</span><span class="na">getAttribute</span><span class="o">(</span><span class="s">"buyerTel"</span><span class="o">);</span> 				<span class="c1">// 구매자연락처</span>
+<span class="c1">//String buyerEmail 		= "happy@day.co.kr"; 									// 구매자메일주소</span>
+<span class="nc">String</span> <span class="n">moid</span> 			<span class="o">=</span>  <span class="o">(</span><span class="nc">String</span><span class="o">)</span><span class="n">request</span><span class="o">.</span><span class="na">getAttribute</span><span class="o">(</span><span class="s">"orderId"</span><span class="o">);</span> 				<span class="c1">// 상품주문번호	</span>
+<span class="nc">String</span> <span class="n">returnURL</span> 		<span class="o">=</span> <span class="n">merchantUrl</span> <span class="o">+</span> <span class="s">"/payment/result"</span><span class="o">;</span> 	
+<span class="o">...</span>
+</pre></table></code></div></div><p>두번째, payment.jsp에서 NicePay 결제창 처리를 위해 아래와 같이 수정</p><ul><li>페이지 로딩시에 즉시 결제창을 요청하도록 &lt;body onload="nicepayStart()"&gt;를 추가하였다.<li>결제 내역을 사용자에게 보여줄 필요가 없어 style=”display:none”을 추가하였다.<li>form의 action을 서버에서 가져온 url로 매핑하였다. action=”${merchantUrl}/payment/result”</ul><div class="language-jsp highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+</pre><td class="rouge-code"><pre><span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span><span class="nt">&gt;</span>
+<span class="c1">//결제창 최초 요청시 실행됩니다.</span>
+<span class="kd">function</span> <span class="nx">nicepayStart</span><span class="p">(){</span>
+	<span class="k">if</span><span class="p">(</span><span class="nx">checkPlatform</span><span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nb">navigator</span><span class="p">.</span><span class="nx">userAgent</span><span class="p">)</span> <span class="o">==</span> <span class="dl">"</span><span class="s2">mobile</span><span class="dl">"</span><span class="p">){</span><span class="c1">//모바일 결제창 진입</span>
+		<span class="nb">document</span><span class="p">.</span><span class="nx">payForm</span><span class="p">.</span><span class="nx">action</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">https://web.nicepay.co.kr/v3/v3Payment.jsp</span><span class="dl">"</span><span class="p">;</span>
+		<span class="nb">document</span><span class="p">.</span><span class="nx">payForm</span><span class="p">.</span><span class="nx">acceptCharset</span><span class="o">=</span><span class="dl">"</span><span class="s2">euc-kr</span><span class="dl">"</span><span class="p">;</span>
+		<span class="nb">document</span><span class="p">.</span><span class="nx">payForm</span><span class="p">.</span><span class="nx">submit</span><span class="p">();</span>
+	<span class="p">}</span><span class="k">else</span><span class="p">{</span><span class="c1">//PC 결제창 진입</span>
+		<span class="nx">goPay</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">payForm</span><span class="p">);</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+<span class="p">...</span>
+<span class="nt">&lt;/script&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body</span> <span class="na">onload=</span><span class="s">"nicepayStart()"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;div</span> <span class="na">style=</span><span class="s">"display:none"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;form</span> <span class="na">name=</span><span class="s">"payForm"</span> <span class="na">method=</span><span class="s">"post"</span> <span class="na">action=</span><span class="s">"${merchantUrl}/payment/result"</span> <span class="na">accept-charset=</span><span class="s">"euc-kr"</span><span class="nt">&gt;</span>
+...
+</pre></table></code></div></div><p>세번째, payment_result.jsp에서 window.flutter_inappwebview.callHandler를 사용하여, 결제결과 정보를 flutter webview로 보내도록 구현한다.</p><div class="language-jsp highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+</pre><td class="rouge-code"><pre><span class="nt">&lt;script&gt;</span>
+	<span class="nb">window</span><span class="p">.</span><span class="nx">onload</span> <span class="o">=</span> <span class="nx">pageLoad</span><span class="p">;</span>
+
+	<span class="kd">function</span> <span class="nx">pageLoad</span><span class="p">(){</span>
+		<span class="c1">// 결제 결과값을 JSON 형태로 생성</span>
+		<span class="kd">var</span> <span class="nx">payResult</span> <span class="o">=</span> <span class="p">{</span>
+			<span class="na">paySuccess</span><span class="p">:</span> <span class="nb">window</span><span class="p">.</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">'</span><span class="s1">paySuccess</span><span class="dl">'</span><span class="p">).</span><span class="nx">textContent</span><span class="p">,</span>
+			<span class="na">payMethod</span><span class="p">:</span> <span class="nb">window</span><span class="p">.</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">'</span><span class="s1">payMethod</span><span class="dl">'</span><span class="p">).</span><span class="nx">textContent</span><span class="p">,</span>
+			<span class="na">tid</span><span class="p">:</span> <span class="nb">window</span><span class="p">.</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">'</span><span class="s1">tid</span><span class="dl">'</span><span class="p">).</span><span class="nx">textContent</span><span class="p">,</span>
+			<span class="na">totalAmount</span><span class="p">:</span> <span class="nb">window</span><span class="p">.</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">'</span><span class="s1">amount</span><span class="dl">'</span><span class="p">).</span><span class="nx">textContent</span><span class="p">,</span>
+			<span class="na">cardName</span><span class="p">:</span> <span class="nb">window</span><span class="p">.</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">'</span><span class="s1">cardName</span><span class="dl">'</span><span class="p">).</span><span class="nx">textContent</span><span class="p">,</span>
+			<span class="na">cardNo</span><span class="p">:</span> <span class="nb">window</span><span class="p">.</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">'</span><span class="s1">cardNo</span><span class="dl">'</span><span class="p">).</span><span class="nx">textContent</span><span class="p">,</span>
+			<span class="na">cardQuota</span><span class="p">:</span> <span class="nb">window</span><span class="p">.</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">'</span><span class="s1">cardQuota</span><span class="dl">'</span><span class="p">).</span><span class="nx">textContent</span><span class="p">,</span>
+		<span class="p">}</span>
+
+		<span class="c1">// flutter_inappwebview 라이브러리의 callHandler 함수를 사용하여, 결과값 전달</span>
+		<span class="nb">window</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">"</span><span class="s2">flutterInAppWebViewPlatformReady</span><span class="dl">"</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+			<span class="k">if</span> <span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">flutter_inappwebview</span><span class="p">.</span><span class="nx">callHandler</span><span class="p">)</span> <span class="p">{</span>
+				<span class="nb">window</span><span class="p">.</span><span class="nx">flutter_inappwebview</span><span class="p">.</span><span class="nx">callHandler</span><span class="p">(</span><span class="dl">'</span><span class="s1">NicepayHandler</span><span class="dl">'</span><span class="p">,</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">payResult</span><span class="p">));</span>
+			<span class="p">}</span><span class="k">else</span><span class="p">{</span>
+				<span class="nb">window</span><span class="p">.</span><span class="nx">flutter_inappwebview</span><span class="p">.</span><span class="nx">_callHandler</span><span class="p">(</span><span class="dl">'</span><span class="s1">NicepayHandler</span><span class="dl">'</span><span class="p">,</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">payResult</span><span class="p">));</span>
+			<span class="p">}</span>
+		<span class="p">});</span>
+	<span class="p">}</span>
+<span class="nt">&lt;/script&gt;</span>
+</pre></table></code></div></div><h3 id="2-flutter">2. Flutter</h3><p>flutter_inappwebview 플러그인을 사용하여, nicepay 결제창 처리를 한다. 여기에서는 위의 서버에 작성한 /payment 컨트롤러를 호출하여 nicepay 결제창을 webview에 표시되게 한다.<br /> inappwebview에서 아래와 같은 기능을 구현한다.</p><ul><li>javascript handling : 최종 nicepay 결과를 javacript로 수신하여 처리하는 작업 수행<li>다른 앱 실행 처리를 위한 MethodChannel 구현 : 웹이 아닌 android나 iOS app을 실행하는 경우 처리.</ul><p>첫째, InAppWebView를 생성하면서, initialUrlRequest 속서에 위의 1번 개발된 서버의 요청 URL을 설정한다.<br /> 또한 onWebViewCreated에 javascript handler를 추가하여, payment_result.jsp에서 window.addEventListener로 결제 결과를 수신할 수 있게 구현한다.<br /> 둘째, shouldOverrideUrlLoading에서 nicepay 결제창의 url을 확인하여, http/https가 아닌 요청에 대해 MethodChannel을 호출한다. 여기에서는 getAppUrl(requestUrl);로 구현됨.</p><div class="language-dart highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+</pre><td class="rouge-code"><pre> <span class="nd">@override</span>
+  <span class="n">Widget</span> <span class="n">build</span><span class="o">(</span><span class="n">BuildContext</span> <span class="n">context</span><span class="o">)</span> <span class="o">{</span>
+    <span class="kd">var</span> <span class="n">shoppingController</span> <span class="o">=</span> <span class="n">Get</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">GetShoppingsController</span><span class="o">());</span>
+
+    <span class="k">return</span> <span class="n">Scaffold</span><span class="o">(</span>
+        <span class="nl">appBar:</span> <span class="n">LeadingAppBar</span><span class="o">(</span>
+          <span class="nl">appBar:</span> <span class="n">AppBar</span><span class="o">(),</span>
+          <span class="nl">title:</span> <span class="s">'NICE 결제'</span><span class="o">,</span>
+        <span class="o">),</span>
+        <span class="nl">body:</span> <span class="n">SafeArea</span><span class="o">(</span>
+          <span class="nl">child:</span> <span class="n">InAppWebView</span><span class="o">(</span>
+            <span class="nl">initialUrlRequest:</span> <span class="n">URLRequest</span><span class="o">(</span>
+              <span class="nl">url:</span> <span class="n">Uri</span><span class="o">.</span><span class="na">parse</span><span class="o">(</span>
+                <span class="s">'위의 개발한 서버의 요청 URL/payment'</span><span class="o">,</span>
+              <span class="o">),</span>
+              <span class="nl">body:</span> <span class="n">Uint8List</span><span class="o">.</span><span class="na">fromList</span><span class="o">(</span>
+                <span class="n">utf8</span><span class="o">.</span><span class="na">encode</span><span class="o">(</span>
+                  <span class="n">getRequestBody</span><span class="o">(</span><span class="n">shoppingController</span><span class="o">),</span>  <span class="c1">// 요청 데이터</span>
+                <span class="o">),</span>
+              <span class="o">),</span>
+              <span class="nl">method:</span> <span class="s">'POST'</span><span class="o">,</span>
+              <span class="nl">headers:</span> <span class="o">{</span>
+                <span class="s">'Content-Type'</span><span class="o">:</span> <span class="s">'application/x-www-form-urlencoded'</span><span class="o">,</span>
+              <span class="o">},</span>
+            <span class="o">),</span>
+            <span class="nl">initialOptions:</span> <span class="n">options</span><span class="o">,</span>
+            <span class="nl">onWebViewCreated:</span> <span class="o">(</span><span class="n">controller</span><span class="o">)</span> <span class="o">{</span>
+              <span class="n">controller</span><span class="o">.</span><span class="na">addJavaScriptHandler</span><span class="o">(</span>
+                  <span class="nl">handlerName:</span> <span class="s">'NicepayHandler'</span><span class="o">,</span>
+                  <span class="nl">callback:</span> <span class="o">(</span><span class="n">arguments</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="n">Map</span><span class="o">&lt;</span><span class="kt">String</span><span class="o">,</span> <span class="kd">dynamic</span><span class="o">&gt;</span> <span class="n">resp</span> <span class="o">=</span> <span class="n">jsonDecode</span><span class="o">(</span><span class="n">arguments</span><span class="o">[</span><span class="mi">0</span><span class="o">]);</span>
+                    <span class="k">if</span> <span class="o">(</span><span class="n">resp</span><span class="o">[</span><span class="s">'paySuccess'</span><span class="o">]</span> <span class="o">==</span> <span class="s">'true'</span><span class="o">)</span> <span class="o">{</span>
+                      <span class="n">Map</span><span class="o">&lt;</span><span class="kt">String</span><span class="o">,</span> <span class="kd">dynamic</span><span class="o">&gt;</span> <span class="n">param</span> <span class="o">=</span> <span class="o">{};</span>
+                      <span class="n">param</span><span class="o">[</span><span class="s">'reportSeq'</span><span class="o">]</span> <span class="o">=</span> <span class="n">shoppingController</span><span class="o">.</span><span class="na">reportSeq</span><span class="o">.</span><span class="na">value</span><span class="o">;</span>
+                      <span class="n">param</span><span class="o">[</span><span class="s">'addrSeq'</span><span class="o">]</span> <span class="o">=</span> <span class="n">shoppingController</span><span class="o">.</span><span class="na">addrSeq</span><span class="o">.</span><span class="na">value</span><span class="o">;</span>
+                      <span class="n">param</span><span class="o">[</span><span class="s">'impUid'</span><span class="o">]</span> <span class="o">=</span> <span class="n">resp</span><span class="o">[</span><span class="s">'tid'</span><span class="o">];</span>
+                      <span class="n">List</span><span class="o">&lt;</span><span class="kd">dynamic</span><span class="o">&gt;</span> <span class="n">prdAmountList</span> <span class="o">=</span> <span class="o">[];</span>
+                      <span class="k">for</span> <span class="o">(</span><span class="kd">var</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+                          <span class="n">i</span> <span class="o">&lt;</span> <span class="n">shoppingController</span><span class="o">.</span><span class="na">prdList</span><span class="o">.</span><span class="na">length</span><span class="o">;</span>
+                          <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+                        <span class="kd">var</span> <span class="n">prd</span> <span class="o">=</span> <span class="n">shoppingController</span><span class="o">.</span><span class="na">prdList</span><span class="o">[</span><span class="n">i</span><span class="o">];</span>
+                        <span class="n">prdAmountList</span><span class="o">.</span><span class="na">add</span><span class="o">({</span>
+                          <span class="s">'prdKey'</span><span class="o">:</span> <span class="n">prd</span><span class="o">[</span><span class="s">'prdKey'</span><span class="o">],</span>
+                          <span class="s">'payAmount'</span><span class="o">:</span> <span class="n">prd</span><span class="o">[</span><span class="s">'amount'</span><span class="o">]</span>
+                        <span class="o">});</span>
+                      <span class="o">}</span>
+                      <span class="n">param</span><span class="o">[</span><span class="s">'prdAmountList'</span><span class="o">]</span> <span class="o">=</span> <span class="n">prdAmountList</span><span class="o">;</span>
+
+                      <span class="n">postBuysApi</span><span class="o">(</span><span class="n">param</span><span class="o">,</span> <span class="n">context</span><span class="o">);</span>
+                    <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+                      <span class="n">Get</span><span class="o">.</span><span class="na">back</span><span class="o">(</span><span class="nl">result:</span> <span class="n">resp</span><span class="o">);</span>
+                    <span class="o">}</span>
+                  <span class="o">});</span>
+            <span class="o">},</span>
+            <span class="nl">shouldOverrideUrlLoading:</span> <span class="o">(</span><span class="n">controller</span><span class="o">,</span> <span class="n">navigationAction</span><span class="o">)</span> <span class="n">async</span> <span class="o">{</span>
+              <span class="kt">String</span> <span class="n">requestUrl</span> <span class="o">=</span> <span class="n">navigationAction</span><span class="o">.</span><span class="na">request</span><span class="o">.</span><span class="na">url</span><span class="o">.</span><span class="na">toString</span><span class="o">();</span>
+              <span class="n">debugPrint</span><span class="o">(</span><span class="s">'웹뷰 [onUpdateVisitedHistory]: </span><span class="si">$requestUrl</span><span class="s">'</span><span class="o">);</span>
+
+              <span class="k">if</span> <span class="o">(!</span><span class="n">requestUrl</span><span class="o">.</span><span class="na">startsWith</span><span class="o">(</span><span class="s">'http'</span><span class="o">)</span> <span class="o">&amp;&amp;</span>
+                  <span class="o">!</span><span class="n">requestUrl</span><span class="o">.</span><span class="na">startsWith</span><span class="o">(</span><span class="s">'https'</span><span class="o">))</span> <span class="o">{</span>
+                <span class="k">if</span> <span class="o">(</span><span class="n">Platform</span><span class="o">.</span><span class="na">isAndroid</span><span class="o">)</span> <span class="o">{</span>
+                  <span class="n">getAppUrl</span><span class="o">(</span><span class="n">requestUrl</span><span class="o">);</span>
+                  <span class="k">return</span> <span class="n">NavigationActionPolicy</span><span class="o">.</span><span class="na">CANCEL</span><span class="o">;</span>
+                <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">Platform</span><span class="o">.</span><span class="na">isIOS</span><span class="o">)</span> <span class="o">{</span>
+                  <span class="n">await</span> <span class="n">launchUrl</span><span class="o">(</span>
+                    <span class="n">Uri</span><span class="o">.</span><span class="na">parse</span><span class="o">(</span><span class="n">requestUrl</span><span class="o">),</span>
+                  <span class="o">);</span>
+                  <span class="k">return</span> <span class="n">NavigationActionPolicy</span><span class="o">.</span><span class="na">CANCEL</span><span class="o">;</span>
+                <span class="o">}</span>
+              <span class="o">}</span>
+              <span class="k">return</span> <span class="n">NavigationActionPolicy</span><span class="o">.</span><span class="na">ALLOW</span><span class="o">;</span>
+            <span class="o">},</span>
+          <span class="o">),</span>
+        <span class="o">));</span>
+  <span class="o">}</span>
+</pre></table></code></div></div><p>결제 요청 파라미터 생성과, MethodChannel 호출 소스는 아래와 같다.</p><div class="language-dart highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+</pre><td class="rouge-code"><pre><span class="o">...</span>
+  <span class="c1">/// 결제 요청 파라미터</span>
+  <span class="kt">String</span> <span class="n">getRequestBody</span><span class="o">(</span><span class="n">GetShoppingsController</span> <span class="n">controller</span><span class="o">)</span> <span class="o">{</span>
+    <span class="kt">String</span> <span class="n">result</span> <span class="o">=</span> <span class="s">""</span><span class="o">;</span>
+    <span class="n">result</span> <span class="o">+=</span> <span class="s">"goodsName=</span><span class="si">${controller.prdName.value}</span><span class="s">"</span><span class="o">;</span>      <span class="c1">// 상품명</span>
+    <span class="n">result</span> <span class="o">+=</span> <span class="s">"&amp;price=</span><span class="si">${controller.payAmount.value}</span><span class="s">"</span><span class="o">;</span>       <span class="c1">// 결제금액</span>
+    <span class="n">result</span> <span class="o">+=</span> <span class="s">"&amp;buyerName=</span><span class="si">${controller.buyerName.value}</span><span class="s">"</span><span class="o">;</span>   <span class="c1">// 결제자 이름</span>
+    <span class="n">result</span> <span class="o">+=</span> <span class="s">"&amp;buyerTel=</span><span class="si">${controller.buyerTel.value}</span><span class="s">"</span><span class="o">;</span>     <span class="c1">// 결제자 전화번호</span>
+    <span class="k">return</span> <span class="n">result</span><span class="o">;</span>
+  <span class="o">}</span>
+
+  <span class="c1">/// 앱 실행 및 설치 MethodChannel 호출</span>
+  <span class="n">Future</span> <span class="n">getAppUrl</span><span class="o">(</span><span class="kt">String</span> <span class="n">url</span><span class="o">)</span> <span class="n">async</span> <span class="o">{</span>
+    <span class="n">await</span> <span class="n">platform</span><span class="o">.</span><span class="na">invokeMethod</span><span class="o">(</span><span class="s">'getAppUrl'</span><span class="o">,</span> <span class="o">&lt;</span><span class="kt">String</span><span class="o">,</span> <span class="kt">Object</span><span class="o">&gt;{</span><span class="s">'url'</span><span class="o">:</span> <span class="n">url</span><span class="o">}).</span><span class="na">then</span><span class="o">(</span>
+        <span class="o">(</span><span class="n">value</span><span class="o">)</span> <span class="n">async</span> <span class="o">{</span>
+      <span class="n">debugPrint</span><span class="o">(</span><span class="s">'paring url : </span><span class="si">$value</span><span class="s">'</span><span class="o">);</span>
+
+      <span class="k">if</span> <span class="o">(</span><span class="n">await</span> <span class="n">canLaunchUrl</span><span class="o">(</span><span class="n">Uri</span><span class="o">.</span><span class="na">parse</span><span class="o">(</span><span class="n">value</span><span class="o">)))</span> <span class="o">{</span>
+        <span class="n">await</span> <span class="n">launchUrl</span><span class="o">(</span>
+          <span class="n">Uri</span><span class="o">.</span><span class="na">parse</span><span class="o">(</span><span class="n">value</span><span class="o">),</span>
+        <span class="o">);</span>
+        <span class="k">return</span><span class="o">;</span>
+      <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+        <span class="n">debugPrint</span><span class="o">(</span><span class="s">'이동 불가능한 URL입니다.'</span><span class="o">);</span>
+        <span class="k">return</span><span class="o">;</span>
+      <span class="o">}</span>
+    <span class="o">});</span>
+  <span class="o">}</span>
+</pre></table></code></div></div><h3 id="3-android-mainactivity">3. Android MainActivity</h3><p>configureFlutterEngine(flutterEngine: FlutterEngine) 함수에서 MethodChannel 처리를 한다. methodCall.method == “getAppUrl”인 경우, startSchemeIntent(url) 호출하여, android 앱을 실행하거나, 마켓으로 이동하도록 한다.</p><div class="language-kotlin highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+</pre><td class="rouge-code"><pre><span class="o">..</span><span class="p">.</span>
+    <span class="k">override</span> <span class="k">fun</span> <span class="nf">configureFlutterEngine</span><span class="p">(</span><span class="n">flutterEngine</span><span class="p">:</span> <span class="nc">FlutterEngine</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">super</span><span class="p">.</span><span class="nf">configureFlutterEngine</span><span class="p">(</span><span class="n">flutterEngine</span><span class="p">)</span>
+
+        <span class="nc">GeneratedPluginRegistrant</span><span class="p">.</span><span class="nf">registerWith</span><span class="p">(</span><span class="n">flutterEngine</span><span class="p">)</span>
+
+        <span class="kd">val</span> <span class="py">handler</span> <span class="p">=</span>
+            <span class="nc">MethodChannel</span><span class="p">.</span><span class="nc">MethodCallHandler</span> <span class="p">{</span> <span class="n">methodCall</span><span class="p">:</span> <span class="nc">MethodCall</span><span class="p">,</span> <span class="n">result</span><span class="p">:</span> <span class="nc">MethodChannel</span><span class="p">.</span><span class="nc">Result</span> <span class="p">-&gt;</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">methodCall</span><span class="p">.</span><span class="n">method</span> <span class="p">==</span> <span class="s">"getPlatformVersion"</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="n">result</span><span class="p">.</span><span class="nf">success</span><span class="p">(</span><span class="s">"Android Version: "</span> <span class="p">+</span> <span class="nc">Build</span><span class="p">.</span><span class="nc">VERSION</span><span class="p">.</span><span class="nc">RELEASE</span><span class="p">)</span>
+                <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">methodCall</span><span class="p">.</span><span class="n">method</span> <span class="p">==</span> <span class="s">"coocon"</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="kd">var</span> <span class="py">inString</span> <span class="p">=</span> <span class="n">methodCall</span><span class="p">.</span><span class="n">arguments</span><span class="p">.</span><span class="nf">toString</span><span class="p">()</span>
+                    <span class="kd">var</span> <span class="py">resp</span> <span class="p">=</span> <span class="n">sasManager</span><span class="p">.</span><span class="nf">run</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">inString</span><span class="p">)</span>
+                    <span class="n">result</span><span class="p">.</span><span class="nf">success</span><span class="p">(</span><span class="n">resp</span><span class="p">)</span>
+                <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">methodCall</span><span class="p">.</span><span class="n">method</span> <span class="p">==</span> <span class="s">"getAppUrl"</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="k">try</span> <span class="p">{</span>
+                        <span class="kd">val</span> <span class="py">url</span><span class="p">:</span> <span class="nc">String</span> <span class="p">=</span> <span class="n">methodCall</span><span class="p">.</span><span class="nf">argument</span><span class="p">(</span><span class="s">"url"</span><span class="p">)</span><span class="o">!!</span>
+                        <span class="nf">println</span><span class="p">(</span><span class="s">"url: "</span> <span class="p">+</span> <span class="n">url</span><span class="p">)</span>
+                        <span class="nf">startSchemeIntent</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+                        <span class="c1">//result.success(intent.dataString)</span>
+                    <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="n">e</span><span class="p">:</span> <span class="nc">URISyntaxException</span><span class="p">)</span> <span class="p">{</span>
+                        <span class="n">result</span><span class="p">.</span><span class="nf">notImplemented</span><span class="p">()</span>
+                    <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="n">e</span><span class="p">:</span> <span class="nc">ActivityNotFoundException</span><span class="p">)</span> <span class="p">{</span>
+                        <span class="n">result</span><span class="p">.</span><span class="nf">notImplemented</span><span class="p">()</span>
+                    <span class="p">}</span>
+                <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                    <span class="n">result</span><span class="p">.</span><span class="nf">notImplemented</span><span class="p">()</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="n">channel</span> <span class="p">=</span> <span class="nc">MethodChannel</span><span class="p">(</span><span class="n">flutterEngine</span><span class="p">.</span><span class="n">dartExecutor</span><span class="p">,</span> <span class="nc">CHANNEL</span><span class="p">)</span>
+
+        <span class="n">channel</span><span class="o">!!</span><span class="p">.</span><span class="nf">setMethodCallHandler</span><span class="p">(</span><span class="n">handler</span><span class="p">)</span>
+    <span class="p">}</span>
+
+    <span class="cm">/*Intent 스킴을 처리하는 함수*/</span>
+    <span class="k">fun</span> <span class="nf">startSchemeIntent</span><span class="p">(</span><span class="n">url</span><span class="p">:</span> <span class="nc">String</span><span class="p">):</span> <span class="nc">Boolean</span> <span class="p">{</span>
+        <span class="kd">val</span> <span class="py">schemeIntent</span><span class="p">:</span> <span class="nc">Intent</span> <span class="p">=</span> <span class="k">try</span> <span class="p">{</span>
+            <span class="nc">Intent</span><span class="p">.</span><span class="nf">parseUri</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="nc">Intent</span><span class="p">.</span><span class="nc">URI_INTENT_SCHEME</span><span class="p">)</span> <span class="c1">// Intent 스킴을 파싱</span>
+        <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="n">e</span><span class="p">:</span> <span class="nc">URISyntaxException</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="k">false</span>
+        <span class="p">}</span>
+        <span class="k">try</span> <span class="p">{</span>
+            <span class="nf">startActivity</span><span class="p">(</span><span class="n">schemeIntent</span><span class="p">)</span> <span class="c1">// 앱으로 이동</span>
+            <span class="k">return</span> <span class="k">true</span>
+        <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="n">e</span><span class="p">:</span> <span class="nc">ActivityNotFoundException</span><span class="p">)</span> <span class="p">{</span> <span class="c1">// 앱이 설치 안 되어 있는 경우</span>
+            <span class="kd">val</span> <span class="py">packageName</span> <span class="p">=</span> <span class="n">schemeIntent</span><span class="p">.</span><span class="nf">getPackage</span><span class="p">()</span>
+
+            <span class="k">if</span> <span class="p">(!</span><span class="n">packageName</span><span class="p">.</span><span class="nf">isNullOrBlank</span><span class="p">())</span> <span class="p">{</span>
+                <span class="nf">startActivity</span><span class="p">(</span>
+                    <span class="nc">Intent</span><span class="p">(</span>
+                        <span class="nc">Intent</span><span class="p">.</span><span class="nc">ACTION_VIEW</span><span class="p">,</span>
+                        <span class="nc">Uri</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="s">"market://details?id=$packageName"</span><span class="p">)</span> <span class="c1">// 스토어로 이동</span>
+                    <span class="p">)</span>
+                <span class="p">)</span>
+                <span class="k">return</span> <span class="k">true</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="k">false</span>
+    <span class="p">}</span>
+</pre></table></code></div></div></div><div class="post-tail-wrapper text-muted"><div class="post-meta mb-3"> <i class="far fa-folder-open fa-fw mr-1"></i> <a href='/categories/blogging/'>Blogging</a></div><div class="post-tags"> <i class="fa fa-tags fa-fw mr-1"></i> <a href="/tags/flutter/" class="post-tag no-text-decoration" >flutter</a> <a href="/tags/nicepay/" class="post-tag no-text-decoration" >nicepay</a> <a href="/tags/payment/" class="post-tag no-text-decoration" >payment</a></div><div class="post-tail-bottom d-flex justify-content-between align-items-center mt-3 pt-5 pb-2"><div class="license-wrapper"> This post is licensed under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a> by the author.</div><div class="share-wrapper"> <span class="share-label text-muted mr-1">Share</span> <span class="share-icons"> <a href="https://twitter.com/intent/tweet?text=NICE pay 연동 - 01 - New software technology trend&url=https://linebird.github.io/posts/flutter-nicepay-01/" data-toggle="tooltip" data-placement="top" title="Twitter" target="_blank" rel="noopener" aria-label="Twitter"> <i class="fa-fw fab fa-twitter"></i> </a> <a href="https://www.facebook.com/sharer/sharer.php?title=NICE pay 연동 - 01 - New software technology trend&u=https://linebird.github.io/posts/flutter-nicepay-01/" data-toggle="tooltip" data-placement="top" title="Facebook" target="_blank" rel="noopener" aria-label="Facebook"> <i class="fa-fw fab fa-facebook-square"></i> </a> <a href="https://telegram.me/share?text=NICE pay 연동 - 01 - New software technology trend&url=https://linebird.github.io/posts/flutter-nicepay-01/" data-toggle="tooltip" data-placement="top" title="Telegram" target="_blank" rel="noopener" aria-label="Telegram"> <i class="fa-fw fab fa-telegram"></i> </a> <i class="fa-fw fas fa-link small" onclick="copyLink()" data-toggle="tooltip" data-placement="top" title="Copy link"></i> </span></div></div></div></div></div><div id="panel-wrapper" class="col-xl-3 pl-2 text-muted topbar-down"><div class="access"><div id="access-lastmod" class="post"> <span>Recent Update</span><ul class="post-content pl-0 pb-1 ml-1 mt-2"><li><a href="/posts/weeklyreport-arom-20240429/">SCP 프로젝트 주간보고(4월22일 ~ 4월26일)</a><li><a href="/posts/weeklyreport-arom-20240408/">SCP 프로젝트 주간보고(4월1일 ~ 4월5일)</a><li><a href="/posts/weeklyreport-arom-20240401/">SCP 프로젝트 주간보고(3월25일 ~ 3월29일)</a><li><a href="/posts/python-sqlalcheme-20240320/">SQLAlcheme model 자동생성 방법</a><li><a href="/posts/weeklyreport-arom-20240311/">SCP 프로젝트 주간보고(3월4일 ~ 3월8일)</a></ul></div><div id="access-tags"> <span>Trending Tags</span><div class="d-flex flex-wrap mt-3 mb-1 mr-3"> <a class="post-tag" href="/tags/aromit/">aromit</a> <a class="post-tag" href="/tags/%EC%A3%BC%EA%B0%84%EB%B3%B4%EA%B3%A0/">주간보고</a> <a class="post-tag" href="/tags/flutter/">flutter</a> <a class="post-tag" href="/tags/openstack/">openstack</a> <a class="post-tag" href="/tags/java/">java</a> <a class="post-tag" href="/tags/news/">news</a> <a class="post-tag" href="/tags/ysk/">ysk</a> <a class="post-tag" href="/tags/python/">python</a> <a class="post-tag" href="/tags/database/">database</a> <a class="post-tag" href="/tags/javascript/">javascript</a></div></div></div><div id="toc-wrapper" class="pl-0 pr-4 mb-5"> <span class="pl-3 pt-2 mb-2">Contents</span><nav id="toc" data-toggle="toc"></nav></div></div></div><div class="row"><div class="col-12 col-lg-11 col-xl-8"><div id="post-extend-wrapper" class="pl-1 pr-1 pl-sm-2 pr-sm-2 pl-md-4 pr-md-4"><div id="related-posts" class="mt-5 mb-2 mb-sm-4"><h3 class="pt-2 mt-1 mb-4 ml-1" data-toc-skip>Further Reading</h3><div class="card-deck mb-4"><div class="card"> <a href="/posts/flutter-nicepay-02/"><div class="card-body"> <span class="timeago small" > Jul 17, 2023 <i class="unloaded">2023-07-17T14:40:00+09:00</i> </span><h3 class="pt-0 mt-1 mb-3" data-toc-skip>NICE pay 연동 - 02</h3><div class="text-muted small"><p> Flutter InAppWebView, ERR_UNKNOWN_URL_SCHEME 에러 이전 블로그에서 nice pay 연동을 종료하고, ‘룰루랄라’할 때, 회사 동료가 에러가 난다고 문의가 왔다. 카카오 뱅크에서는 되는데, 국민은행 앱을 실행하면 에러 화면이 보인다는 제보. 테스트 결과, 아래와 같이 화면이 보인다. Error 발생 경위 I...</p></div></div></a></div><div class="card"> <a href="/posts/flutter-01/"><div class="card-body"> <span class="timeago small" > Jan 9, 2023 <i class="unloaded">2023-01-09T13:15:00+09:00</i> </span><h3 class="pt-0 mt-1 mb-3" data-toc-skip>flutter 기록 - 001</h3><div class="text-muted small"><p> 개발환경 설정 Flutter PC에 설치하기 위해 flutter 사이트 방문 Flutter SDK 다운로드 원하는 위치에 압축풀기( C:\flutter ) flutter를 환경변수의 path 등록 flutter doctor 명령어 수행 의존성 실패 등을 설치 ...</p></div></div></a></div><div class="card"> <a href="/posts/flutter-02/"><div class="card-body"> <span class="timeago small" > Jan 9, 2023 <i class="unloaded">2023-01-09T13:15:00+09:00</i> </span><h3 class="pt-0 mt-1 mb-3" data-toc-skip>flutter - GetX</h3><div class="text-muted small"><p> GetX GetX는 상태 관리 패키지로 많이 알려져있지만, 사실 이보다는 더 많은 기능을 가지고 있다. Flutter에서 GetX를 사용하게 되면, 상태 관리뿐만 아니라, Route, 다국어 지원, 화면 크기 가져오기, API 호출 기능 등 다양한 기능을 제공한다. 아래의 링크를 참조하면 도움이 됨 [GetX] 상태 관리 [GetX...</p></div></div></a></div></div></div><div class="post-navigation d-flex justify-content-between"> <a href="/posts/flutter-method_channel-01/" class="btn btn-outline-primary"><p>Flutter Method Channel - 01</p></a> <a href="/posts/flutter-nicepay-02/" class="btn btn-outline-primary"><p>NICE pay 연동 - 02</p></a></div></div></div></div><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lozad/dist/lozad.min.js"></script> <script type="text/javascript"> const imgs = document.querySelectorAll('.post-content img'); const observer = lozad(imgs); observer.observe(); </script><footer class="d-flex w-100 justify-content-center"><div class="d-flex justify-content-between align-items-center"><div class="footer-left"><p class="mb-0"> © 2024 <a href="https://twitter.com/linebird">Jinsoo Yoo</a>. <span data-toggle="tooltip" data-placement="top" title="Except where otherwise noted, the blog posts on this site are licensed under the Creative Commons Attribution 4.0 International (CC BY 4.0) License by the author.">Some rights reserved.</span></p></div><div class="footer-right"><p class="mb-0"> Powered by <a href="https://jekyllrb.com" target="_blank" rel="noopener">Jekyll</a> with <a href="https://github.com/cotes2020/jekyll-theme-chirpy/" target="_blank" rel="noopener">Chirpy</a> theme.</p></div></div></footer></div><div id="search-result-wrapper" class="d-flex justify-content-center unloaded"><div class="col-12 col-xl-11 post-content"><div id="search-hints"><h4 class="text-muted mb-4">Trending Tags</h4><a class="post-tag" href="/tags/aromit/">aromit</a> <a class="post-tag" href="/tags/%EC%A3%BC%EA%B0%84%EB%B3%B4%EA%B3%A0/">주간보고</a> <a class="post-tag" href="/tags/flutter/">flutter</a> <a class="post-tag" href="/tags/openstack/">openstack</a> <a class="post-tag" href="/tags/java/">java</a> <a class="post-tag" href="/tags/news/">news</a> <a class="post-tag" href="/tags/ysk/">ysk</a> <a class="post-tag" href="/tags/python/">python</a> <a class="post-tag" href="/tags/database/">database</a> <a class="post-tag" href="/tags/javascript/">javascript</a></div><div id="search-results" class="d-flex flex-wrap justify-content-center text-muted mt-3"></div></div></div></div><div id="mask"></div><a id="back-to-top" href="#" aria-label="back-to-top" class="btn btn-lg btn-box-shadow" role="button"> <i class="fas fa-angle-up"></i> </a> <script src="https://cdn.jsdelivr.net/npm/simple-jekyll-search@1.7.3/dest/simple-jekyll-search.min.js"></script> <script> SimpleJekyllSearch({ searchInput: document.getElementById('search-input'), resultsContainer: document.getElementById('search-results'), json: '/assets/js/data/search.json', searchResultTemplate: '<div class="pl-1 pr-1 pl-sm-2 pr-sm-2 pl-lg-4 pr-lg-4 pl-xl-0 pr-xl-0"> <a href="https://linebird.github.io{url}">{title}</a><div class="mt-1 mb-1 post-meta d-flex flex-column flex-sm-row text-muted"><div class="mr-sm-4"><i class="far fa-folder fa-fw"></i>{categories}</div><div><i class="fa fa-tag fa-fw"></i>{tags}</div></div><p>{snippet}</p></div>', noResultsText: '<p class="mt-5">검색 결과가 없습니다.</p>' }); </script>

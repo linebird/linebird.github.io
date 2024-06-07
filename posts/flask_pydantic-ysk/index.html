@@ -1,0 +1,513 @@
+<!DOCTYPE html><html lang="en" mode="light" ><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><meta name="theme" content="Chirpy v2.7.2"><meta name="generator" content="Jekyll v4.2.0" /><meta property="og:title" content="flask/pydantic swagger 자동 생성" /><meta name="author" content="유진수" /><meta property="og:locale" content="en_US" /><meta name="description" content="flask/pydantic swagger 자동 생성" /><meta property="og:description" content="flask/pydantic swagger 자동 생성" /><link rel="canonical" href="https://linebird.github.io/posts/flask_pydantic-ysk/" /><meta property="og:url" content="https://linebird.github.io/posts/flask_pydantic-ysk/" /><meta property="og:site_name" content="New software technology trend" /><meta property="og:type" content="article" /><meta property="article:published_time" content="2024-01-19T19:50:00+09:00" /><meta name="twitter:card" content="summary" /><meta property="twitter:title" content="flask/pydantic swagger 자동 생성" /><meta name="twitter:site" content="@linebird" /><meta name="twitter:creator" content="@유진수" /><meta name="google-site-verification" content="google_meta_tag_verification" /> <script type="application/ld+json"> {"author":{"@type":"Person","name":"유진수"},"description":"flask/pydantic swagger 자동 생성","url":"https://linebird.github.io/posts/flask_pydantic-ysk/","@type":"BlogPosting","headline":"flask/pydantic swagger 자동 생성","dateModified":"2024-01-19T19:50:00+09:00","datePublished":"2024-01-19T19:50:00+09:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://linebird.github.io/posts/flask_pydantic-ysk/"},"@context":"https://schema.org"}</script><title>flask/pydantic swagger 자동 생성 | New software technology trend</title><link rel="shortcut icon" href="/assets/img/favicons/favicon.ico" type="image/x-icon"><link rel="icon" href="/assets/img/favicons/favicon.ico" type="image/x-icon"><link rel="apple-touch-icon" href="/assets/img/favicons/apple-icon.png"><link rel="apple-touch-icon" href="/assets/img/favicons/apple-icon-precomposed.png"><link rel="apple-touch-icon" sizes="57x57" href="/assets/img/favicons/apple-icon-57x57.png"><link rel="apple-touch-icon" sizes="60x60" href="/assets/img/favicons/apple-icon-60x60.png"><link rel="apple-touch-icon" sizes="72x72" href="/assets/img/favicons/apple-icon-72x72.png"><link rel="apple-touch-icon" sizes="76x76" href="/assets/img/favicons/apple-icon-76x76.png"><link rel="apple-touch-icon" sizes="114x114" href="/assets/img/favicons/apple-icon-114x114.png"><link rel="apple-touch-icon" sizes="120x120" href="/assets/img/favicons/apple-icon-120x120.png"><link rel="apple-touch-icon" sizes="144x144" href="/assets/img/favicons/apple-icon-144x144.png"><link rel="apple-touch-icon" sizes="152x152" href="/assets/img/favicons/apple-icon-152x152.png"><link rel="apple-touch-icon" sizes="180x180" href="/assets/img/favicons/apple-icon-180x180.png"><link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicons/android-icon-192x192.png"><link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicons/favicon-32x32.png"><link rel="icon" type="image/png" sizes="96x96" href="/assets/img/favicons/favicon-96x96.png"><link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicons/favicon-16x16.png"><link rel="manifest" href="/assets/img/favicons/manifest.json"><meta name='msapplication-config' content='/assets/img/favicons/browserconfig.xml'><meta name="msapplication-TileColor" content="#ffffff"><meta name="msapplication-TileImage" content="/assets/img/favicons/ms-icon-144x144.png"><meta name="theme-color" content="#ffffff"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous"><link rel="dns-prefetch" href="https://fonts.gstatic.com"><link rel="preconnect" href="https://www.google-analytics.com" crossorigin="use-credentials"><link rel="dns-prefetch" href="https://www.google-analytics.com"><link rel="preconnect" href="https://www.googletagmanager.com" crossorigin="anonymous"><link rel="dns-prefetch" href="https://www.googletagmanager.com"><link rel="preconnect" href="cdn.jsdelivr.net"><link rel="dns-prefetch" href="cdn.jsdelivr.net"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha256-LA89z+k9fjgMKQ/kq4OO2Mrf8VltYml/VES+Rg0fh20=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.11.2/css/all.min.css" integrity="sha256-+N4/V/SbAFiW1MPBCXnfnP9QSN3+Keu+NlB+0ev/YKQ=" crossorigin="anonymous"><link rel="preload" href="/assets/css/post.css" as="style"><link rel="stylesheet" href="/assets/css/post.css"><link rel="preload" as="style" href="/assets/css/lib/bootstrap-toc.min.css"><link rel="stylesheet" href="/assets/css/lib/bootstrap-toc.min.css" /> <script src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script> <script defer src="https://cdn.jsdelivr.net/combine/npm/popper.js@1.15.0,npm/bootstrap@4/dist/js/bootstrap.min.js"></script> <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5535513387307938" crossorigin="anonymous"></script> <script async src="/assets/js/post.min.js"></script> <script defer src="/app.js"></script> <script defer src="https://www.googletagmanager.com/gtag/js?id="></script> <script> document.addEventListener("DOMContentLoaded", function(event) { window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', ''); }); </script><body data-spy="scroll" data-target="#toc"><div id="sidebar" class="d-flex flex-column align-items-end"><div class="profile-wrapper text-center"><div id="avatar"> <a href="/" alt="avatar" class="mx-auto"> <img src="/assets/img/profile/linebird.png" alt="avatar" onerror="this.style.display='none'"> </a></div><div class="site-title mt-3"> <a href="/">New software technology trend</a></div><div class="site-subtitle font-italic">Software news and articles</div></div><ul class="w-100"><li class="nav-item"> <a href="/" class="nav-link"> <i class="fa-fw fas fa-home ml-xl-3 mr-xl-3 unloaded"></i> <span>HOME</span> </a><li class="nav-item"> <a href="/tabs/categories/" class="nav-link"> <i class="fa-fw fas fa-stream ml-xl-3 mr-xl-3 unloaded"></i> <span>CATEGORIES</span> </a><li class="nav-item"> <a href="/tabs/tags/" class="nav-link"> <i class="fa-fw fas fa-tags ml-xl-3 mr-xl-3 unloaded"></i> <span>TAGS</span> </a><li class="nav-item"> <a href="/tabs/archives/" class="nav-link"> <i class="fa-fw fas fa-archive ml-xl-3 mr-xl-3 unloaded"></i> <span>ARCHIVES</span> </a><li class="nav-item"> <a href="/tabs/about/" class="nav-link"> <i class="fa-fw fas fa-info ml-xl-3 mr-xl-3 unloaded"></i> <span>ABOUT</span> </a></ul><div class="sidebar-bottom mt-auto d-flex flex-wrap justify-content-center"> <a href="https://github.com/linebird" aria-label="github" target="_blank" rel="noopener"> <i class="fab fa-github-alt"></i> </a> <a href="https://twitter.com/linebird" aria-label="twitter" target="_blank" rel="noopener"> <i class="fab fa-twitter"></i> </a> <a href=" javascript:location.href = 'mailto:' + ['linebird71','gmail.com'].join('@')" aria-label="email" > <i class="fas fa-envelope"></i> </a> <a href="/feed.xml" aria-label="rss" > <i class="fas fa-rss"></i> </a></div></div><div id="topbar-wrapper" class="row justify-content-center topbar-down"><div id="topbar" class="col-11 d-flex h-100 align-items-center justify-content-between"> <span id="breadcrumb"> <span> <a href="/"> Posts </a> </span> <span>flask/pydantic swagger 자동 생성</span> </span> <i id="sidebar-trigger" class="fas fa-bars fa-fw"></i><div id="topbar-title"> Post</div><i id="search-trigger" class="fas fa-search fa-fw"></i> <span id="search-wrapper" class="align-items-center"> <i class="fas fa-search fa-fw"></i> <input class="form-control" id="search-input" type="search" aria-label="search" placeholder="Search..."> <i class="fa fa-times-circle fa-fw" id="search-cleaner"></i> </span> <span id="search-cancel" >Cancel</span></div></div><div id="main-wrapper"><div id="main"><div class="row"><div id="post-wrapper" class="col-12 col-lg-11 col-xl-8"><div class="post pl-1 pr-1 pl-sm-2 pr-sm-2 pl-md-4 pr-md-4"><h1 data-toc-skip>flask/pydantic swagger 자동 생성</h1><div class="post-meta text-muted d-flex flex-column"><div> <span class="timeago " data-toggle="tooltip" data-placement="bottom" title="Fri, Jan 19, 2024, 7:50 PM +0900" > Jan 19 <i class="unloaded">2024-01-19T19:50:00+09:00</i> </span> by <span class="author"> 유진수 </span></div><div> <span class="readtime" data-toggle="tooltip" data-placement="bottom" title="2468 words">13 min</span></div></div><div class="post-content"><h2 id="flaskpydantic-swagger-자동-생성">flask/pydantic swagger 자동 생성</h2><blockquote><p>Swagger 관련 조사 및 검토 결과<br /></p><ul><li>Python Flask의 Swagger 생성에 가장 많이 사용되는 라이브러는 Flask OpenAPI3이다.<li>Flask OpenAPI3가 최근까지 업그레이드가 이루어지고 있고 인기도가 133 Star로 가장 높다.<li>Flask OpenAPI3는 Swagger, ReDoc and RapiDoc의 3가지 문서 생성 제공하고, Pydantic의 빠른 데이터 verification과 Swagger UI에서의 authorizations의 Reload도 지원한다.<li>따라서, 가능하면 Flask OpenAPI3를 Python Flask의 Swagger 자동 생성에 이용하는 것이 좋을 듯하다.</ul></blockquote><h2 id="참고-사이트">참고 사이트</h2><div class="language-plaintext highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+</pre><td class="rouge-code"><pre>- https://docs.pydantic.dev/latest/ (Pydantic 공식 문서)
+- https://pypi.org/project/flask-pydantic-openapi/
+- https://luolingchun.github.io/flask-openapi3/v3.x/ (가장 최신 소스임)
+- https://stackoverflow.com/questions/67849806/flask-how-to-automate-openapi-v3-documentation
+- https://github.com/turner-townsend/flask-pydantic-spec/blob/main/tests/test_plugin_flask.py
+- https://minwook-shin.github.io/python-flask-restplus-swagger/ (Swagger적용예)
+- https://sir.kr/so_python/158 (Flask, Swagger UI and Flask-RESTPlus)
+- https://buzzni.com/blog/47 (API 문서와 데이터 검증)
+- https://github.com/ponytailer/flask-dantic-swagger (Swagger를 빠르게 생성)
+
+</pre></table></code></div></div><h2 id="swagger-ui란">Swagger UI란?</h2><blockquote><p>■ Swagger UI 는 RESTFul 웹 서비스를 문서화하기위한 일련의 기술 중 하나입니다.<br /> ■ Swagger 는 현재 Linux Foundation 에서 선별 한 OpenAPI 사양으로 발전함.<br /> ■ 웹 서비스에 대한 OpenAPI 설명이 있으면 소프트웨어 도구를 사용하여 다양한 언어로 문서 또는 상용구 코드 (클라이언트 또는 서버)를 생성 할 수 있다.<br /> ■ 자세한 내용은 swagger.io 를 참조<br /> ■ Swagger UI 는 RESTFul 웹 서비스를 설명하고 시각화하는 데 유용한 도구이다.<br /> ■ API 를 문서화하고 JavaScript 를 사용하여 테스트 쿼리를 작성할 수있는 작은 웹 페이지를 생성해 준다.</p></blockquote><ul><li><p>Swagger UI 사용예</p><div class="language-plaintext highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre><td class="rouge-code"><pre>  app.config.SWAGGER_UI_DOC_EXPANSION = 'full'
+  를 소스코드에 삽입하면 SWAGGER UI의 문서가 서버로 구동하자 마자 Full로 모든 정보가 보인다.
+</pre></table></code></div></div></ul><h2 id="flaskpydantic이란">flask/pydantic이란?</h2><blockquote><p>■ flask로 만들어진 프로젝트에서 Request 및 Response에 대한 유효성 검사를 할 수 있게 한다.<br /> ■ 기존 Validation 라이브러리보다 빠르고, Config를 효과적으로 관리하도록 도와준다.<br /> ■ 머신러닝 Feature Data Validation으로도 활용 가능하다.<br /> ■ Pydantic의 두 가지 기능으로는 Validation과 Config관리가 있다</p></blockquote><h2 id="flaskpydantic-swagger">flask/pydantic Swagger</h2><h3 id="1-flask-dantic-swagger">1) flask-dantic-swagger</h3><blockquote><p>See: https://github.com/ponytailer/flask-dantic-swagger</p></blockquote><ul><li>Github 프로젝트 현황<ul><li>flask-dantic-swagger Github는 2020년 전부터 업그레이드가 멈춤<li>가장 오래된 Github 소스이고 거의 활동이 없슴<li>인기 : 2 stars</ul><li><p>개요</p><ul><li>Pydantic을 이용하여 데이터 Validate 및 Swagger를 위한 문서를 자동으로 생성해 준다.</ul><li><p>특징</p><ul><li>UI로 제공하는 OpenAPI documentation 종류<ul><li>Swagger</ul><li>flask/pydantic Swagger은 Swagger를 빠르게 생성해 준다.<li>먼저 schema-validator를 이해해야 한다.<ul><li>https://github.com/huangxiaohen2738/schema-validator</ul></ul></ul><blockquote><p>flask/pydantic Swagger 예제</p></blockquote><div class="language-plaintext highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+</pre><td class="rouge-code"><pre>```
+    class Book(ValidatorModel):
+    title: str
+    price: int
+
+class Author(ValidatorModel):
+    name: str
+    age: int = 30
+    books: List[Book]
+    address: Optional[str]
+
+@app.route("/")
+@validate(query=Book, body=Author, response=Author)
+def test_route():
+    book_title = request.query_params.title
+    author = request.body_params
+    author_books = author.books
+    return jsonify(author)
+
+test_api = Blueprint("test-api", __name__)
+
+&lt;&lt;&lt; from flask_dantic_swagger import generate_swagger
+&lt;&lt;&lt; generate_swagger(app, "")
+&lt;&lt;&lt; generate_swagger(app, "test-api") 
+```
+</pre></table></code></div></div><h3 id="2-swagger-gen">2) swagger-gen</h3><blockquote><p>See: https://github.com/danleonard-nj/swagger-gen</p></blockquote><ul><li><p>Github 프로젝트 현황</p><ul><li>flask-openapi3는 2022년 3월 까지도 Update가 되었음<li>버전이 v0.1.2에서 멈춤<li>인기 : 7 stars</ul><li><p>특징</p><ul><li>UI로 제공하는 OpenAPI documentation 종류<ul><li>Swagger</ul><li><p>swagger-gen 라이브러리로 오버헤드가 매우 낮으면서 모든 기능을 갖춘 사양을 생성하게 한다.</p><li>Flask 애플리케이션을 수정하지 않고도 Swagger UI를 실행하고 Flask 앱을 ​​위한 Swagger 페이지를 생성하는 데 필요한 모든 종속성(HTML, CSS, React JS 및 모듈 등)이 패키지로 제공된다.</ul><li>종속성<ul><li>Swagger UI를 표시하는 데 필요한 웹 콘텐츠는 바이너리로 패키지되어 패키지 리소스로 포함된다.<li>구성 시 종속성은 패키지에서 가져와 Flask 앱 경로 정의에 연결되므로 Flask는 앱 공간에 존재할 필요 없이 이러한 정적 종속성을 제공한다.<li>거의 모든 이유로 Flask 웹 서버에서 정적 파일을 제공하는 것은 좋은 선택이 아니다. 그러나 Swagger 페이지의 과부하가 걱정되지 않는 한 문제가 되지 않는다.</ul><li>기본 구성<ul><li>가장 기본적으로 경로에 정의된 추가 메타데이터 없이 swagger-gen경로 이름, 세그먼트 및 메서드가 포함된 Swagger UI를 생성한다.<li><p>기본 구성은 Swagger클래스의 몇 가지 매개변수로 제한한다. ``` swagger = Swagger( app=app, title=’azure-gateway’, )</p><li>@swagger_metadata용법<div class="language-plaintext highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+</pre><td class="rouge-code"><pre>@swagger_metadata(
+    request_model={'message' : 'string'},
+    summary='An example route',
+    description='This is an example route, check it out!',
+    response_model=[(200, 'Success'), (500, 'Error')],
+    query_params=['first_name', 'last_name'],
+    security='bearer')
+@app.route('/api/test')
+def post_query(methods=['POST']):
+    return something
+</pre></table></code></div></div><div class="language-plaintext highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre>swagger.configure()
+</pre></table></code></div></div><div class="language-plaintext highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+</pre><td class="rouge-code"><pre>[예제]
+
+# See: https://github.com/danleonard-nj/swagger-gen
+# See: https://github.com/turner-townsend/flask-pydantic-spec/blob/main/tests/test_plugin_flask.py
+
+$ pip install swagger-gen
+
+# 다음 소스의 출처 : https://stackoverflow.com/questions/67849806/flask-how-to-automate-openapi-v3-documentation
+
+$ vi swagger-gen-test.py
+
+from swagger_gen.lib.wrappers import swagger_metadata
+from swagger_gen.lib.security import BearerAuth
+from swagger_gen.swagger import Swagger
+from flask import Flask, request
+
+app = Flask(__name__)
+
+
+@app.route('/api/hello/say', methods=['GET'])
+@swagger_metadata(
+    summary='Sample endpoint',
+    description='This is a sample endpoint')
+def test():
+    return {'message': 'hello world!'}
+
+
+swagger = Swagger(
+    app=app,
+    title='app')
+
+swagger.configure()
+
+if __name__ == '__main__':
+    app.run(debug=True, port='5000')
+    ㄴ
+</pre></table></code></div></div></ul></ul><h2 id="flaskpydantic-openapi">flask/pydantic OpenAPI</h2><blockquote><p>OpenAPI V3를 지원하는 문서 시스템</p></blockquote><ul><li>지원 시스템 4개<ul><li>Swagger<li>Redoc<li>DapperBox<li>WidderShins</ul><li>특징<ul><li>Swagger에 비해 Redoc이 문서의 모습이 깔끔한 편<li>Swagger에서 사용했던 테스트 도구가 Redoc에서 없다<ul><li>Postman 등의 API 테스트 도구를 사용 가능<li>Postman과 Insomnia는 OpenAPI를 지원<ul><li>FastAPI에서 만들어진 openapi.json 파일을 로드해 API 테스트 목록을 만들고 쉽게 테스트 할 수 있다.</ul></ul></ul></ul><h3 id="1-flask-openapi3">1) Flask OpenAPI3</h3><blockquote><p>See: https://luolingchun.github.io/flask-openapi3/v3.x/ See: https://github.com/luolingchun/flask-openapi3</p></blockquote><ul><li><p>Github 프로젝트 현황</p><ul><li>flask-openapi3는 2023년 12월까지도 Update가 되고 가장 많이 사용하는 것임<li>버전이 v3.0.1까지 업그레이드가 되었음<li>인기 : 133 stars</ul><li><p>개요</p><ul><li>Pydantic을 이용하여 데이터 Validate 및 Swagger, ReDoc, RapiDoc을 위한 문서를 자동으로 생성해 준다.</ul><li><p>특징</p><ul><li>UI로 제공하는 OpenAPI documentation 종류<ul><li>Swagger<li>Redoc<li>RapiDoc</ul><li>쉬운 사용 및 쉽게 익힐 수 있다<li>OpenAPI Specification기반 Standard document specification<li>Pydantic기반 빠른 데이터 verification<li>Swagger UI에서 authorizations의 Reload 지원</ul><li><p>요구사항</p><ul><li>Flask: web app<li>Pydantic: data validation</ul><li><p>설치</p><div class="language-plaintext highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre>pip install -U flask-openapi3
+</pre></table></code></div></div><div class="language-plaintext highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre>conda install -c conda-forge flask-openapi3
+</pre></table></code></div></div><li><p>간단한 예제</p><div class="language-plaintext highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+</pre><td class="rouge-code"><pre>  from pydantic import BaseModel
+
+  from flask_openapi3 import Info, Tag
+  from flask_openapi3 import OpenAPI
+
+  info = Info(title="book API", version="1.0.0")
+  app = OpenAPI(__name__, info=info)
+
+  book_tag = Tag(name="book", description="Some Book")
+
+
+  class BookQuery(BaseModel):
+      age: int
+      author: str
+
+
+  @app.get("/book", summary="get books", tags=[book_tag])
+  def get_book(query: BookQuery):
+      """
+      to get all books
+      """
+      return {
+          "code": 0,
+          "message": "ok",
+          "data": [
+              {"bid": 1, "age": query.age, "author": query.author},
+              {"bid": 2, "age": query.age, "author": query.author}
+          ]
+      }
+
+
+  if __name__ == "__main__":
+      app.run(debug=True)
+</pre></table></code></div></div><div class="language-plaintext highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+</pre><td class="rouge-code"><pre>  &gt;&gt;&gt; Class-based API View Example &lt;&lt;&lt;
+    
+  from typing import Optional
+
+  from pydantic import BaseModel, Field
+
+  from flask_openapi3 import OpenAPI, Tag, Info, APIView
+
+
+  info = Info(title='book API', version='1.0.0')
+  app = OpenAPI(__name__, info=info)
+
+  api_view = APIView(url_prefix="/api/v1", view_tags=[Tag(name="book")])
+
+
+  class BookPath(BaseModel):
+      id: int = Field(..., description="book ID")
+
+
+  class BookQuery(BaseModel):
+      age: Optional[int] = Field(None, description='Age')
+
+
+  class BookBody(BaseModel):
+      age: Optional[int] = Field(..., ge=2, le=4, description='Age')
+      author: str = Field(None, min_length=2, max_length=4, description='Author')
+
+
+  @api_view.route("/book")
+  class BookListAPIView:
+      a = 1
+
+      @api_view.doc(summary="get book list")
+      def get(self, query: BookQuery):
+          print(self.a)
+          return query.model_dump_json()
+
+      @api_view.doc(summary="create book")
+      def post(self, body: BookBody):
+          """description for a created book"""
+          return body.model_dump_json()
+
+
+  @api_view.route("/book/&lt;id&gt;")
+  class BookAPIView:
+      @api_view.doc(summary="get book")
+      def get(self, path: BookPath):
+          print(path)
+          return "get"
+
+      @api_view.doc(summary="update book")
+      def put(self, path: BookPath):
+          print(path)
+          return "put"
+
+      @api_view.doc(summary="delete book", deprecated=True)
+      def delete(self, path: BookPath):
+          print(path)
+          return "delete"
+
+
+  app.register_api_view(api_view)
+
+  if __name__ == "__main__":
+      app.run(debug=True)
+        
+</pre></table></code></div></div><li><p>실행 방법</p><div class="language-plaintext highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre><td class="rouge-code"><pre>  - Run the simple example, and go to http://127.0.0.1:5000/openapi.
+
+  - You will see the documentation: Swagger, Redoc and RapiDoc
+</pre></table></code></div></div></ul><h3 id="2-flask-pydantic-openapi">2) Flask Pydantic Openapi</h3><blockquote><p>See: https://pypi.org/project/flask-pydantic-openapi/ See: https://github.com/PostBeyond/flask-pydantic-spec</p></blockquote><ul><li>Github 프로젝트 현황<ul><li>flask-dantic-swagger Github는 2022년 전부터 업그레이드가 멈춤<li>Flask-Pydantic-Spec에서 Fork한 프로젝트임<li>인기 : 2 stars</ul></ul><blockquote><p>개요</p></blockquote><ul><li>OpenAPI 문서를 Flask 앱에 쉽게 추가해주고 Pydantic을 사용하여 Request에 대한 유효성 검사하게 해주는 라이브러리</ul><blockquote><p>특징</p></blockquote><ul><li>UI로 제공하는 OpenAPI documentation 종류<ul><li>Swagger<li>Redoc</ul><li>annotations 필요없고, YAML :sparkles: 가 필요없다.<li>Redoc UI or Swagger UI :yum:으로 API document 생성 기능 제공<li>Pydantic :wink:로 query, JSON data, response data를 검증 기능을 제공<li>JSON이 아닌 request/response types들도 지원한다.</ul><blockquote><p>설치</p></blockquote><div class="language-plaintext highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre><td class="rouge-code"><pre>```
+$ pip install flask-pydantic-openapi
+```
+</pre></table></code></div></div><blockquote><p>flask-pydantic-openapi 사용법</p></blockquote><ul><li><p>절차</p><div class="language-plaintext highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+</pre><td class="rouge-code"><pre>(1) pydantic.BaseModel을 사용하여 query, json, headers, cookies, resp등에 사용되는 자료 구조 정의
+(2) flask_pydantic_openapi.Validator 인스턴스 생성
+    ● api = Validator('flask')
+(3) route를 decorate하는 api.validate를 작성
+    ● 옵션들 : query, body, headers, cookies, resp, tags
+(4) context(query, body, headers, cookies)로 접속
+    ● flask: request.context로도 가능함
+(5) 웹 앱 Register
+    ● api.register(app)
+(6) /apidoc/redoc or /apidoc/swagger에서 문서 체크
+    ● 유효성 검사를 통과하지 못하면 JSON 오류 메시지(ctx, loc, msg, type)과 함께 HTTP code 422을 리턴한다.
+</pre></table></code></div></div><li><p>유효성 검사전 config 수정 범례 #1</p><div class="language-plaintext highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre><td class="rouge-code"><pre>from flask_pydantic_openapi import FlaskPydanticOpenapi
+FlaskPydanticOpenapi("flask", title="Demo API", version="v1.0", path="doc")
+
+</pre></table></code></div></div><li><p>유효성 검사전 Response 지정 수정 범례 #2</p><div class="language-plaintext highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre><td class="rouge-code"><pre>from flask_pydantic_openapi import Response
+Response(HTTP_200=None, HTTP_403=ForbidModel)
+Response('HTTP_200') # equals to Response(HTTP_200=None)
+
+</pre></table></code></div></div><li><p>Flask 소스 코드 예제</p><ul><li>테스트 방법 : http post :8000/api/user name=alice age=18</ul><div class="language-plaintext highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+</pre><td class="rouge-code"><pre>from flask import Flask, request, jsonify
+from pydantic import BaseModel, Field, constr
+from flask_pydantic_openapi import FlaskPydanticOpenapi, Response, Request
+
+
+class Profile(BaseModel):
+    name: constr(min_length=2, max_length=40) # Constrained Str
+    age: int = Field(
+        ...,
+        gt=0,
+        lt=150,
+        description='user age(Human)'
+    )
+
+    class Config:
+        schema_extra = {
+            # provide an example
+            'example': {
+                'name': 'very_important_user',
+                'age': 42,
+            }
+        }
+
+
+class Message(BaseModel):
+    text: str
+
+
+app = Flask(__name__)
+api = FlaskPydanticOpenapi('flask')
+
+
+@app.route('/api/user', methods=['POST'])
+@api.validate(body=Request(Profile), resp=Response(HTTP_200=Message, HTTP_403=None), tags=['api'])
+def user_profile():
+    """
+    verify user profile (summary of this endpoint)
+
+    user's name, user's age, ... (long description)
+    """
+    print(request.context.json) # or `request.json`
+    return jsonify(text='it works')
+
+
+if __name__ == "__main__":
+    api.register(app) # if you don't register in api init step
+    app.run(port=8000)
+</pre></table></code></div></div></ul></div><div class="post-tail-wrapper text-muted"><div class="post-meta mb-3"> <i class="far fa-folder-open fa-fw mr-1"></i> <a href='/categories/score/'>SCore</a></div><div class="post-tags"> <i class="fa fa-tags fa-fw mr-1"></i> <a href="/tags/openstack/" class="post-tag no-text-decoration" >openstack</a> <a href="/tags/ysk/" class="post-tag no-text-decoration" >ysk</a></div><div class="post-tail-bottom d-flex justify-content-between align-items-center mt-3 pt-5 pb-2"><div class="license-wrapper"> This post is licensed under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a> by the author.</div><div class="share-wrapper"> <span class="share-label text-muted mr-1">Share</span> <span class="share-icons"> <a href="https://twitter.com/intent/tweet?text=flask/pydantic swagger 자동 생성 - New software technology trend&url=https://linebird.github.io/posts/flask_pydantic-ysk/" data-toggle="tooltip" data-placement="top" title="Twitter" target="_blank" rel="noopener" aria-label="Twitter"> <i class="fa-fw fab fa-twitter"></i> </a> <a href="https://www.facebook.com/sharer/sharer.php?title=flask/pydantic swagger 자동 생성 - New software technology trend&u=https://linebird.github.io/posts/flask_pydantic-ysk/" data-toggle="tooltip" data-placement="top" title="Facebook" target="_blank" rel="noopener" aria-label="Facebook"> <i class="fa-fw fab fa-facebook-square"></i> </a> <a href="https://telegram.me/share?text=flask/pydantic swagger 자동 생성 - New software technology trend&url=https://linebird.github.io/posts/flask_pydantic-ysk/" data-toggle="tooltip" data-placement="top" title="Telegram" target="_blank" rel="noopener" aria-label="Telegram"> <i class="fa-fw fab fa-telegram"></i> </a> <i class="fa-fw fas fa-link small" onclick="copyLink()" data-toggle="tooltip" data-placement="top" title="Copy link"></i> </span></div></div></div></div></div><div id="panel-wrapper" class="col-xl-3 pl-2 text-muted topbar-down"><div class="access"><div id="access-lastmod" class="post"> <span>Recent Update</span><ul class="post-content pl-0 pb-1 ml-1 mt-2"><li><a href="/posts/weeklyreport-arom-20240429/">SCP 프로젝트 주간보고(4월22일 ~ 4월26일)</a><li><a href="/posts/weeklyreport-arom-20240408/">SCP 프로젝트 주간보고(4월1일 ~ 4월5일)</a><li><a href="/posts/weeklyreport-arom-20240401/">SCP 프로젝트 주간보고(3월25일 ~ 3월29일)</a><li><a href="/posts/python-sqlalcheme-20240320/">SQLAlcheme model 자동생성 방법</a><li><a href="/posts/weeklyreport-arom-20240311/">SCP 프로젝트 주간보고(3월4일 ~ 3월8일)</a></ul></div><div id="access-tags"> <span>Trending Tags</span><div class="d-flex flex-wrap mt-3 mb-1 mr-3"> <a class="post-tag" href="/tags/aromit/">aromit</a> <a class="post-tag" href="/tags/%EC%A3%BC%EA%B0%84%EB%B3%B4%EA%B3%A0/">주간보고</a> <a class="post-tag" href="/tags/flutter/">flutter</a> <a class="post-tag" href="/tags/openstack/">openstack</a> <a class="post-tag" href="/tags/java/">java</a> <a class="post-tag" href="/tags/news/">news</a> <a class="post-tag" href="/tags/ysk/">ysk</a> <a class="post-tag" href="/tags/python/">python</a> <a class="post-tag" href="/tags/database/">database</a> <a class="post-tag" href="/tags/javascript/">javascript</a></div></div></div><div id="toc-wrapper" class="pl-0 pr-4 mb-5"> <span class="pl-3 pt-2 mb-2">Contents</span><nav id="toc" data-toggle="toc"></nav></div></div></div><div class="row"><div class="col-12 col-lg-11 col-xl-8"><div id="post-extend-wrapper" class="pl-1 pr-1 pl-sm-2 pr-sm-2 pl-md-4 pr-md-4"><div id="related-posts" class="mt-5 mb-2 mb-sm-4"><h3 class="pt-2 mt-1 mb-4 ml-1" data-toc-skip>Further Reading</h3><div class="card-deck mb-4"><div class="card"> <a href="/posts/sphinx_doc-ysk/"><div class="card-body"> <span class="timeago small" > Jan 19 <i class="unloaded">2024-01-19T17:45:00+09:00</i> </span><h3 class="pt-0 mt-1 mb-3" data-toc-skip>OpenStack Documentation Generation 참조</h3><div class="text-muted small"><p> [Sphinx / Read-the-Docs를 통한 Python Project 문서화] See: https://hooni-playground.com/1101/ See: https://fwani.tistory.com/3 Sphinx를 깔고 –&gt; 2. Sphinx 문법으로 파일을 구성한 후 –&gt;3...</p></div></div></a></div><div class="card"> <a href="/posts/oscmp_doc_gen-ysk/"><div class="card-body"> <span class="timeago small" > Jan 19 <i class="unloaded">2024-01-19T19:30:00+09:00</i> </span><h3 class="pt-0 mt-1 mb-3" data-toc-skip>openstack 문서화 분석</h3><div class="text-muted small"><p> Openstack 문서화 분석 [오픈스택 문서화의 특징] 문서화 특징 소스코드의 주석 등을 활용한 문서화가 아니다. RESTful API에 대한 문서화도 sphinx-apidoc 툴을 활용하여 생성한 문서가 아니다. API 참조 문서, API 가이드도 sphinx-autodoc 툴을 활용하여...</p></div></div></a></div><div class="card"> <a href="/posts/oscmp_doc_std-ysk/"><div class="card-body"> <span class="timeago small" > Jan 19 <i class="unloaded">2024-01-19T19:40:00+09:00</i> </span><h3 class="pt-0 mt-1 mb-3" data-toc-skip>OSCMP 주석 표준 관련</h3><div class="text-muted small"><p> OSCMP 주석 표준 관련 참고 사이트 - https://jh-bk.tistory.com/15 - https://velog.io/@jk01019/docstring-in-python 주석 달기 (책 “파이썬 코딩의 기술”) 모듈 모듈의 내용과, 사용자가 알아야 하는 중요한 클래스나 함수를 기술한다. 클...</p></div></div></a></div></div></div><div class="post-navigation d-flex justify-content-between"> <a href="/posts/oscmp_doc_std-ysk/" class="btn btn-outline-primary"><p>OSCMP 주석 표준 관련</p></a> <a href="/posts/report-arom-04/" class="btn btn-outline-primary"><p>SCP 프로젝트 주간보고(1월15일 ~ 1월19일)</p></a></div></div></div></div><footer class="d-flex w-100 justify-content-center"><div class="d-flex justify-content-between align-items-center"><div class="footer-left"><p class="mb-0"> © 2024 <a href="https://twitter.com/linebird">Jinsoo Yoo</a>. <span data-toggle="tooltip" data-placement="top" title="Except where otherwise noted, the blog posts on this site are licensed under the Creative Commons Attribution 4.0 International (CC BY 4.0) License by the author.">Some rights reserved.</span></p></div><div class="footer-right"><p class="mb-0"> Powered by <a href="https://jekyllrb.com" target="_blank" rel="noopener">Jekyll</a> with <a href="https://github.com/cotes2020/jekyll-theme-chirpy/" target="_blank" rel="noopener">Chirpy</a> theme.</p></div></div></footer></div><div id="search-result-wrapper" class="d-flex justify-content-center unloaded"><div class="col-12 col-xl-11 post-content"><div id="search-hints"><h4 class="text-muted mb-4">Trending Tags</h4><a class="post-tag" href="/tags/aromit/">aromit</a> <a class="post-tag" href="/tags/%EC%A3%BC%EA%B0%84%EB%B3%B4%EA%B3%A0/">주간보고</a> <a class="post-tag" href="/tags/flutter/">flutter</a> <a class="post-tag" href="/tags/openstack/">openstack</a> <a class="post-tag" href="/tags/java/">java</a> <a class="post-tag" href="/tags/news/">news</a> <a class="post-tag" href="/tags/ysk/">ysk</a> <a class="post-tag" href="/tags/python/">python</a> <a class="post-tag" href="/tags/database/">database</a> <a class="post-tag" href="/tags/javascript/">javascript</a></div><div id="search-results" class="d-flex flex-wrap justify-content-center text-muted mt-3"></div></div></div></div><div id="mask"></div><a id="back-to-top" href="#" aria-label="back-to-top" class="btn btn-lg btn-box-shadow" role="button"> <i class="fas fa-angle-up"></i> </a> <script src="https://cdn.jsdelivr.net/npm/simple-jekyll-search@1.7.3/dest/simple-jekyll-search.min.js"></script> <script> SimpleJekyllSearch({ searchInput: document.getElementById('search-input'), resultsContainer: document.getElementById('search-results'), json: '/assets/js/data/search.json', searchResultTemplate: '<div class="pl-1 pr-1 pl-sm-2 pr-sm-2 pl-lg-4 pr-lg-4 pl-xl-0 pr-xl-0"> <a href="https://linebird.github.io{url}">{title}</a><div class="mt-1 mb-1 post-meta d-flex flex-column flex-sm-row text-muted"><div class="mr-sm-4"><i class="far fa-folder fa-fw"></i>{categories}</div><div><i class="fa fa-tag fa-fw"></i>{tags}</div></div><p>{snippet}</p></div>', noResultsText: '<p class="mt-5">검색 결과가 없습니다.</p>' }); </script>
