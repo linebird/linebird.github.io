@@ -2,7 +2,7 @@
 layout: post
 title: "SCP 프로젝트 주간보고(12월16일 ~ 12월20일)"
 date: 2024-12-23 13:30:00 +0900
-categories: [WeeklyReport]
+categories: [Blogging]
 tags: [aromit,주간보고]
 ---
 
