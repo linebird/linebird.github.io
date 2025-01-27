@@ -20,8 +20,9 @@ order: 4
 
 ## 경력
 
-* (주)아롬정보기술(2009.02 ~ 2024.현재) : CTO 재직 중
-  * 2023.12 ~ 현재 : 연구소 및 개발부서 지원
+* (주)아롬정보기술(2009.02 ~ 2025.현재) : CTO 재직 중
+  * 2025.01 ~ 현재 : Samsung SDS Cloud Platform 개발 - 에스코어
+  * 2024.01 ~ 2024.12 : Samsung SDS Cloud Platform 개발 - 에스코어
   * 2023.02 ~ 2023.11 : 메디팜핏 개발
     * Application architecture
     * Flutter를 이용한 사용자/약사 App 개발
