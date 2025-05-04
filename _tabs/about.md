@@ -11,7 +11,7 @@ order: 4
 ---
 
 <!-- github에서는 경로를 아래와 같이 주어야 이미지 표시됨. src="../assets/img/linebird2.png" 경로는 표시되지 않음 -->
-<img src="/assets/img/profile/linebird.png" width="30%">
+<img src="../assets/img/profile/linebird.png" width="30%">
 
 ## 연락처
 
