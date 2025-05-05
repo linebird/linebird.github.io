@@ -21,6 +21,8 @@ tagline: A text-focused Jekyll theme # it will display as the subtitle
 description: >- # used by seo meta and the atom feed
   클라우드, 빅데이터, AI ... 소프트웨어 기술 소개 및 트렌드 소개.
 
+favicon: /assets/img/favicon.ico # favicon path, it will be copied to the root of the site
+
 # Fill in the protocol & hostname for your site.
 # E.g. 'https://username.github.io', note that it does not end with a '/'.
 url: "https://linebird.github.io"
