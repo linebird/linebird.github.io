@@ -21,7 +21,18 @@ order: 4
 ## 경력
 
 * (주)아롬정보기술(2009.02 ~ 2023.현재) : CTO 재직 중
-  * 2023.12 ~ 현재 : 연구소 및 개발부서 지원
+  * 2025.01 ~ 2025.현재 : Samsung Cloud Platform 개발 - 에스코어
+    * SNP 부분 개발 PL
+      * 통합검색 개발
+      * Support 개발
+      * 탄소배출량 개발
+      * 서비스 포탈 BE 개발
+  * 2024.01 ~ 2024.12 : Samsung Cloud Platform 개발 - 에스코어
+    * SNP 부분 개발 PL
+      * Logging&Audit 개발
+      * Support 개발
+      * Notification 개발
+      * Copilot BE 개발
   * 2023.02 ~ 2023.11 : 메디팜핏 개발
     * Application architecture
     * Flutter를 이용한 사용자/약사 App 개발
