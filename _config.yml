@@ -16,7 +16,7 @@ timezone: Asia/Seoul
 
 title: The Blueprint # the main title
 
-tagline: "모든 것은 변한다" # it will display as the subtitle
+tagline: Finding timeless system design principles amidst the ever-changing flow of technology. # it will display as the subtitle
 
 description: >- # used by seo meta and the atom feed
   클라우드, 빅데이터, AI ... 소프트웨어 기술 소개 및 트렌드 소개.
