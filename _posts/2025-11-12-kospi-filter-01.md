@@ -4,7 +4,7 @@ title: "2025-11-12 테스트 매매일지"
 date: 2025-11-12 18:30:00 +0900
 categories: [Blogging]
 tags: [quant, python]
-publish: false
+published: false
 ---
 
 ## 매수 종목 찾기
