@@ -20,8 +20,11 @@ order: 4
 
 ## 경력
 
-* (주)아롬정보기술(2009.02 ~ 2025.현재) : CTO 재직 중
-  * 2025.01 ~ 2025.현재 : Samsung Cloud Platform 개발 - 에스코어
+* (주)아롬정보기술(2009.02 ~ 2026.현재)
+  * 2025.02 ~ 2026.현재 : KT Cloud New 관리자센터 개발 - KTC
+    * AA / TA
+    * 개발환경 설정 및 CI/CD 구축
+  * 2025.01 ~ 2026.01 : Samsung Cloud Platform 개발 - 에스코어
     * SNP 부분 개발 PL
       * 통합검색 개발
       * Support 개발
