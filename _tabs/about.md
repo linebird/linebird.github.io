@@ -21,7 +21,7 @@ order: 4
 ## 경력
 
 * (주)아롬정보기술(2009.02 ~ 2026.현재)
-  * 2025.02 ~ 2026.현재 : KT Cloud New 관리자센터 개발 - KTC
+  * 2026.02 ~ 2026.현재 : KT Cloud New 관리자센터 개발 - KTC
     * AA / TA
     * 개발환경 설정 및 CI/CD 구축
   * 2025.01 ~ 2026.01 : Samsung Cloud Platform 개발 - 에스코어
