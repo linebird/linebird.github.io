@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "MCP, Skills, Agents with scripts"
-date: 2026-13-30 19:00:00 +0900
+date: 2026-03-30 19:00:00 +0900
 categories: [AI]
 tags: [ai, mcp, skill, agent]
 published: true
