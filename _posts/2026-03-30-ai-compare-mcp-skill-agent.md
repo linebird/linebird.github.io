@@ -1,3 +1,12 @@
+---
+layout: post
+title: "MCP, Skills, Agents with scripts"
+date: 2026-13-30 19:00:00 +0900
+categories: [AI]
+tags: [ai, mcp, skill, agent]
+published: true
+---
+
 
 ## MCP, Skills, Agents with scripts 도대체 뭐가 다르지?
 
@@ -44,7 +53,7 @@ MCP, 스킬, 에이전트는 서로 경쟁하는 옵션이 아니며, 하나의 
 
 ![alt text](/assets/img/2026/mcp-skill-agent.png)
 
-### MCP, Skills, Agents 요약 비교
+### 5. MCP, Skills, Agents 요약 비교
 
 | 구분      | MCP (Protocol)               | Skills (Knowledge)            | Agents (Orchestrator)        |
 | --------- | ---------------------------- | ----------------------------- | ---------------------------- |
@@ -52,3 +61,8 @@ MCP, 스킬, 에이전트는 서로 경쟁하는 옵션이 아니며, 하나의 
 | 구성 요소 | 클라이언트, 서버, JSON-RPC   | SKILL.md, 지침, 리소스        | 계획 수립, 도구 호출, 메모리 |
 | 비유      | 전자기기의 케이블/단자       | 전문가의 숙련도/교본          | 일을 끝마치는 일꾼/반장      |
 | 장점      | 한 번 구축으로 호환성 극대화 | 컨텍스트 효율 및 전문성 강화  | 복잡하고 유연한 문제 해결    |
+
+### 참고
+
+ - [MCP, Skills, and Agents](https://cra.mr/mcp-skills-and-agents/)
+ - [MCP vs Skills vs Agents With Scripts: Which One Should You Pick?](https://dzone.com/articles/mcp-vs-skills-vs-agents)
