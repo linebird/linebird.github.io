@@ -14,7 +14,7 @@ Codex는 저장소의 `AGENTS.md`를 자동으로 읽어 프로젝트별 개발 
 
 ## 1. 기본 구조
 
-예를 들어 `saferyn-backend` 같은 프로젝트라면 다음 정도로 시작하는 것을 권합니다.
+예를 들어 `saferyn-backend` 같은 프로젝트라면 다음 정도로 시작하는 것을 권장
 
 ```text
 saferyn-backend/
