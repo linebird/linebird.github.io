@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Codex를 활용한 프로젝트 기본 구조"
-date: 2026-09-16 17:21:00 +0900
+date: 2026-10-06 17:21:00 +0900
 categories: [ai]
 tags: [codex, ai]
 published: true
