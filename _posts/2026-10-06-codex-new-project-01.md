@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Codex를 활용한 프로젝트 기본 구조"
+title: "Codex를 활용한 Application 개발 flow"
 date: 2026-10-06 17:21:00 +0900
 categories: [ai]
 tags: [codex, ai]
