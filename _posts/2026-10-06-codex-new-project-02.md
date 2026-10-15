@@ -164,9 +164,6 @@ OrderResponse
 
 #### 4.1 권장 디렉터리 구조
 
-<details open>
-  <summary>디렉토리 예시</summary>
-
 ```text
 legacy-spring-project/
 │
@@ -208,8 +205,6 @@ legacy-spring-project/
     └── workflows/
         └── ci.yml
 ```
-
-</details>
 
 `src/` 아래 구조는 예시임. 기존 프로젝트가 업무별 패키지 구조를 사용한다면 절대 위 구조로 강제 변경하지 않는다.  
 
