@@ -225,13 +225,14 @@ legacy-spring-project/
 모든 문서를 매 요청마다 읽도록 지시할 필요는 없으며, 관련된 작업에 필요한 문서만 참고시키면 됨.
 
 OpenAI의 최신 Codex 가이드도 불필요하게 커진 `AGENTS.md`와 매번 모든 문서를 읽도록 하는 지시를 피하도록 권장.
-[OpenAI Developers](https://www.google.com/s2/favicons?domain=https://developers.openai.com\&sz=32)
+([Codex Prompting Guide](https://developers.openai.com/cookbook/examples/gpt-5/codex_prompting_guide?trk=article-ssr-frontend-pulse_little-text-block&utm_source=chatgpt.com), 
+[Rethinking skills and prompts for GPT-6 Astra](https://developers.openai.com/blog/rethinking-skills-and-prompts-for-gpt-6-astra?utm_source=chatgpt.com))
 
 ### 5. AGENTS.md 작성
 
 `AGENTS.md`는 Codex에게 프로젝트의 개발 원칙을 전달하는 핵심 파일.
 
-Codex CLI는 저장소 경로의 `AGENTS.md`를 찾아 지침으로 사용하므로, 매번 동일한 개발 규칙을 프롬프트에 복사할 필요가 없음[OpenAI 개발자](https://www.google.com/s2/favicons?domain=https://developers.openai.com\&sz=32)
+Codex CLI는 저장소 경로의 `AGENTS.md`를 찾아 지침으로 사용하므로, 매번 동일한 개발 규칙을 프롬프트에 복사할 필요가 없음([Codex Prompting Guide](https://developers.openai.com/cookbook/examples/gpt-5/codex_prompting_guide?trk=article-ssr-frontend-pulse_little-text-block&utm_source=chatgpt.com))
 
 기존 Spring 프로젝트라면 아래 내용으로 시작 가능
 
@@ -473,7 +474,7 @@ TASK-001을 승인된 구현 계획에 따라 개발해줘.
 구현 후 수정한 파일과 주요 변경 사항을 보고해줘.
 ```
 
-Codex는 현재 접근 가능한 프로젝트 파일을 분석하고 수정할 수 있어서, 코드 작성뿐 아니라 테스트 실행과 반복적인 수정에도 활용할 수 있다. --> 참고: [OpenAI API](https://www.google.com/s2/favicons?domain=https://developers.openai.com\&sz=32)
+Codex는 현재 접근 가능한 프로젝트 파일을 분석하고 수정할 수 있어서, 코드 작성뿐 아니라 테스트 실행과 반복적인 수정에도 활용할 수 있다. ([Code generation](https://developers.openai.com/api/docs/guides/code-generation?utm_source=chatgpt.com))
 
 #### 7.4 VERIFY — 자동 검증
 
