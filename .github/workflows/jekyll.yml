@@ -33,6 +33,24 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      # 2. [추가] 셀프 호스티드 러너용 Ruby 수동 설치 스텝
+      - name: Install Ruby manually for self-hosted runner
+        run: |
+          RUBY_VERSION="3.1"
+          TOOL_CACHE_DIR="/opt/hostedtoolcache/Ruby/${RUBY_VERSION}/x64"
+          
+          if [ ! -f "${TOOL_CACHE_DIR}.complete" ]; then
+            echo "Installing Ruby ${RUBY_VERSION} to tool cache..."
+            sudo mkdir -p "${TOOL_CACHE_DIR}"
+            sudo chown -R $USER:$USER /opt/hostedtoolcache
+            
+            git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build
+            ~/.rbenv/plugins/ruby-build/bin/ruby-build "${RUBY_VERSION}" "${TOOL_CACHE_DIR}"
+            
+            touch "${TOOL_CACHE_DIR}.complete"
+          else
+            echo "Ruby ${RUBY_VERSION} is already cached."
+          fi
       - name: Setup Ruby
         # https://github.com/ruby/setup-ruby/releases/tag/v1.207.0
         uses: ruby/setup-ruby@4a9ddd6f338a97768b8006bf671dfbad383215f4
