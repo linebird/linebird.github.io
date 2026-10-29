@@ -36,8 +36,8 @@ jobs:
       # 2. [추가] 셀프 호스티드 러너용 Ruby 수동 설치 스텝
       - name: Install Ruby manually for self-hosted runner
         run: |
-          RUBY_VERSION="3.1.7" # 정확한 패치 버전 명시
-          TOOL_CACHE_DIR="/opt/hostedtoolcache/Ruby/3.1/x64" # 툴 캐시는 기존 경로 유지
+          RUBY_VERSION="3.3.6" # 정확한 패치 버전 명시
+          TOOL_CACHE_DIR="/opt/hostedtoolcache/Ruby/3.3/x64" # 툴 캐시는 기존 경로 유지
           
           if [ ! -f "${TOOL_CACHE_DIR}.complete" ]; then
             echo "Installing dependencies for building Ruby..."
@@ -60,7 +60,7 @@ jobs:
         # https://github.com/ruby/setup-ruby/releases/tag/v1.207.0
         uses: ruby/setup-ruby@4a9ddd6f338a97768b8006bf671dfbad383215f4
         with:
-          ruby-version: "3.1" # Not needed with a .ruby-version file
+          ruby-version: "3.3" # Not needed with a .ruby-version file
           bundler-cache: true # runs 'bundle install' and caches installed gems automatically
           cache-version: 0 # Increment this number if you need to re-download cached gems
       - name: Setup Pages
