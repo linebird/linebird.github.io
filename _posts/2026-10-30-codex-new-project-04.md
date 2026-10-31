@@ -487,7 +487,7 @@ DB 정보를 별도 저장소에서 관리하면 여러 Repository에 같은 문
 
     Harness 업데이트 MR 생성, 호환성 테스트, 자동 품질 검증을 운영 체계에 통합한다.
 
-## 최종 구조
+## 11. 최종 구조
 
 1. Common Harness Repository
 
