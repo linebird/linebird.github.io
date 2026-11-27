@@ -14,9 +14,9 @@ timezone: Asia/Seoul
 # jekyll-seo-tag settings › https://github.com/jekyll/jekyll-seo-tag/blob/master/docs/usage.md
 # ↓ --------------------------
 
-title: The Blueprint # the main title
+title: 행동하라, 바로 지금 # the main title
 
-tagline: Finding timeless system design principles amidst the ever-changing flow of technology. # it will display as the subtitle
+tagline: 우리 인생을 방해하는 두 가지가 있으니 하나는 어느 것도 시작하지 않은 것이요. 다른 하나는 어느 것도 끝내지 않은 것이다. # it will display as the subtitle
 
 description: >- # used by seo meta and the atom feed
   클라우드, 빅데이터, AI ... 소프트웨어 기술 소개 및 트렌드 소개.
